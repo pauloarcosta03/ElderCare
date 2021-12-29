@@ -1,0 +1,85 @@
+{
+  "project_info": {
+    "project_number": "679261047286",
+    "firebase_url": "https://eldercare-a6b1a-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "eldercare-a6b1a",
+    "storage_bucket": "eldercare-a6b1a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:679261047286:android:5e88950fe299c8769adfd7",
+        "android_client_info": {
+          "package_name": "com.eldercare.eldercare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "679261047286-vvlhtu1s6aft83pamgt6o828qnjkcuoc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eldercare.eldercare",
+            "certificate_hash": "a033bb6f0b99fda796b1921660deba3c0d5cf58c"
+          }
+        },
+        {
+          "client_id": "679261047286-l36i53rqn7l72io1jf20bdk5olav03fv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUHOa5T7jzVwhxcWCXlHNlEnW1VkcOitc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "679261047286-l36i53rqn7l72io1jf20bdk5olav03fv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:679261047286:android:5431dc4af0ff99b89adfd7",
+        "android_client_info": {
+          "package_name": "com.eldercare.eldertest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "679261047286-5dlg9a2ss1cmt4t95fmrubonbb4url0j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eldercare.eldertest",
+            "certificate_hash": "a033bb6f0b99fda796b1921660deba3c0d5cf58c"
+          }
+        },
+        {
+          "client_id": "679261047286-l36i53rqn7l72io1jf20bdk5olav03fv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUHOa5T7jzVwhxcWCXlHNlEnW1VkcOitc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "679261047286-l36i53rqn7l72io1jf20bdk5olav03fv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
