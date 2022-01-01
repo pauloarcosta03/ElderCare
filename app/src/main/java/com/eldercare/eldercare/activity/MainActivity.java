@@ -59,6 +59,7 @@ public class MainActivity extends IntroActivity {
 
         //autenticacao.signOut();
         if (autenticacao.getCurrentUser() != null){
+
             abrirActivityPrincipal();
         }
 
