@@ -13,11 +13,6 @@
             android:name=".activity.ui.notas.AdicionarNotasActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.ui.notas.AdicionarNotaActivity"
-            android:exported="false"
-            android:label="@string/title_activity_adicionar_nota"
-            android:theme="@style/Theme.ElderCare.NoActionBar" />
-        <activity
             android:name=".activity.PrincipalActivity"
             android:exported="false"
             android:label="@string/title_activity_principal"

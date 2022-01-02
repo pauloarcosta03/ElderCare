@@ -8,6 +8,17 @@
     android:layout_height="match_parent"
     tools:context=".activity.ui.notas.NotasFragment" >
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerNotas"
+        android:layout_width="0dp"
+        android:layout_height="643dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.github.clans.fab.FloatingActionButton
         android:id="@+id/fabNotas"
         android:layout_width="wrap_content"
@@ -17,6 +28,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        fab:fab_label="Menu item 1"
         fab:fab_size="normal" />
 </androidx.constraintlayout.widget.ConstraintLayout>
