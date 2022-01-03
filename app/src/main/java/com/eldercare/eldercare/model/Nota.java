@@ -9,12 +9,9 @@ public class Nota {
 
     private String titulo;
     private String descricao;
+    private String key;
 
     public Nota() {
-    }
-
-    public String getTitulo() {
-        return titulo;
     }
 
     public void guardar() {
@@ -28,6 +25,18 @@ public class Nota {
                 .push()
                 .setValue(this);
 
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getTitulo() {
+        return titulo;
     }
 
     public void setTitulo(String titulo) {

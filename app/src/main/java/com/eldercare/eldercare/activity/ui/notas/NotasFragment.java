@@ -45,7 +45,6 @@ public class NotasFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +102,7 @@ public class NotasFragment extends Fragment {
                 for (DataSnapshot dados: snapshot.getChildren()){
 
                     Nota nota = dados.getValue( Nota.class );
+                    nota.setKey(dados.getKey());
                     notas.add(nota);
 
                 }

@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.eldercare.eldercare.R;
+import com.eldercare.eldercare.adapter.notas.AdapterNotas;
 import com.eldercare.eldercare.config.ConfiguracaoFirebase;
 import com.eldercare.eldercare.databinding.ActivityPrincipalBinding;
 import com.eldercare.eldercare.helper.Base64Custom;
