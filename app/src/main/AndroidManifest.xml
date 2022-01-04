@@ -10,8 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ElderCare">
         <activity
-            android:name=".activity.ui.notas.AdicionarNotasActivity"
+            android:name=".activity.ui.contactos.AdicionarContactosActivity"
             android:exported="false" />
+        <activity
+            android:name=".activity.ui.notas.AdicionarNotasActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ElderCare.NoActionBar" />
         <activity
             android:name=".activity.PrincipalActivity"
             android:exported="false"

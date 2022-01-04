@@ -55,4 +55,7 @@ dependencies {
 
     //floating action button
     implementation 'com.github.clans:fab:1.6.4'
+
+    //recyclerView
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
 }

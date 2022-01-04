@@ -12,4 +12,6 @@
     <color name="colorAccent">#0342FF</color>
     <color name="colorPrimary">#3FBBF5</color>
     <color name="colorPrimaryDark">#3F91F5</color>
+
+    <color name="colorUrgencia">#ff0015</color>
 </resources>
