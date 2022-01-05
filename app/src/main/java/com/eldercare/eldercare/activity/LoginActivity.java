@@ -72,8 +72,9 @@ public class LoginActivity extends AppCompatActivity {
 
     //classe para fazer login
     public void fazerLogin(){
-        autenticacao = ConfiguracaoFirebase.getFirebaseAutorizacao();
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
 
+        //faz login com o e-mail e com a password que o utilizador introduziram
         autenticacao.signInWithEmailAndPassword(
                 utilizador.getEmail(),
                 utilizador.getPassword()
@@ -81,9 +82,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),
-                            "Login feito com sucesso.",
-                            Toast.LENGTH_LONG).show();
                     finish();
                 }else{
                     //cria a mensagem de erro

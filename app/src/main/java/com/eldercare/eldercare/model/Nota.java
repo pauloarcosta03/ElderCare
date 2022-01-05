@@ -16,7 +16,7 @@ public class Nota {
 
     public void guardar() {
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
-        FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutorizacao();
+        FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
 
         String idUtilizador = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
 

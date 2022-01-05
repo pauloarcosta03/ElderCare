@@ -1,7 +1,6 @@
 package com.eldercare.eldercare.adapter.notas;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eldercare.eldercare.R;
@@ -31,7 +29,7 @@ public class AdapterNotas extends RecyclerView.Adapter<AdapterNotas.MyViewHolder
 
     private DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
     private DatabaseReference notasRef;
-    private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutorizacao();
+    private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     private Nota nota;
 
 //save the context recievied via constructor in a local variable

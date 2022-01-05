@@ -35,7 +35,7 @@ public class NotasFragment extends Fragment {
     private List<Nota> notas = new ArrayList<>();
     private AdapterNotas adapterNotas;
 
-    private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutorizacao();
+    private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     private DatabaseReference notasRef;
     private DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
     private ValueEventListener valueEventListenerNotas;

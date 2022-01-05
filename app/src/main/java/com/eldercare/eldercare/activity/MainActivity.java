@@ -19,7 +19,6 @@ public class MainActivity extends IntroActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
 
         //Não permite darkmode na aplicação toda
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -50,16 +49,16 @@ public class MainActivity extends IntroActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        //Verifica se o utilizador está conectado à respetiva conta
         verificarLogin();
     }
 
     public void verificarLogin(){
 
-        autenticacao = ConfiguracaoFirebase.getFirebaseAutorizacao();
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
 
-        //autenticacao.signOut();
         if (autenticacao.getCurrentUser() != null){
-
+            //Abre automáticamente a dashboard
             abrirActivityPrincipal();
         }
 

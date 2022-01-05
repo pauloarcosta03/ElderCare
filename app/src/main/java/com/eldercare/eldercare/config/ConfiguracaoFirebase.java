@@ -10,7 +10,7 @@ public class ConfiguracaoFirebase {
     private static DatabaseReference firebaseRef;
 
     //Dar a referencia ao login do firebase à variável autenticacao
-    public static FirebaseAuth getFirebaseAutorizacao(){
+    public static FirebaseAuth getFirebaseAutenticacao(){
 
         if (autenticacao == null){
             autenticacao = FirebaseAuth.getInstance();

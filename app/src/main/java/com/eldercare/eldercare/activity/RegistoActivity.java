@@ -87,7 +87,8 @@ public class RegistoActivity extends AppCompatActivity {
     //classe para registar o user
     public void registarUtilizador(){
 
-        autenticacao = ConfiguracaoFirebase.getFirebaseAutorizacao();
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        //O registo é criado no firebase
         autenticacao.createUserWithEmailAndPassword(
                 utilizador.getEmail(),
                 utilizador.getPassword())

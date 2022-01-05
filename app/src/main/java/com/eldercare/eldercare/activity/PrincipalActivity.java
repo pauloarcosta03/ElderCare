@@ -1,20 +1,15 @@
 package com.eldercare.eldercare.activity;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.eldercare.eldercare.R;
-import com.eldercare.eldercare.adapter.notas.AdapterNotas;
 import com.eldercare.eldercare.config.ConfiguracaoFirebase;
 import com.eldercare.eldercare.databinding.ActivityPrincipalBinding;
 import com.eldercare.eldercare.helper.Base64Custom;
 import com.eldercare.eldercare.model.Utilizador;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -91,7 +86,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
         //Mudar o nome de utilizador no menu
             //Buscar e-mail
-            autenticacao = ConfiguracaoFirebase.getFirebaseAutorizacao();
+            autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
             String emailUser = autenticacao.getCurrentUser().getEmail();
 
             //Buscar Nome

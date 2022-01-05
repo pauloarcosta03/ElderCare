@@ -1,5 +1,11 @@
 package com.eldercare.eldercare.model;
 
+import com.eldercare.eldercare.config.ConfiguracaoFirebase;
+import com.eldercare.eldercare.helper.Base64Custom;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
+
 public class Contacto {
 
     private String nome;
@@ -8,6 +14,19 @@ public class Contacto {
     private String key;
 
     public Contacto() {
+    }
+
+    public void guardar(){
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
+        FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+
+        String idUtilizador = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
+
+        firebaseRef.child("contactos")
+                .child(idUtilizador)
+                .push()
+                .setValue(this);
+
     }
 
     public String getKey() {

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.eldercare.eldercare.R;
 import com.eldercare.eldercare.model.Nota;
@@ -32,11 +33,22 @@ public class AdicionarNotasActivity extends AppCompatActivity {
         String textoTitulo = editTitulo.getText().toString();
         String textoDescricao = editDescricao.getText().toString();
 
-        nota.setTitulo(textoTitulo);
-        nota.setDescricao(textoDescricao);
+        //Verifica se os campos estão todos preenchidos
+        if (!textoTitulo.isEmpty()){
+            if (!textoDescricao.isEmpty()){
+                nota.setTitulo(textoTitulo);
+                nota.setDescricao(textoDescricao);
 
-        nota.guardar();
-        finish();
+                nota.guardar();
+                finish();
+            }else{
+                Toast.makeText(this, "Preencha o conteudo primeiro.", Toast.LENGTH_LONG).show();
+            }
+        }else{
+            Toast.makeText(this, "Preencha o título primeiro.", Toast.LENGTH_LONG).show();
+        }
+
+
     }
 
 }
