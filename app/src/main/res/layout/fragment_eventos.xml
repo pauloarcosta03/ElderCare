@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ui.calendario.CalendarioFragment">
+    tools:context=".activity.ui.calendario.EventosFragment">
 
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/calendarView"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/calendarView" />
 
     <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/fabContactos"
+        android:id="@+id/fabEventos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"

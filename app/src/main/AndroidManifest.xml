@@ -6,43 +6,46 @@
 
     <application
         android:allowBackup="true"
-        android:screenOrientation="portrait"
         android:icon="@mipmap/logo1"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo1"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.ElderCare">
         <activity
-            android:name=".activity.ui.contactos.AdicionarContactosActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"
+            android:name=".activity.ui.calendario.AdicionarEventosActivity"
             android:exported="false" />
+        <activity
+            android:name=".activity.ui.contactos.AdicionarContactosActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.ui.notas.AdicionarNotasActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.ElderCare.NoActionBar" />
+            android:theme="@style/Theme.ElderCare.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.PrincipalActivity"
-            android:screenOrientation="portrait"
             android:exported="false"
             android:label="@string/title_activity_principal"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.ElderCare.NoActionBar" />
         <activity
             android:name=".activity.RegistoActivity"
+            android:exported="false"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"
-            android:exported="false" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.LoginActivity"
+            android:exported="false"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"
-            android:exported="false" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.MainActivity"
-            android:screenOrientation="portrait"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Intro">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
