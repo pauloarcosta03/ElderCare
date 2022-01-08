@@ -17,6 +17,8 @@ public class AdicionarNotasActivity extends AppCompatActivity {
     private EditText editTitulo, editDescricao;
     private Nota nota;
 
+    private Nota notaAtual;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,10 +26,28 @@ public class AdicionarNotasActivity extends AppCompatActivity {
 
         editTitulo = findViewById(R.id.editTitulo);
         editDescricao = findViewById(R.id.editDescricao);
+        fab = findViewById(R.id.fabAddNotas);
+
+        //Caso o utilizador queira editar uma nota, o código preenche os campos automáticamente
+        notaAtual = (Nota) getIntent().getSerializableExtra("nota");
+
+        if (notaAtual != null){
+
+            editTitulo.setText(notaAtual.getTitulo());
+            editDescricao.setText(notaAtual.getDescricao());
+
+        }
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                guardarNota();
+            }
+        });
 
     }
 
-    public void guardarNota(View view){
+    public void guardarNota(){
         nota = new Nota();
 
         String textoTitulo = editTitulo.getText().toString();
@@ -36,13 +56,28 @@ public class AdicionarNotasActivity extends AppCompatActivity {
         //Verifica se os campos estão todos preenchidos
         if (!textoTitulo.isEmpty()){
             if (!textoDescricao.isEmpty()){
-                nota.setTitulo(textoTitulo);
-                nota.setDescricao(textoDescricao);
 
-                nota.guardar();
-                finish();
+                //Caso o utilizador queira editar uma nota, em vez de criar uma nota com id novo, ela reutiliza o id
+                if (notaAtual != null){
+
+                    nota.setTitulo(textoTitulo);
+                    nota.setDescricao(textoDescricao);
+                    nota.setKey(notaAtual.getKey());
+
+                    nota.editar();
+                    finish();
+
+                }else{
+                    nota.setTitulo(textoTitulo);
+                    nota.setDescricao(textoDescricao);
+
+                    nota.guardar();
+                    finish();
+                }
+
+
             }else{
-                Toast.makeText(this, "Preencha o conteudo primeiro.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Preencha o conteúdo primeiro.", Toast.LENGTH_LONG).show();
             }
         }else{
             Toast.makeText(this, "Preencha o título primeiro.", Toast.LENGTH_LONG).show();

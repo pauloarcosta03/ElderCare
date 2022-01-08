@@ -16,6 +16,7 @@ public class AdicionarContactosActivity extends AppCompatActivity {
     private EditText editNome, editNumero, editCategoria;
     private FloatingActionButton fab;
     private Contacto contacto;
+    private Contacto contactoAtual;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,15 @@ public class AdicionarContactosActivity extends AppCompatActivity {
         editNome = findViewById(R.id.editNome);
         editNumero = findViewById(R.id.editNumero);
         editCategoria = findViewById(R.id.editCategoria);
+
+        contactoAtual = (Contacto) getIntent().getSerializableExtra("contacto");
+
+        //Caso o utilizador queira editar uma nota, o código preenche os campos automáticamente
+        if (contactoAtual != null){
+            editNome.setText(contactoAtual.getNome());
+            editNumero.setText(contactoAtual.getNumero());
+            editCategoria.setText(contactoAtual.getCategoria());
+        }
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,12 +58,30 @@ public class AdicionarContactosActivity extends AppCompatActivity {
         //Exceto a categoria(não é obrigatória)
         if (!textoNome.isEmpty()){
             if (!textoNumero.isEmpty()){
-                contacto.setNome(textoNome);
-                contacto.setNumero(textoNumero);
-                contacto.setCategoria(textoCategoria);
 
-                contacto.guardar();
-                finish();
+                //Caso o utilizador queira editar uma nota, em vez de criar uma nota com id novo, ela reutiliza o id
+                if (contactoAtual != null){
+
+                    contacto.setNome(textoNome);
+                    contacto.setNumero(textoNumero);
+                    contacto.setCategoria(textoCategoria);
+                    //preciso da key para saber onde atualizarw
+                    contacto.setKey(contactoAtual.getKey());
+
+                    contacto.editar();
+                    finish();
+
+                }else{
+
+                    contacto.setNome(textoNome);
+                    contacto.setNumero(textoNumero);
+                    contacto.setCategoria(textoCategoria);
+
+                    contacto.guardar();
+                    finish();
+
+                }
+
             }else {
                 Toast.makeText(this, "Preencha o número primeiro.", Toast.LENGTH_LONG).show();
             }

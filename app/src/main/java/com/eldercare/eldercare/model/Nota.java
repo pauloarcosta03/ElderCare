@@ -5,13 +5,27 @@ import com.eldercare.eldercare.helper.Base64Custom;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
-public class Nota {
+import java.io.Serializable;
+
+public class Nota implements Serializable {
 
     private String titulo;
     private String descricao;
     private String key;
 
     public Nota() {
+    }
+
+    public void editar(){
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
+        FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+
+        String idUtilizador = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
+
+        firebaseRef.child("notas")
+                .child(idUtilizador)
+                .child(this.getKey())
+                .setValue(this);
     }
 
     public void guardar() {

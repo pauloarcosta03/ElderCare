@@ -27,10 +27,6 @@ public class AdapterNotas extends RecyclerView.Adapter<AdapterNotas.MyViewHolder
     List<Nota> notas;
     Context context;
 
-    private DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
-    private DatabaseReference notasRef;
-    private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-    private Nota nota;
 
 //save the context recievied via constructor in a local variable
 
@@ -59,13 +55,6 @@ public class AdapterNotas extends RecyclerView.Adapter<AdapterNotas.MyViewHolder
         holder.titulo.setText(nota.getTitulo());
         holder.descricao.setText(nota.getDescricao());
 
-        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                eliminarNota(posicao, nota.getTitulo());
-            }
-        });
-
     }
 
     @Override
@@ -77,70 +66,14 @@ public class AdapterNotas extends RecyclerView.Adapter<AdapterNotas.MyViewHolder
 
         TextView titulo;
         TextView descricao;
-        Button deleteButton;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             titulo = itemView.findViewById(R.id.textTitulo);
             descricao = itemView.findViewById(R.id.textDescricao);
-            deleteButton = itemView.findViewById(R.id.deleteButton);
 
         }
-    }
-
-    public void eliminarNota(int position, String tituloNota){
-
-        nota = notas.get(position);
-        String emailUtilizador = autenticacao.getCurrentUser().getEmail();
-        String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
-
-        notasRef = firebaseRef.child("notas")
-                .child(idUtilizador);
-
-        notasRef.child(nota.getKey()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(context.getApplicationContext(),
-                            "Nota: " + tituloNota + " eliminada com sucesso",
-                            Toast.LENGTH_LONG).show();
-                }else{
-                    Toast.makeText(context.getApplicationContext(),
-                            "Erro ao eliminar " + tituloNota,
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-
-        /*AlertDialog.Builder alertDialog = new AlertDialog.Builder(context.getApplicationContext());
-
-        alertDialog.setTitle("Deseja eliminar nota?");
-        alertDialog.setMessage("Tem mesmo certeza que quer eliminar esta nota?\n"
-                + tituloNota);
-
-        alertDialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(context.getApplicationContext(),
-                        "Eliminado",
-                        Toast.LENGTH_LONG).show();
-            }
-        });
-
-        alertDialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(context.getApplicationContext(),
-                        "Cancelado",
-                        Toast.LENGTH_LONG).show();
-            }
-        });
-
-        AlertDialog alert = alertDialog.create();
-        alert.show();*/
-
     }
 
 }

@@ -58,4 +58,7 @@ dependencies {
 
     //recyclerView
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
+
+    //Calendario
+    implementation 'com.github.prolificinteractive:material-calendarview:2.0.1'
 }

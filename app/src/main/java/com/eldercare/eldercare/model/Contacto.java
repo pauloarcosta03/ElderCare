@@ -6,7 +6,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 
-public class Contacto {
+import java.io.Serializable;
+
+//implements Serializable serve para passar um contato de uma activity para a outra
+public class Contacto implements Serializable {
 
     private String nome;
     private String categoria;
@@ -14,6 +17,18 @@ public class Contacto {
     private String key;
 
     public Contacto() {
+    }
+
+    public void editar(){
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
+        FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+
+        String idUtilizador = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
+
+        firebaseRef.child("contactos")
+                .child(idUtilizador)
+                .child(this.getKey())
+                .setValue(this);
     }
 
     public void guardar(){

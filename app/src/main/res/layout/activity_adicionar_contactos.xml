@@ -75,6 +75,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:fab_colorNormal="@color/colorPrimaryDark"
+        app:fab_colorPressed="@color/colorPrimary"
         fab:fab_size="normal" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

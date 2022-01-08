@@ -1,59 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/deleteButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/ic_delete_vermelho_24"
-            android:gravity="center" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/textTitulo"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:text="Titulo"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textTitulo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Titulo"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textDescricao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Descrição"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/textDescricao"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.85" />
+        android:text="Descrição"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="20sp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
