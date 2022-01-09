@@ -6,6 +6,11 @@
     <group android:checkableBehavior="single">
 
         <item
+            android:id="@+id/nav_lembretes"
+            android:icon="@drawable/ic_menu_lembretes"
+            android:title="Lembretes Diários" />
+
+        <item
             android:id="@+id/nav_calendario"
             android:icon="@drawable/ic_menu_calendario"
             android:title="Calendário" />
