@@ -1,23 +1,79 @@
 package com.eldercare.eldercare.model;
 
-public class Evento {
+import com.eldercare.eldercare.config.ConfiguracaoFirebase;
+import com.eldercare.eldercare.helper.Base64Custom;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
+
+import java.io.Serializable;
+
+public class Evento implements Serializable {
 
     private String titulo;
     private String descricao;
     private String horas;
     private String minutos;
     private String data;
+    private String tempo;
     private String key;
 
     public Evento() {
     }
 
+    public void guardarEvento(){
+
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
+        FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+
+        String idUtilizador = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
+
+        //fazer o id do dia
+        String[] dataSplit = this.data.split("/");
+
+        String idDia = dataSplit[0] + dataSplit[1] + dataSplit[2];
+
+        firebaseRef.child("eventos").child(idUtilizador)
+                .child(idDia)
+                .push()
+                .setValue(this);
+
+    }
+
+    public void editarEvento(){
+
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
+        FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+
+        String idUtilizador = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
+
+        //fazer o id do dia
+        String[] dataSplit = this.data.split("/");
+
+        String idDia = dataSplit[0] + dataSplit[1] + dataSplit[2];
+
+        firebaseRef.child("eventos").child(idUtilizador)
+                .child(idDia)
+                .child(this.getKey())
+                .setValue(this);
+
+    }
+
+    @Exclude//para não guardar a key
     public String getKey() {
         return key;
     }
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getTempo() {
+        return tempo;
+    }
+
+    public void setTempo(String tempo) {
+        this.tempo = tempo;
     }
 
     public String getTitulo() {

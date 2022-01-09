@@ -4,6 +4,7 @@ import com.eldercare.eldercare.config.ConfiguracaoFirebase;
 import com.eldercare.eldercare.helper.Base64Custom;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
 
@@ -41,6 +42,7 @@ public class Nota implements Serializable {
 
     }
 
+    @Exclude//para não guardar a key
     public String getKey() {
         return key;
     }

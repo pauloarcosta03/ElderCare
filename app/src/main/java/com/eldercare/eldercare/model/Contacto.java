@@ -44,6 +44,7 @@ public class Contacto implements Serializable {
 
     }
 
+    @Exclude//para não guardar a key
     public String getKey() {
         return key;
     }

@@ -88,7 +88,7 @@ public class NotasFragment extends Fragment {
                     public void onLongItemClick(View view, int position) {
                         Nota nota = notas.get(position);
 
-                        final String[] opcoes = {"Editar nota", "Duplicar Nota", "Eliminar Nota"};
+                        final String[] opcoes = {"Editar Nota", "Duplicar Nota", "Eliminar Nota"};
 
                         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                         alertDialog.setTitle("Opções de nota");
@@ -96,7 +96,7 @@ public class NotasFragment extends Fragment {
                         alertDialog.setItems(opcoes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                if ("Editar nota".equals(opcoes[which])){
+                                if ("Editar Nota".equals(opcoes[which])){
                                     Intent intent = new Intent(getContext(), AdicionarNotasActivity.class);
                                     intent.putExtra("nota", nota);
                                     startActivity(intent);
@@ -131,7 +131,7 @@ public class NotasFragment extends Fragment {
                                                                         Toast.LENGTH_SHORT).show();
                                                             }else{
                                                                 Toast.makeText(getContext(),
-                                                                        "Erro ao eliminar",
+                                                                        "Erro ao eliminar nota",
                                                                         Toast.LENGTH_LONG).show();
                                                             }
                                                         }

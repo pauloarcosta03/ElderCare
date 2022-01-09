@@ -5,31 +5,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.ui.calendario.AdicionarEventosActivity">
 
+    <!--<EditText
+        android:id="@+id/editData"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:hint="data"
+        tools:layout_editor_absoluteX="352dp"
+        tools:layout_editor_absoluteY="88dp" />-->
+
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout2"
-        fab:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/textInputLayout3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintHorizontal_bias="1.0"
+        custom:layout_constraintEnd_toEndOf="parent"
+        custom:layout_constraintStart_toStartOf="parent"
+        custom:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editNome"
+            android:id="@+id/editTitulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:hint="Escreva aqui o nome do contacto." />
+            android:hint="Introduza um titulo" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
+        android:id="@+id/textInputLayout5"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -38,15 +50,38 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editNumero"
+            android:id="@+id/editDescricao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:hint="Escreva aqui o número do contacto."
-            android:inputType="phone" />
+            android:hint="Escreva uma descrição (não obrigatório)" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:hint="Escolha uma data" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -57,27 +92,28 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editCategoria"
+            android:id="@+id/editHoras"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:hint="Escreva aqui a categoria do contacto (ex.Filho)" />
+            android:hint="Escolha uma hora"
+            android:focusable="false"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/fabAddContacto"
+        android:id="@+id/fabAddEvento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:src="@drawable/mi_ic_finish"
+        app:fab_colorNormal="@color/colorPrimaryDark"
+        app:fab_colorPressed="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:fab_colorNormal="@color/colorPrimaryDark"
-        app:fab_colorPressed="@color/colorPrimary"
         fab:fab_size="normal" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

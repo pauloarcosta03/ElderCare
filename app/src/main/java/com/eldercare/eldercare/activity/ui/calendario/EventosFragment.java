@@ -1,25 +1,36 @@
 package com.eldercare.eldercare.activity.ui.calendario;
 
+import static android.media.CamcorderProfile.get;
+
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.eldercare.eldercare.R;
 import com.eldercare.eldercare.activity.ui.notas.AdicionarNotasActivity;
 import com.eldercare.eldercare.adapter.calendario.AdapterCalendario;
 import com.eldercare.eldercare.config.ConfiguracaoFirebase;
 import com.eldercare.eldercare.helper.Base64Custom;
+import com.eldercare.eldercare.helper.RecyclerItemClickListener;
 import com.eldercare.eldercare.model.Evento;
+import com.eldercare.eldercare.model.Nota;
 import com.github.clans.fab.FloatingActionButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -75,6 +86,113 @@ public class EventosFragment extends Fragment {
 
         recyclerCalendario = view.findViewById(R.id.recyclerCalendario);
 
+        //item click do recyclerView
+
+        recyclerCalendario.addOnItemTouchListener(
+                new RecyclerItemClickListener(
+                        getContext(),
+                        recyclerCalendario,
+                        new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Evento evento = eventos.get(position);
+
+                        Intent intent = new Intent(getContext(), AdicionarEventosActivity.class);
+                        intent.putExtra("evento", evento);
+                        startActivity(intent);
+
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+                        Evento evento = eventos.get(position);
+
+                        final String[] opcoes = {"Editar Evento", "Duplicar Evento", "Eliminar Evento"};
+
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                        alertDialog.setTitle("Opções de evento");
+
+                        alertDialog.setItems(opcoes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if("Editar Evento".equals(opcoes[which])){
+
+                                    Intent intent = new Intent(getContext(), AdicionarEventosActivity.class);
+                                    intent.putExtra("evento", evento);
+                                    startActivity(intent);
+
+                                }else if("Duplicar Evento".equals(opcoes[which])){
+
+                                    evento.guardarEvento();
+                                    Toast.makeText(getContext(), "Evento "
+                                                    + evento.getTitulo() +
+                                                    " duplicado com sucesso!",
+                                            Toast.LENGTH_SHORT).show();
+
+
+                                }else if("Eliminar Evento".equals(opcoes[which])){
+
+                                    AlertDialog.Builder eliminarDialog = new AlertDialog.Builder(getContext());
+                                    eliminarDialog.setTitle("Eliminar Evento");
+                                    eliminarDialog.setMessage("Deseja mesmo eliminar este evento?\n" +
+                                            evento.getTitulo());
+
+                                    eliminarDialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            String emailUtilizador = autenticacao.getCurrentUser().getEmail();
+                                            String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
+
+                                            eventosRef = firebaseRef.child("eventos")
+                                                    .child(idUtilizador)
+                                                    .child(dataSelecionada);
+
+                                            eventosRef.child(evento.getKey()).removeValue()
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                                            if (task.isSuccessful()){
+                                                                Toast.makeText(getContext(), "Evento "
+                                                                                + evento.getTitulo() +
+                                                                                " removido com sucesso!",
+                                                                        Toast.LENGTH_SHORT).show();
+                                                            }else{
+                                                                Toast.makeText(getContext(),
+                                                                        "Erro ao eliminar evento",
+                                                                        Toast.LENGTH_LONG).show();
+                                                            }
+
+                                                        }
+                                                    });
+
+                                        }
+                                    });
+
+                                    eliminarDialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                        }
+                                    });
+
+                                    eliminarDialog.show();
+
+                                }
+                            }
+                        });
+
+                        alertDialog.show();
+
+                    }
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    }
+                }));
+
         //Configuraçao do adapter
         adapterCalendario = new AdapterCalendario(eventos, getContext());
 
@@ -86,6 +204,7 @@ public class EventosFragment extends Fragment {
 
         configuracaoCalendarView();
 
+        //verificar se o fab é clicado
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +254,8 @@ public class EventosFragment extends Fragment {
                 .child(idUtilizador)
                 .child(dataSelecionada);
 
-        valueEventListenerEventos = eventosRef.addValueEventListener(new ValueEventListener() {
+        //O orderByChild("horas") serve para ordenar pelo child horas
+        valueEventListenerEventos = eventosRef.orderByChild("tempo").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -147,6 +267,10 @@ public class EventosFragment extends Fragment {
                     evento.setKey(dados.getKey());
                     eventos.add(evento);
 
+                }
+
+                for(Evento evento: eventos){
+                    Log.i("evento", String.valueOf(evento));
                 }
 
                 //diz ao adapter que os dados foram atualizados
