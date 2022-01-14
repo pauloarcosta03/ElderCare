@@ -297,4 +297,10 @@ public class EventosFragment extends Fragment {
         configuracaoCalendarView();
         recuperarEventos();
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        eventosRef.removeEventListener(valueEventListenerEventos);
+    }
 }
