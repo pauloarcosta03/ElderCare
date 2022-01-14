@@ -84,6 +84,11 @@ public class LembretesFragment extends Fragment {
                 new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                Lembrete lembrete = lembretes.get(position);
+
+                Intent intent = new Intent(getContext(), AdicionarLembretesActivity.class);
+                intent.putExtra("lembrete", lembrete);
+                startActivity(intent);
 
             }
 
