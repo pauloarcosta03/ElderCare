@@ -115,10 +115,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
+
 
     /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {

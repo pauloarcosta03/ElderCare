@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eldercare.eldercare.R;
@@ -41,6 +42,7 @@ public class NotasFragment extends Fragment {
 
     private FloatingActionButton fab;
     private RecyclerView recyclerView;
+    private TextView textVazio;
     private List<Nota> notas = new ArrayList<>();
     private AdapterNotas adapterNotas;
 
@@ -71,6 +73,7 @@ public class NotasFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fab = view.findViewById(R.id.fabNotas);
+        textVazio = view.findViewById(R.id.textVazio);
 
         //RecyclerView
         recyclerView = view.findViewById(R.id.recyclerNotas);
@@ -202,6 +205,13 @@ public class NotasFragment extends Fragment {
                     nota.setKey(dados.getKey());
                     notas.add(nota);
 
+                }
+
+                //verificar se existem notas e mostra uma mensagem
+                if(notas.isEmpty()){
+                    textVazio.setText("Ainda não tem nenhuma nota adicionada.");
+                }else{
+                    textVazio.setText("");
                 }
 
                 //diz ao adapter que os dados foram atualizados

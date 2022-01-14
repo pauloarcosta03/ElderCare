@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eldercare.eldercare.R;
@@ -49,6 +50,7 @@ public class EventosFragment extends Fragment {
     private FloatingActionButton fab;
     private MaterialCalendarView calendario;
     private RecyclerView recyclerCalendario;
+    private TextView textVazio;
     private AdapterCalendario adapterCalendario;
     private CalendarDay dataAtual;
 
@@ -83,6 +85,7 @@ public class EventosFragment extends Fragment {
 
         fab = view.findViewById(R.id.fabEventos);
         calendario = view.findViewById(R.id.calendarView);
+        textVazio = view.findViewById(R.id.textVazio);
 
         recyclerCalendario = view.findViewById(R.id.recyclerCalendario);
 
@@ -254,7 +257,7 @@ public class EventosFragment extends Fragment {
                 .child(idUtilizador)
                 .child(dataSelecionada);
 
-        //O orderByChild("horas") serve para ordenar pelo child horas
+        //O orderByChild("tempo") serve para ordenar pelo child tempo
         valueEventListenerEventos = eventosRef.orderByChild("tempo").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -269,8 +272,11 @@ public class EventosFragment extends Fragment {
 
                 }
 
-                for(Evento evento: eventos){
-                    Log.i("evento", String.valueOf(evento));
+                //verificar se existem contactos e mostra uma mensagem
+                if(eventos.isEmpty()){
+                    textVazio.setText("Ainda não tem nenhum evento adicionada.");
+                }else{
+                    textVazio.setText("");
                 }
 
                 //diz ao adapter que os dados foram atualizados

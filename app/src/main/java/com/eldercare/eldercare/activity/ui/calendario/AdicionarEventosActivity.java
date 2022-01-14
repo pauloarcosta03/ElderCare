@@ -140,7 +140,6 @@ public class AdicionarEventosActivity extends AppCompatActivity {
                     if(eventoAtual != null){
 
                         evento.setKey(eventoAtual.getKey());
-
                         evento.editarEvento();
                         finish();
 
@@ -150,9 +149,6 @@ public class AdicionarEventosActivity extends AppCompatActivity {
                         finish();
 
                     }
-
-
-
                 }else{
                     Toast.makeText(getApplicationContext(), "Introduza uma hora por favor.", Toast.LENGTH_LONG)
                             .show();

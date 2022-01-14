@@ -22,6 +22,11 @@ public class Utilizador {
                 .child(this.idUtilizador)
                 .setValue(this);
 
+        //Adicionar o 112 aos contactos
+        firebaseRef.child("contactos").child(this.idUtilizador).child("112").child("nome").setValue("112");
+        firebaseRef.child("contactos").child(this.idUtilizador).child("112").child("numero").setValue("112");
+        firebaseRef.child("contactos").child(this.idUtilizador).child("112").child("categoria").setValue("urgência");
+
     }
 
     @Exclude

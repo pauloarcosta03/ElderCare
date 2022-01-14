@@ -9,6 +9,7 @@
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/drawable/side_nav_bar.xml" value="0.11203703703703703" />
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/activity_adicionar_contactos.xml" value="0.26875" />
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/activity_adicionar_eventos.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/activity_adicionar_lembretes.xml" value="0.26875" />
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/activity_adicionar_notas.xml" value="0.25" />
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/activity_login.xml" value="0.26875" />
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/activity_main.xml" value="0.26875" />
@@ -16,6 +17,7 @@
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/activity_registo.xml" value="0.26875" />
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/adapter_calendario.xml" value="0.26875" />
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/adapter_contactos.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/adapter_lembretes.xml" value="0.26875" />
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/adapter_notas.xml" value="0.26875" />
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/app_bar_principal.xml" value="0.26875" />
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/content_principal.xml" value="0.26875" />
@@ -24,7 +26,7 @@
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/fragment_eventos.xml" value="0.26875" />
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/fragment_gallery.xml" value="0.26875" />
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/fragment_home.xml" value="0.26875" />
-        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/fragment_lembretes.xml" value="0.13958333333333334" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/fragment_lembretes.xml" value="0.25" />
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/fragment_notas.xml" value="0.25" />
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/fragment_numeros.xml" value="0.26875" />
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/fragment_slideshow.xml" value="0.26875" />

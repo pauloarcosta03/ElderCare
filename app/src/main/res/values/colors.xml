@@ -9,9 +9,9 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="fundo">#ABF4F0</color>
-    <color name="colorAccent">#0342FF</color>
-    <color name="colorPrimary">#3FBBF5</color>
-    <color name="colorPrimaryDark">#3F91F5</color>
+    <color name="colorAccent">#147180</color>
+    <color name="colorPrimary">#1BAEC5</color>
+    <color name="colorPrimaryDark">#2097AA</color>
 
     <color name="colorUrgencia">#ff0015</color>
 </resources>

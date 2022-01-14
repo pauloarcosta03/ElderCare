@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eldercare.eldercare.R;
@@ -40,6 +41,7 @@ public class ContactosFragment extends Fragment {
 
     private FloatingActionButton fab;
     private RecyclerView recyclerView;
+    private TextView textVazio;
     private AdapterContactos adapterContactos;
 
     private List<Contacto> contactos = new ArrayList<>();
@@ -70,6 +72,7 @@ public class ContactosFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         fab = view.findViewById(R.id.fabContactos);
+        textVazio = view.findViewById(R.id.textVazio);
 
         //RecyclerView
         recyclerView = view.findViewById(R.id.recyclerContactos);
@@ -214,6 +217,13 @@ public class ContactosFragment extends Fragment {
                     contacto.setKey(dados.getKey());
                     contactos.add(contacto);
 
+                }
+
+                //verificar se existem contactos e mostra uma mensagem
+                if(contactos.isEmpty()){
+                    textVazio.setText("Ainda não tem nenhum contacto adicionada.");
+                }else{
+                    textVazio.setText("");
                 }
 
                 //diz ao adapter que os dados foram atualizados

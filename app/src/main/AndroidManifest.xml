@@ -13,10 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ElderCare">
         <activity
-            android:name=".activity.ui.calendario.AdicionarEventosActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"
+            android:name=".activity.ui.lembretes.AdicionarLembretesActivity"
             android:exported="false" />
+        <activity
+            android:name=".activity.ui.calendario.AdicionarEventosActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.ui.contactos.AdicionarContactosActivity"
             android:exported="false"
@@ -55,7 +58,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
