@@ -3,7 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_lembretes">
+    app:startDestination="@+id/nav_pressao">
+
+    <fragment
+        android:id="@+id/nav_pressao"
+        android:name="com.eldercare.eldercare.activity.ui.pressao.PressaoFragment"
+        android:label="Pressão Arterial"
+        tools:layout="@layout/fragment_pressao" />
 
     <fragment
         android:id="@+id/nav_lembretes"

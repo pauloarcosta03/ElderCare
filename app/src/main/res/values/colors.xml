@@ -14,4 +14,10 @@
     <color name="colorPrimaryDark">#2097AA</color>
 
     <color name="colorUrgencia">#ff0015</color>
+
+    <color name="colorPressaoNormal">#077C0B</color>
+    <color name="colorPressaoPreHipertencao">#E8D104</color>
+    <color name="colorPressaoHipertencao1">#FF9800</color>
+    <color name="colorPressaoHipertencao2">#FF5722</color>
+    <color name="colorPressaoAlta">#A80412</color>
 </resources>

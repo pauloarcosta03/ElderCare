@@ -294,7 +294,6 @@ public class EventosFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        configuracaoCalendarView();
         recuperarEventos();
     }
 

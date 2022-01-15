@@ -91,7 +91,7 @@ public class AdicionarEventosActivity extends AppCompatActivity {
                 mTimePicker = new TimePickerDialog(AdicionarEventosActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        editHoras.setText( selectedHour + ":" + selectedMinute);
+                        editHoras.setText( selectedHour + ":" + String.format("%02d", selectedMinute));
                     }
                 }, hour, minute, true);
                 mTimePicker.setTitle("Escolha as horas");
