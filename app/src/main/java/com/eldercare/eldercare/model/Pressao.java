@@ -11,6 +11,7 @@ import java.io.Serializable;
 public class Pressao implements Serializable {
 
     private String data;
+    private String dataAnterior;
     private String horas;
     private String minutos;
     private String tempo;
@@ -18,6 +19,60 @@ public class Pressao implements Serializable {
     private String sistolica;
     private String diastolica;
     private String key;
+
+    public void editar(){
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
+        FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+
+        String idUtilizador = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
+
+        //fazer o id do dia
+        String[] dataSplit = this.data.split("/");
+
+        String idDia = dataSplit[0] + dataSplit[1] + dataSplit[2];
+
+        firebaseRef.child("pressao").child(idUtilizador)
+                .child(idDia)
+                .child(this.getKey())
+                .setValue(this);
+
+        if(!(this.getData()).equals(this.getDataAnterior())){
+            //fazer o id do dia anterior
+            String[] dataAnteriorSplit = this.dataAnterior.split("/");
+
+            String idDiaAnterior = dataAnteriorSplit[0] + dataAnteriorSplit[1] + dataAnteriorSplit[2];
+
+            firebaseRef.child("pressao").child(idUtilizador)
+                    .child(idDiaAnterior)
+                    .child(this.getKey()).removeValue();
+        }
+    }
+
+    public void editarData(){
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
+        FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+
+        String idUtilizador = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
+
+        //fazer o id do dia atual
+        String[] dataSplit = this.data.split("/");
+
+        String idDia = dataSplit[0] + dataSplit[1] + dataSplit[2];
+
+        //fazer o id do dia anterior
+        String[] dataAnteriorSplit = this.dataAnterior.split("/");
+
+        String idDiaAnterior = dataAnteriorSplit[0] + dataAnteriorSplit[1] + dataAnteriorSplit[2];
+
+        firebaseRef.child("pressao").child(idUtilizador)
+                .child(idDia)
+                .child(this.getKey())
+                .setValue(this);
+
+        firebaseRef.child("pressao").child(idUtilizador)
+                .child(idDiaAnterior)
+                .child(this.getKey()).removeValue();
+    }
 
     public void guardar(){
 
@@ -40,6 +95,15 @@ public class Pressao implements Serializable {
     }
 
     public Pressao() {
+    }
+
+    @Exclude
+    public String getDataAnterior() {
+        return dataAnterior;
+    }
+
+    public void setDataAnterior(String dataAnterior) {
+        this.dataAnterior = dataAnterior;
     }
 
     @Exclude

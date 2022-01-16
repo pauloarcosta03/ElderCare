@@ -15,6 +15,7 @@ public class Evento implements Serializable {
     private String horas;
     private String minutos;
     private String data;
+    private String dataAnterior;
     private String tempo;
     private String key;
 
@@ -57,6 +58,26 @@ public class Evento implements Serializable {
                 .child(this.getKey())
                 .setValue(this);
 
+        if(!(this.getData()).equals(this.getDataAnterior())){
+            //fazer o id do dia anterior
+            String[] dataAnteriorSplit = this.dataAnterior.split("/");
+
+            String idDiaAnterior = dataAnteriorSplit[0] + dataAnteriorSplit[1] + dataAnteriorSplit[2];
+
+            firebaseRef.child("eventos").child(idUtilizador)
+                    .child(idDiaAnterior)
+                    .child(this.getKey()).removeValue();
+        }
+
+    }
+
+    @Exclude
+    public String getDataAnterior() {
+        return dataAnterior;
+    }
+
+    public void setDataAnterior(String dataAnterior) {
+        this.dataAnterior = dataAnterior;
     }
 
     @Exclude//para não guardar a key

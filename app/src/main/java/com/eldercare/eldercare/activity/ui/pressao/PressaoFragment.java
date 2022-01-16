@@ -1,10 +1,12 @@
 package com.eldercare.eldercare.activity.ui.pressao;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,14 +14,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eldercare.eldercare.R;
 import com.eldercare.eldercare.adapter.pressao.AdapterPressao;
 import com.eldercare.eldercare.config.ConfiguracaoFirebase;
 import com.eldercare.eldercare.helper.Base64Custom;
+import com.eldercare.eldercare.helper.RecyclerItemClickListener;
 import com.eldercare.eldercare.model.Pressao;
 import com.github.clans.fab.FloatingActionButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -76,6 +83,109 @@ public class PressaoFragment extends Fragment {
         fab = view.findViewById(R.id.fabPressao);
 
         recyclerView = view.findViewById(R.id.recyclerPressao);
+
+        //item click do recyclerView
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getContext(),
+                        recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+
+                        Pressao pressao = pressoes.get(position);
+
+                        Intent intent = new Intent(getContext(), AdicionarPressaoActivity.class);
+                        intent.putExtra("pressao", pressao);
+                        startActivity(intent);
+
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+
+                        Pressao pressao = pressoes.get(position);
+
+                        final String[] opcoes = {"Editar Pressão", "Duplicar Pressão", "Eliminar Pressão"};
+
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                        alertDialog.setTitle("Opções de Pressão");
+
+                        alertDialog.setItems(opcoes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if("Editar Pressão".equals(opcoes[which])){
+
+                                    Intent intent = new Intent(getContext(), AdicionarPressaoActivity.class);
+                                    intent.putExtra("pressao", pressao);
+                                    startActivity(intent);
+
+                                }else if("Duplicar Pressão".equals(opcoes[which])){
+
+                                    pressao.guardar();
+                                    Toast.makeText(getContext(),
+                                            "Pressão duplicada com sucesso!",
+                                            Toast.LENGTH_SHORT).show();
+
+                                }else if("Eliminar Pressão".equals(opcoes[which])){
+
+                                    AlertDialog.Builder eliminarDialog = new AlertDialog.Builder(getContext());
+                                    eliminarDialog.setTitle("Eliminar Pressão");
+                                    eliminarDialog.setMessage("Deseja mesmo eliminar este registo?");
+
+                                    eliminarDialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            String emailUtilizador = autenticacao.getCurrentUser().getEmail();
+                                            String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
+
+                                            pressoesRef = firebaseRef
+                                                    .child("pressao")
+                                                    .child(idUtilizador)
+                                                    .child(dataSelecionada);
+
+                                            pressoesRef.child(pressao.getKey()).removeValue()
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                                            if(task.isSuccessful()){
+                                                                Toast.makeText(getContext(),
+                                                                        "Registo de pressão arterial eliminado.",
+                                                                        Toast.LENGTH_LONG).show();
+                                                            }else{
+                                                                Toast.makeText(getContext(),
+                                                                        "Erro ao eliminar registo de pressão arterial",
+                                                                        Toast.LENGTH_LONG).show();
+                                                            }
+
+                                                        }
+                                                    });
+
+                                        }
+                                    });
+
+                                    eliminarDialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                        }
+                                    });
+
+                                    eliminarDialog.show();
+
+                                }
+                            }
+                        });
+
+                        alertDialog.show();
+
+                    }
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    }
+                }));
 
         //Configuração adapter
         adapterPressao = new AdapterPressao(pressoes, getContext());

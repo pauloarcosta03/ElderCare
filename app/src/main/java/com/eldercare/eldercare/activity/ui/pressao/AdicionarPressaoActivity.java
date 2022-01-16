@@ -30,6 +30,7 @@ public class AdicionarPressaoActivity extends AppCompatActivity {
     private FloatingActionButton fab;
 
     private Pressao pressao;
+    private Pressao pressaoAtual;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,17 @@ public class AdicionarPressaoActivity extends AppCompatActivity {
         editPressao = findViewById(R.id.editPressao);
         editPaciente = findViewById(R.id.editPaciente);
         fab = findViewById(R.id.fabAddPressao);
+
+        pressaoAtual = (Pressao) getIntent().getSerializableExtra("pressao");
+
+        if(pressaoAtual != null){
+
+            editPressao.setText(pressaoAtual.getSistolica() + "/" + pressaoAtual.getDiastolica());
+            editData.setText(pressaoAtual.getData());
+            editHoras.setText(pressaoAtual.getHoras() + ":" + pressaoAtual.getMinutos());
+            editPaciente.setText(pressaoAtual.getPaciente());
+
+        }
 
         //Escolha de data
         DatePickerDialog.OnDateSetListener data =new DatePickerDialog.OnDateSetListener() {
@@ -135,7 +147,16 @@ public class AdicionarPressaoActivity extends AppCompatActivity {
                                 pressao.setSistolica(sistolica);
                                 pressao.setDiastolica(diastolica);
 
-                                pressao.guardar();
+                                if(pressaoAtual != null){
+
+
+                                    pressao.setDataAnterior(pressaoAtual.getData());
+                                    pressao.setKey(pressaoAtual.getKey());
+                                    pressao.editar();
+
+                                }else{
+                                    pressao.guardar();
+                                }
 
                             }else{
                                 Toast.makeText(getApplicationContext(), "Escreva uma pressão válida por favor.", Toast.LENGTH_LONG)
