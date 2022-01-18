@@ -30,7 +30,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
 
-                app:mcv_selectionColor="#00F"
+                app:mcv_selectionColor="@color/colorPrimary"
                 app:mcv_showOtherDates="all" />
 
             <androidx.recyclerview.widget.RecyclerView

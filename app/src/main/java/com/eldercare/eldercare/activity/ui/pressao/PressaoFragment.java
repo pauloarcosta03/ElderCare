@@ -228,9 +228,9 @@ public class PressaoFragment extends Fragment {
                     pressoes.add(pressao);
                 }
 
-                //verificar se existem contactos e mostra uma mensagem
+                //verificar se existem pressoes e mostra uma mensagem
                 if(pressoes.isEmpty()){
-                    textVazio.setText("Ainda não tem nenhum evento adicionada.");
+                    textVazio.setText("Ainda não tem nenhum registo adicionada.");
                 }else{
                     textVazio.setText("");
                 }

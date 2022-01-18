@@ -20,4 +20,9 @@
     <color name="colorPressaoHipertencao1">#FF9800</color>
     <color name="colorPressaoHipertencao2">#FF5722</color>
     <color name="colorPressaoAlta">#A80412</color>
+
+    <color name="colorGlicoseNormal">#077C0B</color>
+    <color name="colorGlicoseHipoglicemia">#FF9800</color>
+    <color name="colorGlicosePreDiabetes">#FF5722</color>
+    <color name="colorGlicoseDiabetes">#A80412</color>
 </resources>

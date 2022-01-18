@@ -48,32 +48,6 @@ public class Pressao implements Serializable {
         }
     }
 
-    public void editarData(){
-        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
-        FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-
-        String idUtilizador = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
-
-        //fazer o id do dia atual
-        String[] dataSplit = this.data.split("/");
-
-        String idDia = dataSplit[0] + dataSplit[1] + dataSplit[2];
-
-        //fazer o id do dia anterior
-        String[] dataAnteriorSplit = this.dataAnterior.split("/");
-
-        String idDiaAnterior = dataAnteriorSplit[0] + dataAnteriorSplit[1] + dataAnteriorSplit[2];
-
-        firebaseRef.child("pressao").child(idUtilizador)
-                .child(idDia)
-                .child(this.getKey())
-                .setValue(this);
-
-        firebaseRef.child("pressao").child(idUtilizador)
-                .child(idDiaAnterior)
-                .child(this.getKey()).removeValue();
-    }
-
     public void guardar(){
 
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
