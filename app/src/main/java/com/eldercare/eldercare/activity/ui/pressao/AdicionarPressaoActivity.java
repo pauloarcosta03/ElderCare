@@ -153,9 +153,11 @@ public class AdicionarPressaoActivity extends AppCompatActivity {
                                     pressao.setDataAnterior(pressaoAtual.getData());
                                     pressao.setKey(pressaoAtual.getKey());
                                     pressao.editar();
+                                    finish();
 
                                 }else{
                                     pressao.guardar();
+                                    finish();
                                 }
 
                             }else{

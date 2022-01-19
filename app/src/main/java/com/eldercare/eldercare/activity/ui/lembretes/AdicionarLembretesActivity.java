@@ -98,10 +98,10 @@ public class AdicionarLembretesActivity extends AppCompatActivity {
                 lembrete.setHoras(horas);
                 lembrete.setMinutos(minutos);
                 lembrete.setTempo(textoHoras);
-                lembrete.setKey(lembreteAtual.getKey());
 
                 if(lembreteAtual != null){
 
+                    lembrete.setKey(lembreteAtual.getKey());
                     lembrete.editar();
 
                 }else{

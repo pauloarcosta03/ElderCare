@@ -131,8 +131,19 @@ public class AdicionarGlicemiaActivity extends AppCompatActivity {
                         glicemia.setMinutos(minutos);
                         glicemia.setData(textoData);
 
-                        glicemia.guardar();
-                        finish();
+                        if(glicemiaAtual!=null){
+
+                            glicemia.setKey(glicemiaAtual.getKey());
+                            glicemia.setDataAnterior(glicemiaAtual.getData());
+                            glicemia.editar();
+                            finish();
+
+                        }else {
+                            glicemia.guardar();
+                            finish();
+                        }
+
+
 
                     }else{
                         Toast.makeText(getApplicationContext(), "Introduza as horas primeiro.", Toast.LENGTH_SHORT).show();
