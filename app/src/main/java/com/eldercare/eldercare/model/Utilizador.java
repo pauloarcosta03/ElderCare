@@ -22,6 +22,12 @@ public class Utilizador {
                 .child(this.idUtilizador)
                 .setValue(this);
 
+        //guardar a tag de cuidador
+        firebaseRef.child("utilizadores")
+                .child(this.idUtilizador)
+                .child("tipo")
+                .setValue("c");
+
         //Adicionar o 112 aos contactos
         firebaseRef.child("contactos").child(this.idUtilizador).child("112").child("nome").setValue("112");
         firebaseRef.child("contactos").child(this.idUtilizador).child("112").child("numero").setValue("112");
