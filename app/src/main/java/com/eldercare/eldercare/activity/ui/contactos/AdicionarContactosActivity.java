@@ -25,7 +25,7 @@ public class AdicionarContactosActivity extends AppCompatActivity {
 
         fab = findViewById(R.id.fabAddContacto);
 
-        editNome = findViewById(R.id.editNome);
+        editNome = findViewById(R.id.editPassword);
         editNumero = findViewById(R.id.editNumero);
         editCategoria = findViewById(R.id.editCategoria);
 

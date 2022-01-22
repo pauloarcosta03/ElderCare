@@ -1,4 +1,4 @@
-package com.eldercare.eldercare.activity;
+package com.eldercare.eldercare.activity.ui.definicoes;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,72 +22,63 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
-public class RegistoActivity extends AppCompatActivity {
+public class CriarPacienteActivity extends AppCompatActivity {
 
-    //variáveis do layout
     private EditText editNome, editEmail, editPassword;
-    private Button botaoRegisto;
+    private Button botaoCriar;
 
-    //classes
-    private Utilizador utilizador;
-
-    //variáveis firebase
     private FirebaseAuth autenticacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registo);
+        setContentView(R.layout.activity_criar_paciente);
 
-        editNome = findViewById(R.id.editNomeSignup);
-        editEmail = findViewById(R.id.editEmailSignup);
-        editPassword = findViewById(R.id.editPasswordSignup);
+        editNome = findViewById(R.id.editNome);
+        editEmail = findViewById(R.id.editEmail);
+        editPassword = findViewById(R.id.editPassword);
 
-        botaoRegisto = findViewById(R.id.botaoSignup);
+        botaoCriar = findViewById(R.id.botaoCriar);
 
-        botaoRegisto.setOnClickListener(new View.OnClickListener() {
+        String textoNome = editNome.getText().toString();
+        String textoEmail = editEmail.getText().toString();
+        String textoPassword = editPassword.getText().toString();
+
+        botaoCriar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!editNome.getText().toString().isEmpty()){
+                    if(!editEmail.getText().toString().isEmpty()){
+                        if(!editPassword.getText().toString().isEmpty()){
 
-                String textoNome = editNome.getText().toString();
-                String textoEmail = editEmail.getText().toString();
-                String textoPassword = editPassword.getText().toString();
-
-                //Verificação do preenchimento dos campos
-                if (!textoNome.isEmpty()){
-                    if (!textoEmail.isEmpty()){
-                        if (!textoPassword.isEmpty()){
-
-                            utilizador = new Utilizador();
-                            utilizador.setNome(textoNome);
-                            utilizador.setEmail(textoEmail);
-                            utilizador.setPassword(textoPassword);
-                            //para ter um identificador
-                            utilizador.setTipo("c");
-
-                            registarUtilizador();
+                            registarPaciente();
 
                         }else{
-                            Toast.makeText(getApplicationContext(),
-                                    "Por favor preencha a palavra-passe.",
-                                    Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Introduz um nome.", Toast.LENGTH_SHORT).show();
                         }
                     }else{
-                        Toast.makeText(getApplicationContext(),
-                                "Por favor preencha o e-mail.",
-                                Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Introduz um nome.", Toast.LENGTH_SHORT).show();
                     }
                 }else{
-                    Toast.makeText(getApplicationContext(),
-                            "Por favor preencha o nome.",
-                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Introduz um nome.", Toast.LENGTH_SHORT).show();
                 }
+
+
             }
         });
     }
 
-    //classe para registar o user
-    public void registarUtilizador(){
+    public void registarPaciente(){
+
+        String textoNome = editNome.getText().toString();
+        String textoEmail = editEmail.getText().toString();
+        String textoPassword = editPassword.getText().toString();
+
+        Utilizador utilizador = new Utilizador();
+        utilizador.setNome(textoNome);
+        utilizador.setEmail(textoEmail);
+        utilizador.setPassword(textoPassword);
+        utilizador.setTipo("p");
 
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         //O registo é criado no firebase
@@ -128,4 +119,5 @@ public class RegistoActivity extends AppCompatActivity {
                 });
 
     }
+
 }

@@ -9,6 +9,7 @@ public class Utilizador {
     private String nome;
     private String email;
     private String password;
+    private String tipo;
     private String idUtilizador;
     private DatabaseReference firebaseRef;
 
@@ -21,12 +22,6 @@ public class Utilizador {
         firebaseRef.child("utilizadores")
                 .child(this.idUtilizador)
                 .setValue(this);
-
-        //guardar a tag de cuidador
-        firebaseRef.child("utilizadores")
-                .child(this.idUtilizador)
-                .child("tipo")
-                .setValue("c");
 
         //Adicionar o 112 aos contactos
         firebaseRef.child("contactos").child(this.idUtilizador).child("112").child("nome").setValue("112");
@@ -42,6 +37,14 @@ public class Utilizador {
 
     public void setIdUtilizador(String idUtilizador) {
         this.idUtilizador = idUtilizador;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getNome() {

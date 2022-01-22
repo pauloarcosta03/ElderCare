@@ -60,6 +60,8 @@ public class MainActivity extends IntroActivity {
         if (autenticacao.getCurrentUser() != null){
             //Abre automáticamente a dashboard
             abrirActivityPrincipal();
+            //para não fazer mais a verificação
+            finish();
         }
 
     }

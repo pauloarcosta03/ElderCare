@@ -1,5 +1,6 @@
 package com.eldercare.eldercare.activity.ui.definicoes;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -42,6 +43,13 @@ public class DefinicoesFragment extends Fragment {
 
         ButtonAddPaciente = view.findViewById(R.id.ButtonAddPaciente);
         ButtonRemConta = view.findViewById(R.id.ButtonRemConta);
+
+        ButtonAddPaciente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), CriarPacienteActivity.class));
+            }
+        });
 
     }
 }

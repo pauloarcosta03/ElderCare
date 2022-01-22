@@ -12,6 +12,10 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.ElderCare">
+
+        <activity
+            android:name=".activity.ui.definicoes.CriarPacienteActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.ui.glicemia.AdicionarGlicemiaActivity"
             android:exported="false"
