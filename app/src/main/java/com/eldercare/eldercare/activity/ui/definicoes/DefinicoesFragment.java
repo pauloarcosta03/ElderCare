@@ -57,31 +57,31 @@ public class DefinicoesFragment extends Fragment {
         ButtonAddPaciente = view.findViewById(R.id.ButtonAddPaciente);
         ButtonRemConta = view.findViewById(R.id.ButtonRemConta);
 
-        //Ver se o utilizador tem permições
-        String emailUtilizador = autenticacao.getCurrentUser().getEmail();
-        String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
+            //Ver se o utilizador tem permições
+            String emailUtilizador = autenticacao.getCurrentUser().getEmail();
+            String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
 
-        utilizadorRef = firebaseRef.child("utilizadores")
-                .child(idUtilizador);
+            utilizadorRef = firebaseRef.child("utilizadores")
+                    .child(idUtilizador);
 
-        utilizadorRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            utilizadorRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                Utilizador utilizador = snapshot.getValue(Utilizador.class);
+                    Utilizador utilizador = snapshot.getValue(Utilizador.class);
 
-                if(utilizador.getTipo().equals("p")){
-                    ButtonAddPaciente.setVisibility(View.INVISIBLE);
-                    ButtonRemConta.setVisibility(View.INVISIBLE);
+                    if(utilizador.getTipo().equals("p")){
+                        ButtonAddPaciente.setVisibility(View.INVISIBLE);
+                        ButtonRemConta.setVisibility(View.INVISIBLE);
+                    }
+
                 }
 
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+                }
+            });
 
         ButtonAddPaciente.setOnClickListener(new View.OnClickListener() {
             @Override

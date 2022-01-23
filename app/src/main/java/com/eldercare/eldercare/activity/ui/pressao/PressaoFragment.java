@@ -24,6 +24,7 @@ import com.eldercare.eldercare.config.ConfiguracaoFirebase;
 import com.eldercare.eldercare.helper.Base64Custom;
 import com.eldercare.eldercare.helper.RecyclerItemClickListener;
 import com.eldercare.eldercare.model.Pressao;
+import com.eldercare.eldercare.model.Utilizador;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -55,6 +56,8 @@ public class PressaoFragment extends Fragment {
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     private DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
     private DatabaseReference pressoesRef;
+    private DatabaseReference utilizadorRef;
+    private Utilizador utilizador;
 
     private ValueEventListener valueEventListenerPressoes;
 
@@ -82,7 +85,56 @@ public class PressaoFragment extends Fragment {
         calendario = view.findViewById(R.id.calendarView);
         fab = view.findViewById(R.id.fabPressao);
 
+        //Verificar as permições da conta
+        String emailUtilizador = autenticacao.getCurrentUser().getEmail();
+        String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
+
         recyclerView = view.findViewById(R.id.recyclerPressao);
+
+        utilizadorRef = firebaseRef.child("utilizadores")
+                .child(idUtilizador);
+
+        utilizadorRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                utilizador = snapshot.getValue(Utilizador.class);
+
+                if(utilizador.getTipo().equals("p")){
+                    fab.setVisibility(View.INVISIBLE);
+                }else{
+                    touchListener();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        //Configuração adapter
+        adapterPressao = new AdapterPressao(pressoes, getContext());
+
+        //Configuração do layout manager
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapterPressao);
+
+        configuracaoCalendario();
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), AdicionarPressaoActivity.class));
+            }
+        });
+
+    }
+
+    public void touchListener(){
 
         //item click do recyclerView
         recyclerView.addOnItemTouchListener(
@@ -186,24 +238,6 @@ public class PressaoFragment extends Fragment {
 
                     }
                 }));
-
-        //Configuração adapter
-        adapterPressao = new AdapterPressao(pressoes, getContext());
-
-        //Configuração do layout manager
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapterPressao);
-
-        configuracaoCalendario();
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), AdicionarPressaoActivity.class));
-            }
-        });
 
     }
 

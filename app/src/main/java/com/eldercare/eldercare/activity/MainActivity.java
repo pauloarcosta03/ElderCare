@@ -61,7 +61,7 @@ public class MainActivity extends IntroActivity {
             //Abre automáticamente a dashboard
             abrirActivityPrincipal();
             //para não fazer mais a verificação
-            finish();
+            //finish();
         }
 
     }
