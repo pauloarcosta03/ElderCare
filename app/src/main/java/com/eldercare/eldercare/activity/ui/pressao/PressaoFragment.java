@@ -85,11 +85,11 @@ public class PressaoFragment extends Fragment {
         calendario = view.findViewById(R.id.calendarView);
         fab = view.findViewById(R.id.fabPressao);
 
+        recyclerView = view.findViewById(R.id.recyclerPressao);
+
         //Verificar as permições da conta
         String emailUtilizador = autenticacao.getCurrentUser().getEmail();
         String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
-
-        recyclerView = view.findViewById(R.id.recyclerPressao);
 
         utilizadorRef = firebaseRef.child("utilizadores")
                 .child(idUtilizador);

@@ -26,6 +26,7 @@ import com.eldercare.eldercare.config.ConfiguracaoFirebase;
 import com.eldercare.eldercare.helper.Base64Custom;
 import com.eldercare.eldercare.helper.RecyclerItemClickListener;
 import com.eldercare.eldercare.model.Lembrete;
+import com.eldercare.eldercare.model.Utilizador;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -49,6 +50,8 @@ public class LembretesFragment extends Fragment {
 
     private DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
     private DatabaseReference lembretesRef;
+    private DatabaseReference utilizadorRef;
+    private Utilizador utilizador;
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     private ValueEventListener valueEventListenerLembretes;
 
@@ -79,105 +82,32 @@ public class LembretesFragment extends Fragment {
         //recyclerView
         recyclerLembretes = view.findViewById(R.id.recyclerLembretes);
 
-        recyclerLembretes.addOnItemTouchListener(new RecyclerItemClickListener(getContext(),
-                recyclerLembretes,
-                new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Lembrete lembrete = lembretes.get(position);
+        //Verificar as permições da conta
+        String emailUtilizador = autenticacao.getCurrentUser().getEmail();
+        String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
 
-                Intent intent = new Intent(getContext(), AdicionarLembretesActivity.class);
-                intent.putExtra("lembrete", lembrete);
-                startActivity(intent);
+        utilizadorRef = firebaseRef.child("utilizadores")
+                .child(idUtilizador);
+
+        utilizadorRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                utilizador = snapshot.getValue(Utilizador.class);
+
+                if(utilizador.getTipo().equals("p")){
+                    fab.setVisibility(View.INVISIBLE);
+                }else{
+                    touchListener();
+                }
 
             }
 
             @Override
-            public void onLongItemClick(View view, int position) {
-                Lembrete lembrete = lembretes.get(position);
-
-                final String[] opcoes = {"Editar Lembrete", "Duplicar Lembrete", "Eliminar Lembrete"};
-
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-                alertDialog.setTitle("Opções de Lembrete");
-                alertDialog.setItems(opcoes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        if("Editar Lembrete".equals(opcoes[which])){
-
-                            Intent intent = new Intent(getContext(), AdicionarLembretesActivity.class);
-                            intent.putExtra("lembrete", lembrete);
-                            startActivity(intent);
-
-                        }else if("Duplicar Lembrete".equals(opcoes[which])){
-
-                            lembrete.guardar();
-                            Toast.makeText(getContext(), "Lembrete "
-                                            + lembrete.getTitulo() +
-                                            " duplicado com sucesso!",
-                                    Toast.LENGTH_SHORT).show();
-
-                        }else if("Eliminar Lembrete".equals(opcoes[which])){
-
-                            AlertDialog.Builder eliminarDialog = new AlertDialog.Builder(getContext());
-                            eliminarDialog.setTitle("Eliminar Lembrete");
-                            eliminarDialog.setMessage("Deseja mesmo eliminar esta lembrete?\n"
-                                    + lembrete.getTitulo());
-
-                            eliminarDialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    String emailUtilizador = autenticacao.getCurrentUser().getEmail();
-                                    String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
-
-                                    lembretesRef = firebaseRef.child("lembretes")
-                                            .child(idUtilizador);
-
-                                    lembretesRef.child(lembrete.getKey()).removeValue()
-                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-
-                                                    if (task.isSuccessful()){
-                                                        Toast.makeText(getContext(), "Lembrete "
-                                                                        + lembrete.getTitulo() +
-                                                                        " removido com sucesso!",
-                                                                Toast.LENGTH_SHORT).show();
-                                                    }else{
-                                                        Toast.makeText(getContext(),
-                                                                "Erro ao eliminar lembrete",
-                                                                Toast.LENGTH_LONG).show();
-                                                    }
-
-                                                }
-                                            });
-                                }
-                            });
-
-                            eliminarDialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            });
-
-                            eliminarDialog.show();
-                        }
-
-                    }
-                });
-
-                alertDialog.show();
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        }));
+        });
 
         //configuração adapter
         adapterLembretes = new AdapterLembretes(lembretes, getContext());
@@ -196,6 +126,108 @@ public class LembretesFragment extends Fragment {
             }
         });
 
+    }
+
+    public void touchListener(){
+        recyclerLembretes.addOnItemTouchListener(new RecyclerItemClickListener(getContext(),
+                recyclerLembretes,
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Lembrete lembrete = lembretes.get(position);
+
+                        Intent intent = new Intent(getContext(), AdicionarLembretesActivity.class);
+                        intent.putExtra("lembrete", lembrete);
+                        startActivity(intent);
+
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+                        Lembrete lembrete = lembretes.get(position);
+
+                        final String[] opcoes = {"Editar Lembrete", "Duplicar Lembrete", "Eliminar Lembrete"};
+
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                        alertDialog.setTitle("Opções de Lembrete");
+                        alertDialog.setItems(opcoes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                if("Editar Lembrete".equals(opcoes[which])){
+
+                                    Intent intent = new Intent(getContext(), AdicionarLembretesActivity.class);
+                                    intent.putExtra("lembrete", lembrete);
+                                    startActivity(intent);
+
+                                }else if("Duplicar Lembrete".equals(opcoes[which])){
+
+                                    lembrete.guardar();
+                                    Toast.makeText(getContext(), "Lembrete "
+                                                    + lembrete.getTitulo() +
+                                                    " duplicado com sucesso!",
+                                            Toast.LENGTH_SHORT).show();
+
+                                }else if("Eliminar Lembrete".equals(opcoes[which])){
+
+                                    AlertDialog.Builder eliminarDialog = new AlertDialog.Builder(getContext());
+                                    eliminarDialog.setTitle("Eliminar Lembrete");
+                                    eliminarDialog.setMessage("Deseja mesmo eliminar esta lembrete?\n"
+                                            + lembrete.getTitulo());
+
+                                    eliminarDialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            String emailUtilizador = autenticacao.getCurrentUser().getEmail();
+                                            String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
+
+                                            lembretesRef = firebaseRef.child("lembretes")
+                                                    .child(idUtilizador);
+
+                                            lembretesRef.child(lembrete.getKey()).removeValue()
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                                            if (task.isSuccessful()){
+                                                                Toast.makeText(getContext(), "Lembrete "
+                                                                                + lembrete.getTitulo() +
+                                                                                " removido com sucesso!",
+                                                                        Toast.LENGTH_SHORT).show();
+                                                            }else{
+                                                                Toast.makeText(getContext(),
+                                                                        "Erro ao eliminar lembrete",
+                                                                        Toast.LENGTH_LONG).show();
+                                                            }
+
+                                                        }
+                                                    });
+                                        }
+                                    });
+
+                                    eliminarDialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                        }
+                                    });
+
+                                    eliminarDialog.show();
+                                }
+
+                            }
+                        });
+
+                        alertDialog.show();
+
+                    }
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    }
+                }));
     }
 
     public void recuperarLembretes(){
