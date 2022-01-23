@@ -29,6 +29,7 @@ import com.eldercare.eldercare.helper.Base64Custom;
 import com.eldercare.eldercare.helper.RecyclerItemClickListener;
 import com.eldercare.eldercare.model.Evento;
 import com.eldercare.eldercare.model.Nota;
+import com.eldercare.eldercare.model.Utilizador;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -59,6 +60,8 @@ public class EventosFragment extends Fragment {
 
     private DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
     private DatabaseReference eventosRef;
+    private DatabaseReference utilizadorRef;
+    private Utilizador utilizador;
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     private ValueEventListener valueEventListenerEventos;
 
@@ -89,112 +92,32 @@ public class EventosFragment extends Fragment {
 
         recyclerCalendario = view.findViewById(R.id.recyclerCalendario);
 
-        //item click do recyclerView
+        //Verificar as permições da conta
+        String emailUtilizador = autenticacao.getCurrentUser().getEmail();
+        String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
 
-        recyclerCalendario.addOnItemTouchListener(
-                new RecyclerItemClickListener(
-                        getContext(),
-                        recyclerCalendario,
-                        new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Evento evento = eventos.get(position);
+        utilizadorRef = firebaseRef.child("utilizadores")
+                .child(idUtilizador);
 
-                        Intent intent = new Intent(getContext(), AdicionarEventosActivity.class);
-                        intent.putExtra("evento", evento);
-                        startActivity(intent);
+        utilizadorRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                    }
+                utilizador = snapshot.getValue(Utilizador.class);
 
-                    @Override
-                    public void onLongItemClick(View view, int position) {
-                        Evento evento = eventos.get(position);
+                if(utilizador.getTipo().equals("p")){
+                    fab.setVisibility(View.INVISIBLE);
+                }else{
+                    touchListener();
+                }
 
-                        final String[] opcoes = {"Editar Evento", "Duplicar Evento", "Eliminar Evento"};
+            }
 
-                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-                        alertDialog.setTitle("Opções de evento");
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                        alertDialog.setItems(opcoes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if("Editar Evento".equals(opcoes[which])){
-
-                                    Intent intent = new Intent(getContext(), AdicionarEventosActivity.class);
-                                    intent.putExtra("evento", evento);
-                                    startActivity(intent);
-
-                                }else if("Duplicar Evento".equals(opcoes[which])){
-
-                                    evento.guardarEvento();
-                                    Toast.makeText(getContext(), "Evento "
-                                                    + evento.getTitulo() +
-                                                    " duplicado com sucesso!",
-                                            Toast.LENGTH_SHORT).show();
-
-
-                                }else if("Eliminar Evento".equals(opcoes[which])){
-
-                                    AlertDialog.Builder eliminarDialog = new AlertDialog.Builder(getContext());
-                                    eliminarDialog.setTitle("Eliminar Evento");
-                                    eliminarDialog.setMessage("Deseja mesmo eliminar este evento?\n" +
-                                            evento.getTitulo());
-
-                                    eliminarDialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-
-                                            String emailUtilizador = autenticacao.getCurrentUser().getEmail();
-                                            String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
-
-                                            eventosRef = firebaseRef.child("eventos")
-                                                    .child(idUtilizador)
-                                                    .child(dataSelecionada);
-
-                                            eventosRef.child(evento.getKey()).removeValue()
-                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<Void> task) {
-
-                                                            if (task.isSuccessful()){
-                                                                Toast.makeText(getContext(), "Evento "
-                                                                                + evento.getTitulo() +
-                                                                                " removido com sucesso!",
-                                                                        Toast.LENGTH_SHORT).show();
-                                                            }else{
-                                                                Toast.makeText(getContext(),
-                                                                        "Erro ao eliminar evento",
-                                                                        Toast.LENGTH_LONG).show();
-                                                            }
-
-                                                        }
-                                                    });
-
-                                        }
-                                    });
-
-                                    eliminarDialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-
-                                        }
-                                    });
-
-                                    eliminarDialog.show();
-
-                                }
-                            }
-                        });
-
-                        alertDialog.show();
-
-                    }
-
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                    }
-                }));
+            }
+        });
 
         //Configuraçao do adapter
         adapterCalendario = new AdapterCalendario(eventos, getContext());
@@ -215,6 +138,114 @@ public class EventosFragment extends Fragment {
             }
         });
 
+    }
+
+    public void touchListener(){
+        //item click do recyclerView
+        recyclerCalendario.addOnItemTouchListener(
+                new RecyclerItemClickListener(
+                        getContext(),
+                        recyclerCalendario,
+                        new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                Evento evento = eventos.get(position);
+
+                                Intent intent = new Intent(getContext(), AdicionarEventosActivity.class);
+                                intent.putExtra("evento", evento);
+                                startActivity(intent);
+
+                            }
+
+                            @Override
+                            public void onLongItemClick(View view, int position) {
+                                Evento evento = eventos.get(position);
+
+                                final String[] opcoes = {"Editar Evento", "Duplicar Evento", "Eliminar Evento"};
+
+                                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                                alertDialog.setTitle("Opções de evento");
+
+                                alertDialog.setItems(opcoes, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if("Editar Evento".equals(opcoes[which])){
+
+                                            Intent intent = new Intent(getContext(), AdicionarEventosActivity.class);
+                                            intent.putExtra("evento", evento);
+                                            startActivity(intent);
+
+                                        }else if("Duplicar Evento".equals(opcoes[which])){
+
+                                            evento.guardarEvento();
+                                            Toast.makeText(getContext(), "Evento "
+                                                            + evento.getTitulo() +
+                                                            " duplicado com sucesso!",
+                                                    Toast.LENGTH_SHORT).show();
+
+
+                                        }else if("Eliminar Evento".equals(opcoes[which])){
+
+                                            AlertDialog.Builder eliminarDialog = new AlertDialog.Builder(getContext());
+                                            eliminarDialog.setTitle("Eliminar Evento");
+                                            eliminarDialog.setMessage("Deseja mesmo eliminar este evento?\n" +
+                                                    evento.getTitulo());
+
+                                            eliminarDialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+
+                                                    String emailUtilizador = autenticacao.getCurrentUser().getEmail();
+                                                    String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
+
+                                                    eventosRef = firebaseRef.child("eventos")
+                                                            .child(idUtilizador)
+                                                            .child(dataSelecionada);
+
+                                                    eventosRef.child(evento.getKey()).removeValue()
+                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+
+                                                                    if (task.isSuccessful()){
+                                                                        Toast.makeText(getContext(), "Evento "
+                                                                                        + evento.getTitulo() +
+                                                                                        " removido com sucesso!",
+                                                                                Toast.LENGTH_SHORT).show();
+                                                                    }else{
+                                                                        Toast.makeText(getContext(),
+                                                                                "Erro ao eliminar evento",
+                                                                                Toast.LENGTH_LONG).show();
+                                                                    }
+
+                                                                }
+                                                            });
+
+                                                }
+                                            });
+
+                                            eliminarDialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+
+                                                }
+                                            });
+
+                                            eliminarDialog.show();
+
+                                        }
+                                    }
+                                });
+
+                                alertDialog.show();
+
+                            }
+
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            }
+                        }));
     }
 
     public void configuracaoCalendarView(){
