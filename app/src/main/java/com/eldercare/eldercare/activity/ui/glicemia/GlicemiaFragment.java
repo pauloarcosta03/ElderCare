@@ -25,6 +25,7 @@ import com.eldercare.eldercare.config.ConfiguracaoFirebase;
 import com.eldercare.eldercare.helper.Base64Custom;
 import com.eldercare.eldercare.helper.RecyclerItemClickListener;
 import com.eldercare.eldercare.model.Glicemia;
+import com.eldercare.eldercare.model.Utilizador;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -55,6 +56,8 @@ public class GlicemiaFragment extends Fragment {
 
     private DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
     private DatabaseReference glicemiaRef;
+    private DatabaseReference utilizadorRef;
+    private Utilizador utilizador;
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     private ValueEventListener valueEventListenerGlicemia;
 
@@ -84,104 +87,32 @@ public class GlicemiaFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerGlicemia);
 
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(),
-                recyclerView,
-                new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
+            //Verificar as permições da conta
+            String emailUtilizador = autenticacao.getCurrentUser().getEmail();
+            String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
 
-                Glicemia glicemia = glicemias.get(position);
+            utilizadorRef = firebaseRef.child("utilizadores")
+                    .child(idUtilizador);
 
-                Intent intent = new Intent(getContext(), AdicionarGlicemiaActivity.class);
-                intent.putExtra("glicemia", glicemia);
-                startActivity(intent);
+            utilizadorRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-            }
+                    utilizador = snapshot.getValue(Utilizador.class);
 
-            @Override
-            public void onLongItemClick(View view, int position) {
-
-                Glicemia glicemia = glicemias.get(position);
-
-                final String[] opcoes = {"Editar Glicemia", "Duplicar Glicemia", "Eliminar Glicemia"};
-
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-                alertDialog.setTitle("Opções de Glicemia");
-
-                alertDialog.setItems(opcoes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        if("Editar Glicemia".equals(opcoes[which])){
-
-                            Intent intent = new Intent(getContext(), AdicionarGlicemiaActivity.class);
-                            intent.putExtra("glicemia", glicemia);
-                            startActivity(intent);
-
-                        }else if("Duplicar Glicemia".equals(opcoes[which])){
-
-                            glicemia.guardar();
-
-                        }else if("Eliminar Glicemia".equals(opcoes[which])){
-
-                            AlertDialog.Builder eliminarDialog = new AlertDialog.Builder(getContext());
-                            eliminarDialog.setTitle("Eliminar Registo Glicemia");
-                            eliminarDialog.setMessage("Deseja mesmo eliminar este registo?");
-
-                            eliminarDialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    String emailUtilizador = autenticacao.getCurrentUser().getEmail();
-                                    String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
-
-                                    glicemiaRef = firebaseRef
-                                            .child("glicemia")
-                                            .child(idUtilizador)
-                                            .child(dataSelecionada);
-
-                                    glicemiaRef.child(glicemia.getKey()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-
-                                            if(task.isSuccessful()){
-                                                Toast.makeText(getContext(),
-                                                        "Registo de glicemia eliminado.",
-                                                        Toast.LENGTH_LONG).show();
-                                            }else{
-                                                Toast.makeText(getContext(),
-                                                        "Erro ao eliminar registo de glicemia.",
-                                                        Toast.LENGTH_LONG).show();
-                                            }
-                                        }
-                                    });
-
-                                }
-                            });
-
-                            eliminarDialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            });
-
-                            eliminarDialog.show();
-
-                        }
-
+                    if(utilizador.getTipo().equals("p")){
+                        fab.setVisibility(View.INVISIBLE);
+                    }else{
+                        touchListener();
                     }
-                });
 
-                alertDialog.show();
+                }
 
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        }));
+                }
+            });
 
         //Configuração do adapter
         adapterGlicemia = new AdapterGlicemia(glicemias, getContext());
@@ -201,6 +132,107 @@ public class GlicemiaFragment extends Fragment {
             }
         });
 
+    }
+
+    public void touchListener(){
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(),
+                recyclerView,
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+
+                        Glicemia glicemia = glicemias.get(position);
+
+                        Intent intent = new Intent(getContext(), AdicionarGlicemiaActivity.class);
+                        intent.putExtra("glicemia", glicemia);
+                        startActivity(intent);
+
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+
+                        Glicemia glicemia = glicemias.get(position);
+
+                        final String[] opcoes = {"Editar Glicemia", "Duplicar Glicemia", "Eliminar Glicemia"};
+
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                        alertDialog.setTitle("Opções de Glicemia");
+
+                        alertDialog.setItems(opcoes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                if("Editar Glicemia".equals(opcoes[which])){
+
+                                    Intent intent = new Intent(getContext(), AdicionarGlicemiaActivity.class);
+                                    intent.putExtra("glicemia", glicemia);
+                                    startActivity(intent);
+
+                                }else if("Duplicar Glicemia".equals(opcoes[which])){
+
+                                    glicemia.guardar();
+
+                                }else if("Eliminar Glicemia".equals(opcoes[which])){
+
+                                    AlertDialog.Builder eliminarDialog = new AlertDialog.Builder(getContext());
+                                    eliminarDialog.setTitle("Eliminar Registo Glicemia");
+                                    eliminarDialog.setMessage("Deseja mesmo eliminar este registo?");
+
+                                    eliminarDialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            String emailUtilizador = autenticacao.getCurrentUser().getEmail();
+                                            String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
+
+                                            glicemiaRef = firebaseRef
+                                                    .child("glicemia")
+                                                    .child(idUtilizador)
+                                                    .child(dataSelecionada);
+
+                                            glicemiaRef.child(glicemia.getKey()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+
+                                                    if(task.isSuccessful()){
+                                                        Toast.makeText(getContext(),
+                                                                "Registo de glicemia eliminado.",
+                                                                Toast.LENGTH_LONG).show();
+                                                    }else{
+                                                        Toast.makeText(getContext(),
+                                                                "Erro ao eliminar registo de glicemia.",
+                                                                Toast.LENGTH_LONG).show();
+                                                    }
+                                                }
+                                            });
+
+                                        }
+                                    });
+
+                                    eliminarDialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                        }
+                                    });
+
+                                    eliminarDialog.show();
+
+                                }
+
+                            }
+                        });
+
+                        alertDialog.show();
+
+                    }
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    }
+                }));
     }
 
     public void recuperarGlicemia(){
