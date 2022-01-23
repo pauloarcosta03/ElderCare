@@ -25,6 +25,7 @@ import com.eldercare.eldercare.config.ConfiguracaoFirebase;
 import com.eldercare.eldercare.helper.Base64Custom;
 import com.eldercare.eldercare.helper.RecyclerItemClickListener;
 import com.eldercare.eldercare.model.Contacto;
+import com.eldercare.eldercare.model.Utilizador;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -49,6 +50,8 @@ public class ContactosFragment extends Fragment {
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     private DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
     private DatabaseReference contactosRef;
+    private DatabaseReference utilizadorRef;
+    private Utilizador utilizador;
     private ValueEventListener valueEventListenerContactos;
 
     public ContactosFragment() {
@@ -77,106 +80,33 @@ public class ContactosFragment extends Fragment {
         //RecyclerView
         recyclerView = view.findViewById(R.id.recyclerContactos);
 
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(
-                getContext(),
-                recyclerView,
-                new RecyclerItemClickListener.OnItemClickListener() {
+        //Verificar as permições da conta
+        String emailUtilizador = autenticacao.getCurrentUser().getEmail();
+        String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
+
+        utilizadorRef = firebaseRef.child("utilizadores")
+                .child(idUtilizador);
+
+        utilizadorRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onItemClick(View view, int position) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                Contacto contacto = contactos.get(position);
+                utilizador = snapshot.getValue(Utilizador.class);
 
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + contacto.getNumero()));
-                startActivity( intent );
-            }
-
-            @Override
-            public void onLongItemClick(View view, int position) {
-
-                Contacto contacto = contactos.get(position);
-
-                String opcaoLigar = "Ligar a " + contacto.getNome();
-
-                final String[] opcoes = {opcaoLigar, "Editar Contacto", "Eliminar Contacto"};
-
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-                alertDialog.setTitle("Opções de contacto");
-
-                alertDialog.setItems(opcoes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (opcaoLigar.equals(opcoes[which])) {
-
-                            Intent intent = new Intent(Intent.ACTION_DIAL,
-                                    Uri.parse("tel:" + contacto.getNumero()));
-                            startActivity( intent );
-
-                        }else if ("Editar Contacto".equals(opcoes[which])){
-
-                            Intent intent = new Intent(getContext(), AdicionarContactosActivity.class);
-                            intent.putExtra("contacto", contacto);
-                            startActivity(intent);
-
-                        }else if ("Eliminar Contacto".equals(opcoes[which])){
-                            AlertDialog.Builder eliminarDialog = new AlertDialog.Builder(getContext());
-                            eliminarDialog.setTitle("Eliminar Contacto");
-                            eliminarDialog.setMessage("Deseja mesmo eliminar este contacto?\n"
-                                    + contacto.getNome() + "(" + contacto.getNumero() + ")");
-
-                            eliminarDialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    String emailUtilizador = autenticacao.getCurrentUser().getEmail();
-                                    String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
-
-                                    contactosRef = firebaseRef.child("contactos").child(idUtilizador);
-
-                                    contactosRef.child(contacto.getKey()).removeValue()
-                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-
-                                                    if (task.isSuccessful()){
-                                                        Toast.makeText(getContext(), "Contacto "
-                                                                        + contacto.getNome() +
-                                                                        " removido com sucesso!",
-                                                                Toast.LENGTH_SHORT).show();
-                                                    }else{
-                                                        Toast.makeText(getContext(),
-                                                                "Erro ao eliminar",
-                                                                Toast.LENGTH_LONG).show();
-                                                    }
-                                                }
-                                            });
-
-                                }
-                            });
-
-                            eliminarDialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    Toast.makeText(getContext(), "Cancelado", Toast.LENGTH_SHORT).show();
-
-                                }
-                            });
-
-                            eliminarDialog.show();
-
-                        }
-                    }
-                });
-
-                alertDialog.show();
+                if(utilizador.getTipo().equals("p")){
+                    fab.setVisibility(View.INVISIBLE);
+                    touchListenerPacientes();
+                }else{
+                    touchListener();
+                }
 
             }
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        }));
+        });
 
         //configuração adapter
         adapterContactos = new AdapterContactos(contactos, getContext());
@@ -194,6 +124,140 @@ public class ContactosFragment extends Fragment {
                 startActivity(new Intent(getContext(), AdicionarContactosActivity.class));
             }
         });
+    }
+
+    public void touchListener(){
+
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(
+                getContext(),
+                recyclerView,
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+
+                        Contacto contacto = contactos.get(position);
+
+                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + contacto.getNumero()));
+                        startActivity( intent );
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+
+                        Contacto contacto = contactos.get(position);
+
+                        String opcaoLigar = "Ligar a " + contacto.getNome();
+
+                        final String[] opcoes = {opcaoLigar, "Editar Contacto", "Eliminar Contacto"};
+
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                        alertDialog.setTitle("Opções de contacto");
+
+                        alertDialog.setItems(opcoes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (opcaoLigar.equals(opcoes[which])) {
+
+                                    Intent intent = new Intent(Intent.ACTION_DIAL,
+                                            Uri.parse("tel:" + contacto.getNumero()));
+                                    startActivity( intent );
+
+                                }else if ("Editar Contacto".equals(opcoes[which])){
+
+                                    Intent intent = new Intent(getContext(), AdicionarContactosActivity.class);
+                                    intent.putExtra("contacto", contacto);
+                                    startActivity(intent);
+
+                                }else if ("Eliminar Contacto".equals(opcoes[which])){
+                                    AlertDialog.Builder eliminarDialog = new AlertDialog.Builder(getContext());
+                                    eliminarDialog.setTitle("Eliminar Contacto");
+                                    eliminarDialog.setMessage("Deseja mesmo eliminar este contacto?\n"
+                                            + contacto.getNome() + "(" + contacto.getNumero() + ")");
+
+                                    eliminarDialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            String emailUtilizador = autenticacao.getCurrentUser().getEmail();
+                                            String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
+
+                                            contactosRef = firebaseRef.child("contactos").child(idUtilizador);
+
+                                            contactosRef.child(contacto.getKey()).removeValue()
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                                            if (task.isSuccessful()){
+                                                                Toast.makeText(getContext(), "Contacto "
+                                                                                + contacto.getNome() +
+                                                                                " removido com sucesso!",
+                                                                        Toast.LENGTH_SHORT).show();
+                                                            }else{
+                                                                Toast.makeText(getContext(),
+                                                                        "Erro ao eliminar",
+                                                                        Toast.LENGTH_LONG).show();
+                                                            }
+                                                        }
+                                                    });
+
+                                        }
+                                    });
+
+                                    eliminarDialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            Toast.makeText(getContext(), "Cancelado", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    });
+
+                                    eliminarDialog.show();
+
+                                }
+                            }
+                        });
+
+                        alertDialog.show();
+
+                    }
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    }
+                }));
+
+    }
+
+    //Para os pacientes clicarem para ligar
+    public void touchListenerPacientes(){
+
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(
+                getContext(),
+                recyclerView,
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+
+                        Contacto contacto = contactos.get(position);
+
+                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + contacto.getNumero()));
+                        startActivity( intent );
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+
+                    }
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    }
+                }));
+
     }
 
     public void recuperarContactos(){
