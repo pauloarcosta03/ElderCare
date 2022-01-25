@@ -40,7 +40,7 @@
             android:name=".activity.ui.contactos.AdicionarContactosActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".activity.ui.notas.AdicionarNotasActivity"
             android:exported="false"

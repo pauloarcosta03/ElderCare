@@ -11,6 +11,7 @@ public class Utilizador {
     private String password;
     private String tipo;
     private String idUtilizador;
+    private String cuidador;
     private DatabaseReference firebaseRef;
 
     public Utilizador() {
@@ -22,6 +23,20 @@ public class Utilizador {
         firebaseRef.child("utilizadores")
                 .child(this.idUtilizador)
                 .setValue(this);
+
+        if(this.getTipo().equals("p")){
+            firebaseRef.child("utilizadores")
+                    .child(this.idUtilizador)
+                    .child("cuidador")
+                    .setValue(this.getCuidador());
+
+            firebaseRef.child("utilizadores")
+                    .child(this.cuidador)
+                    .child("paciente")
+                    .push()
+                    .setValue(this.getCuidador());
+
+        }
 
         //Adicionar o 112 aos contactos
         firebaseRef.child("contactos").child(this.idUtilizador).child("112").child("nome").setValue("112");
@@ -45,6 +60,15 @@ public class Utilizador {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    @Exclude
+    public String getCuidador() {
+        return cuidador;
+    }
+
+    public void setCuidador(String cuidador) {
+        this.cuidador = cuidador;
     }
 
     public String getNome() {

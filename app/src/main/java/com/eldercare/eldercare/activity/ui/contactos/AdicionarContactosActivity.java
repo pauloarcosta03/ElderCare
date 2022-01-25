@@ -1,5 +1,6 @@
 package com.eldercare.eldercare.activity.ui.contactos;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -13,7 +14,7 @@ import com.github.clans.fab.FloatingActionButton;
 
 public class AdicionarContactosActivity extends AppCompatActivity {
 
-    private EditText editNome, editNumero, editCategoria;
+    private EditText editNome, editNumero, editCategoria, editPaciente;
     private FloatingActionButton fab;
     private Contacto contacto;
     private Contacto contactoAtual;
@@ -28,6 +29,7 @@ public class AdicionarContactosActivity extends AppCompatActivity {
         editNome = findViewById(R.id.editPassword);
         editNumero = findViewById(R.id.editNumero);
         editCategoria = findViewById(R.id.editCategoria);
+        editPaciente = findViewById(R.id.editPaciente);
 
         contactoAtual = (Contacto) getIntent().getSerializableExtra("contacto");
 
@@ -37,6 +39,21 @@ public class AdicionarContactosActivity extends AppCompatActivity {
             editNumero.setText(contactoAtual.getNumero());
             editCategoria.setText(contactoAtual.getCategoria());
         }
+
+        //Clicar para escolher o paciente
+        editPaciente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdicionarContactosActivity.this);
+                alertDialog.setTitle("Escolha o paciente.");
+                alertDialog.setMessage("teste");
+                alertDialog.show();
+
+            }
+        });
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

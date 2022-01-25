@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.database.DatabaseReference;
 
 public class CriarPacienteActivity extends AppCompatActivity {
 
@@ -74,6 +75,12 @@ public class CriarPacienteActivity extends AppCompatActivity {
         String textoEmail = editEmail.getText().toString();
         String textoPassword = editPassword.getText().toString();
 
+        //buscar o id do cuidador do paciente
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+
+        String idCuidador = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
+
         Utilizador utilizador = new Utilizador();
         utilizador.setNome(textoNome);
         utilizador.setEmail(textoEmail);
@@ -92,6 +99,7 @@ public class CriarPacienteActivity extends AppCompatActivity {
                             //Se o registo realizou-se com sucesso
                             String idUtilizador = Base64Custom.codificarBase64(utilizador.getEmail());
                             utilizador.setIdUtilizador(idUtilizador);
+                            utilizador.setCuidador(idCuidador);
                             utilizador.guardarNome();
                             finish();
                         }else{
