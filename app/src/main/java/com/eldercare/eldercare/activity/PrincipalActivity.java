@@ -3,6 +3,7 @@ package com.eldercare.eldercare.activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eldercare.eldercare.R;
@@ -79,6 +80,7 @@ public class PrincipalActivity extends AppCompatActivity {
             // Obtém a referência do nome do utilizador e altera o nome
             TextView textNomeMenu = (TextView) headerView.findViewById(R.id.textNomeMenu);
             TextView textEmailMenu = (TextView) headerView.findViewById(R.id.textEmailMenu);
+            ImageView imagePfp = (ImageView) headerView.findViewById(R.id.imagePfp);
 
         //botão de logout
         navigationView1.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener(
@@ -111,6 +113,11 @@ public class PrincipalActivity extends AppCompatActivity {
 
                     textNomeMenu.setText(utilizador.getNome());
                     textEmailMenu.setText(utilizador.getEmail());
+                    if (utilizador.getTipo().equals("p")){
+                        imagePfp.setImageResource(R.drawable.pacientepfp);
+                    }else{
+                        imagePfp.setImageResource(R.drawable.cuidadorpfp);
+                    }
 
                 }
 
