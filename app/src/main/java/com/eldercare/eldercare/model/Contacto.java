@@ -1,10 +1,15 @@
 package com.eldercare.eldercare.model;
 
+import androidx.annotation.NonNull;
+
 import com.eldercare.eldercare.config.ConfiguracaoFirebase;
 import com.eldercare.eldercare.helper.Base64Custom;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
 
@@ -14,6 +19,8 @@ public class Contacto implements Serializable {
     private String nome;
     private String categoria;
     private String numero;
+    private String paciente;
+    private String idPaciente;
     private String key;
 
     public Contacto() {
@@ -29,6 +36,11 @@ public class Contacto implements Serializable {
                 .child(idUtilizador)
                 .child(this.getKey())
                 .setValue(this);
+
+        firebaseRef.child("contactos")
+                .child(this.idPaciente)
+                .child(this.getKey())
+                .setValue(this);
     }
 
     public void guardar(){
@@ -37,9 +49,16 @@ public class Contacto implements Serializable {
 
         String idUtilizador = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
 
+        String idContacto = firebaseRef.push().getKey();
+
         firebaseRef.child("contactos")
                 .child(idUtilizador)
-                .push()
+                .child(idContacto)
+                .setValue(this);
+
+        firebaseRef.child("contactos")
+                .child(this.idPaciente)
+                .child(idContacto)
                 .setValue(this);
 
     }
@@ -51,6 +70,22 @@ public class Contacto implements Serializable {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(String paciente) {
+        this.paciente = paciente;
+    }
+
+    public String getIdPaciente() {
+        return idPaciente;
+    }
+
+    public void setIdPaciente(String idPaciente) {
+        this.idPaciente = idPaciente;
     }
 
     public String getNome() {

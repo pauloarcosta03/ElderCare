@@ -34,7 +34,7 @@ public class Utilizador {
                     .child(this.cuidador)
                     .child("paciente")
                     .push()
-                    .setValue(this.getCuidador());
+                    .setValue(new Paciente(this.getIdUtilizador(), this.nome));
 
         }
 

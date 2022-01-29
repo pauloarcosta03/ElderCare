@@ -46,6 +46,7 @@ public class AdapterContactos extends RecyclerView.Adapter<AdapterContactos.MyVi
 
         holder.textNome.setText(contacto.getNome());
         holder.textCategoria.setText(categoria);
+        holder.textPaciente.setText(contacto.getPaciente());
         holder.textNumero.setText(contacto.getNumero());
 
         if (contacto.getCategoria().equals("urgência")){
@@ -64,12 +65,14 @@ public class AdapterContactos extends RecyclerView.Adapter<AdapterContactos.MyVi
         TextView textNome;
         TextView textNumero;
         TextView textCategoria;
+        TextView textPaciente;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             textNome = itemView.findViewById(R.id.textNome);
             textNumero = itemView.findViewById(R.id.textNumero);
             textCategoria = itemView.findViewById(R.id.textCategoria);
+            textPaciente = itemView.findViewById(R.id.textPaciente);
 
         }
     }

@@ -6,13 +6,11 @@ def versionPatch = 0
 def versionBuild = 0 // bump for dogfood builds, public betas, etc.
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 29
-        versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
-        versionName "${versionMajor}.${versionMinor}" + (versionPatch == 0 ? "" : ".${versionPatch}")
+        targetSdkVersion 30
     }
 
     lintOptions {
