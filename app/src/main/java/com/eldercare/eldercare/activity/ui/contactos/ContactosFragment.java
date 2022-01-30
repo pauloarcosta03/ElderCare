@@ -181,6 +181,7 @@ public class ContactosFragment extends Fragment {
                                             String emailUtilizador = autenticacao.getCurrentUser().getEmail();
                                             String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
 
+                                            //Eliminar para o cuidador
                                             contactosRef = firebaseRef.child("contactos").child(idUtilizador);
 
                                             contactosRef.child(contacto.getKey()).removeValue()
@@ -194,6 +195,22 @@ public class ContactosFragment extends Fragment {
                                                                                 " removido com sucesso!",
                                                                         Toast.LENGTH_SHORT).show();
                                                             }else{
+                                                                Toast.makeText(getContext(),
+                                                                        "Erro ao eliminar",
+                                                                        Toast.LENGTH_LONG).show();
+                                                            }
+                                                        }
+                                                    });
+
+                                            //Eliminar para o paciente
+                                            contactosRef = firebaseRef.child("contactos").child(contacto.getIdPaciente());
+
+                                            contactosRef.child(contacto.getKey()).removeValue()
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                                            if (!task.isSuccessful()){
                                                                 Toast.makeText(getContext(),
                                                                         "Erro ao eliminar",
                                                                         Toast.LENGTH_LONG).show();
