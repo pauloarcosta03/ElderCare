@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/drawable/ic_logout_24.xml" value="0.13333333333333333" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/drawable/ic_menu_contactos.xml" value="0.21944444444444444" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/drawable/ic_menu_notas.xml" value="0.1" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/drawable/side_nav_bar.xml" value="0.11203703703703703" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/activity_adicionar_contactos.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/activity_adicionar_eventos.xml" value="0.25842696629213485" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/activity_adicionar_glicemia.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/activity_adicionar_lembretes.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/activity_adicionar_notas.xml" value="0.25" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/activity_adicionar_pressao.xml" value="0.2351851851851852" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/activity_criar_paciente.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/activity_loader.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/activity_login.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/activity_main.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/activity_principal.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/activity_registo.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/adapter_calendario.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/adapter_contactos.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/adapter_glicemia.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/adapter_lembretes.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/adapter_notas.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/adapter_pressao.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/app_bar_principal.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/content_principal.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/fragment_calendario.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/fragment_contactos.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/fragment_dashboard.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/fragment_definicoes.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/fragment_eventos.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/fragment_gallery.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/fragment_glicemia.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/fragment_home.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/fragment_lembretes.xml" value="0.25" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/fragment_notas.xml" value="0.25" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/fragment_numeros.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/fragment_pressao.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/fragment_slideshow.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/layout/nav_header_principal.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/menu/activity_main_drawer.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/menu/principal.xml" value="0.26875" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.12222222222222222" />
+        <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/mipmap-anydpi-v26/logo1.xml" value="0.106" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

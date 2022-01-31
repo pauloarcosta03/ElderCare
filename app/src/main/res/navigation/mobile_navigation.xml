@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_dashboard">
+
+    <fragment
+        android:id="@+id/nav_definicoes"
+        android:name="com.eldercare.eldercare.activity.ui.definicoes.DefinicoesFragment"
+        android:label="Definições"
+        tools:layout="@layout/fragment_definicoes" />
+
+    <fragment
+        android:id="@+id/nav_dashboard"
+        android:name="com.eldercare.eldercare.activity.ui.dashboard.DashboardFragment"
+        android:label="Geral"
+        tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/nav_glicemia"
+        android:name="com.eldercare.eldercare.activity.ui.glicemia.GlicemiaFragment"
+        android:label="Glicemia"
+        tools:layout="@layout/fragment_glicemia" />
+
+    <fragment
+        android:id="@+id/nav_pressao"
+        android:name="com.eldercare.eldercare.activity.ui.pressao.PressaoFragment"
+        android:label="Pressão Arterial"
+        tools:layout="@layout/fragment_pressao" />
+
+    <fragment
+        android:id="@+id/nav_lembretes"
+        android:name="com.eldercare.eldercare.activity.ui.lembretes.LembretesFragment"
+        android:label="Lembretes Diários"
+        tools:layout="@layout/fragment_lembretes" />
+
+    <fragment
+        android:id="@+id/nav_calendario"
+        android:name="com.eldercare.eldercare.activity.ui.calendario.EventosFragment"
+        android:label="calendario"
+        tools:layout="@layout/fragment_eventos" />
+
+    <fragment
+        android:id="@+id/nav_contactos"
+        android:name="com.eldercare.eldercare.activity.ui.contactos.ContactosFragment"
+        android:label="Contactos de emergência"
+        tools:layout="@layout/fragment_contactos" />
+
+    <fragment
+        android:id="@+id/nav_notas"
+        android:name="com.eldercare.eldercare.activity.ui.notas.NotasFragment"
+        android:label="notas"
+        tools:layout="@layout/fragment_notas" />
+</navigation>

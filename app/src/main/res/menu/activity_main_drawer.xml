@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/ic_menu_dashboard"
+            android:title="Geral" />
+
+        <item
+            android:id="@+id/nav_pressao"
+            android:icon="@drawable/ic_menu_pressao"
+            android:title="Pressão Arterial" />
+
+        <item
+            android:id="@+id/nav_glicemia"
+            android:icon="@drawable/ic_menu_glicemia"
+            android:title="Glicemia" />
+
+        <item
+            android:id="@+id/nav_lembretes"
+            android:icon="@drawable/ic_menu_lembretes"
+            android:title="Lembretes Diários" />
+
+        <item
+            android:id="@+id/nav_calendario"
+            android:icon="@drawable/ic_menu_calendario"
+            android:title="Calendário" />
+
+        <item
+            android:id="@+id/nav_contactos"
+            android:icon="@drawable/ic_menu_contactos"
+            android:title="Números de emergência" />
+
+        <item
+            android:id="@+id/nav_notas"
+            android:icon="@drawable/ic_menu_notas"
+            android:title="Notas" />
+    </group>
+
+    <group android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/nav_definicoes"
+            android:icon="@drawable/ic_menu_definicoes"
+            android:title="Definições" />
+
+        <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_logout_24"
+        android:title="Encerrar sessão" />
+    </group>
+</menu>
