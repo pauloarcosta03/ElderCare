@@ -17,6 +17,8 @@ public class Evento implements Serializable {
     private String data;
     private String dataAnterior;
     private String tempo;
+    private String paciente;
+    private String idPaciente;
     private String key;
 
     public Evento() {
@@ -34,9 +36,16 @@ public class Evento implements Serializable {
 
         String idDia = dataSplit[0] + dataSplit[1] + dataSplit[2];
 
+        String idEvento = firebaseRef.push().getKey();
+
         firebaseRef.child("eventos").child(idUtilizador)
                 .child(idDia)
-                .push()
+                .child(idEvento)
+                .setValue(this);
+
+        firebaseRef.child("eventos").child(this.idPaciente)
+                .child(idDia)
+                .child(idEvento)
                 .setValue(this);
 
     }
@@ -58,6 +67,12 @@ public class Evento implements Serializable {
                 .child(this.getKey())
                 .setValue(this);
 
+        //editar para o paciente
+        firebaseRef.child("eventos").child(this.idPaciente)
+                .child(idDia)
+                .child(this.getKey())
+                .setValue(this);
+
         if(!(this.getData()).equals(this.getDataAnterior())){
             //fazer o id do dia anterior
             String[] dataAnteriorSplit = this.dataAnterior.split("/");
@@ -67,6 +82,11 @@ public class Evento implements Serializable {
             firebaseRef.child("eventos").child(idUtilizador)
                     .child(idDiaAnterior)
                     .child(this.getKey()).removeValue();
+
+            firebaseRef.child("eventos").child(this.idPaciente)
+                    .child(idDiaAnterior)
+                    .child(this.getKey()).removeValue();
+
         }
 
     }
@@ -87,6 +107,22 @@ public class Evento implements Serializable {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(String paciente) {
+        this.paciente = paciente;
+    }
+
+    public String getIdPaciente() {
+        return idPaciente;
+    }
+
+    public void setIdPaciente(String idPaciente) {
+        this.idPaciente = idPaciente;
     }
 
     public String getTempo() {

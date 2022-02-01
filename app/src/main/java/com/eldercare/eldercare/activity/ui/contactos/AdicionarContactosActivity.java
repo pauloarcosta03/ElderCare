@@ -71,11 +71,6 @@ public class AdicionarContactosActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
-
-                //AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdicionarContactosActivity.this);
-                //alertDialog.setTitle("Escolha o paciente.");
-
                 //Verificar as permições da conta
                 String emailUtilizador = autenticacao.getCurrentUser().getEmail();
                 String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
@@ -116,8 +111,6 @@ public class AdicionarContactosActivity extends AppCompatActivity {
                                         editPaciente.setText(nomes[i]);
                                         //para facilitar o guardar id
                                         editId.setText(ids[i]);
-                                        Toast.makeText(getApplicationContext(), editId.getText(), Toast.LENGTH_LONG).show();
-
                                     }
 
                                 }
@@ -132,8 +125,6 @@ public class AdicionarContactosActivity extends AppCompatActivity {
 
                     }
                 });
-
-                //alertDialog.show();
 
             }
         });
@@ -170,7 +161,7 @@ public class AdicionarContactosActivity extends AppCompatActivity {
                         contacto.setCategoria(textoCategoria);
                         contacto.setPaciente(textoPaciente);
                         contacto.setIdPaciente(textoId);
-                        //preciso da key para saber onde atualizarw
+                        //preciso da key para saber onde atualizar
                         contacto.setKey(contactoAtual.getKey());
 
                         contacto.editar();

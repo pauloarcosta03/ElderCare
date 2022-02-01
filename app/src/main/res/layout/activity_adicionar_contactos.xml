@@ -91,6 +91,17 @@
             android:hint="Escolha o paciente." />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <EditText
+        android:id="@+id/editId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout12" />
+
     <com.github.clans.fab.FloatingActionButton
         android:id="@+id/fabAddContacto"
         android:layout_width="wrap_content"
@@ -104,15 +115,6 @@
         app:fab_colorPressed="@color/colorPrimary"
         fab:fab_size="normal" />
 
-    <EditText
-        android:id="@+id/editId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout12" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
