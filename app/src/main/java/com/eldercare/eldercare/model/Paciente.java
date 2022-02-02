@@ -5,10 +5,7 @@ public class Paciente {
     private String idPaciente;
     private String nome;
 
-    public Paciente(String nome, String idPaciente) {
-
-        this.nome = nome;
-        this.idPaciente = idPaciente;
+    public Paciente() {
 
     }
 
@@ -27,4 +24,5 @@ public class Paciente {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
 }

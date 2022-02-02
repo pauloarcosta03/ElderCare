@@ -23,18 +23,23 @@ public class Utilizador {
         firebaseRef.child("utilizadores")
                 .child(this.idUtilizador)
                 .setValue(this);
-
+        
         if(this.getTipo().equals("p")){
+
             firebaseRef.child("utilizadores")
                     .child(this.idUtilizador)
                     .child("cuidador")
                     .setValue(this.getCuidador());
 
+            Paciente paciente = new Paciente();
+            paciente.setNome(this.nome);
+            paciente.setIdPaciente(this.idUtilizador);
+
             firebaseRef.child("utilizadores")
                     .child(this.cuidador)
                     .child("paciente")
                     .push()
-                    .setValue(new Paciente(this.getIdUtilizador(), this.nome));
+                    .setValue(paciente);
 
         }
 

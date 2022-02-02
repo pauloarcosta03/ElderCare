@@ -70,17 +70,23 @@ public class PrincipalActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
         //Buscar o id a outro layout (layout do menu lateral)
-            // Obtém a referência do layout de navegação
-            NavigationView navigationView1 = (NavigationView) findViewById(R.id.nav_view);
+        // Obtém a referência do layout de navegação
+        NavigationView navigationView1 = (NavigationView) findViewById(R.id.nav_view);
 
-            // Obtém a referência da view de cabeçalho
-            View headerView = navigationView1.getHeaderView(0);
+        // Obtém a referência da view de cabeçalho
+        View headerView = navigationView1.getHeaderView(0);
 
-            // Obtém a referência do nome do utilizador e altera o nome
-            TextView textNomeMenu = (TextView) headerView.findViewById(R.id.textNomeMenu);
-            TextView textEmailMenu = (TextView) headerView.findViewById(R.id.textEmailMenu);
-            ImageView imagePfp = (ImageView) headerView.findViewById(R.id.imagePfp);
+        // Obtém a referência do nome do utilizador e altera o nome
+        TextView textNomeMenu = (TextView) headerView.findViewById(R.id.textNomeMenu);
+        TextView textEmailMenu = (TextView) headerView.findViewById(R.id.textEmailMenu);
+        ImageView imagePfp = (ImageView) headerView.findViewById(R.id.imagePfp);
 
         //botão de logout
         navigationView1.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener(
@@ -94,39 +100,38 @@ public class PrincipalActivity extends AppCompatActivity {
         );
 
         //Mudar o nome de utilizador no menu
-            //Buscar e-mail
-            autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-            String emailUser = autenticacao.getCurrentUser().getEmail();
+        //Buscar e-mail
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        String emailUser = autenticacao.getCurrentUser().getEmail();
 
-            //Buscar Nome
-            firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
+        //Buscar Nome
+        firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
 
-            //codifica o email para ir buscar o identificador
-            String idUser = Base64Custom.codificarBase64(emailUser);
+        //codifica o email para ir buscar o identificador
+        String idUser = Base64Custom.codificarBase64(emailUser);
 
-            DatabaseReference utilizadorRef = firebaseRef.child("utilizadores").child(idUser);
+        DatabaseReference utilizadorRef = firebaseRef.child("utilizadores").child(idUser);
 
-            utilizadorEventListener = utilizadorRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Utilizador utilizador = snapshot.getValue(Utilizador.class);
+        utilizadorEventListener = utilizadorRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Utilizador utilizador = snapshot.getValue(Utilizador.class);
 
-                    textNomeMenu.setText(utilizador.getNome());
-                    textEmailMenu.setText(utilizador.getEmail());
-                    if (utilizador.getTipo().equals("p")){
-                        imagePfp.setImageResource(R.drawable.pacientepfp);
-                    }else{
-                        imagePfp.setImageResource(R.drawable.cuidadorpfp);
-                    }
-
+                textNomeMenu.setText(utilizador.getNome());
+                textEmailMenu.setText(utilizador.getEmail());
+                if (utilizador.getTipo().equals("p")){
+                    imagePfp.setImageResource(R.drawable.pacientepfp);
+                }else{
+                    imagePfp.setImageResource(R.drawable.cuidadorpfp);
                 }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+            }
 
-                }
-            });
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
     }
 
     /*@Override

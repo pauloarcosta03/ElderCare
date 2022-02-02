@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,7 +15,6 @@ import com.eldercare.eldercare.config.ConfiguracaoFirebase;
 import com.eldercare.eldercare.helper.Base64Custom;
 import com.eldercare.eldercare.model.Contacto;
 import com.eldercare.eldercare.model.Paciente;
-import com.eldercare.eldercare.model.Paciente1;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -38,7 +36,7 @@ public class AdicionarContactosActivity extends AppCompatActivity {
     private DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
     private DatabaseReference utilizadorRef;
 
-    private Paciente1 paciente;
+    private Paciente paciente;
     List<String> pacientesNome = new ArrayList<String>();
     List<String> pacientesId = new ArrayList<String>();
 
@@ -90,7 +88,7 @@ public class AdicionarContactosActivity extends AppCompatActivity {
                         alertDialog.setTitle("Escolha o paciente.");
 
                         for (DataSnapshot dados: snapshot.getChildren()) {
-                            paciente = snapshot.getValue(Paciente1.class);
+                            paciente = snapshot.getValue(Paciente.class);
 
                             pacientesNome.add(dados.child("nome").getValue().toString());
                             pacientesId.add(dados.child("idPaciente").getValue().toString());
