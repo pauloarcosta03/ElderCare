@@ -43,6 +43,7 @@ public class AdapterCalendario extends RecyclerView.Adapter<AdapterCalendario.My
         holder.textTitulo.setText(evento.getTitulo());
         holder.textDescricao.setText(evento.getDescricao());
         holder.textHoras.setText(evento.getHoras() + ":" + evento.getMinutos());
+        holder.textPaciente.setText(evento.getPaciente());
 
     }
 
@@ -56,12 +57,14 @@ public class AdapterCalendario extends RecyclerView.Adapter<AdapterCalendario.My
         TextView textTitulo;
         TextView textDescricao;
         TextView textHoras;
+        TextView textPaciente;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             textTitulo = itemView.findViewById(R.id.textTituloCal);
             textDescricao = itemView.findViewById(R.id.textDescCal);
             textHoras = itemView.findViewById(R.id.textHorasCal);
+            textPaciente = itemView.findViewById(R.id.textPaciente);
         }
     }
 
