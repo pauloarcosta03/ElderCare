@@ -203,6 +203,25 @@ public class LembretesFragment extends Fragment {
 
                                                         }
                                                     });
+
+                                            //remover para os pacientes
+                                            lembretesRef = firebaseRef.child("lembretes")
+                                                    .child(lembrete.getIdPaciente());
+
+                                            lembretesRef.child(lembrete.getKey()).removeValue()
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                                            if (!task.isSuccessful()){
+                                                                Toast.makeText(getContext(),
+                                                                        "Erro ao eliminar lembrete",
+                                                                        Toast.LENGTH_LONG).show();
+                                                            }
+
+                                                        }
+                                                    });
+
                                         }
                                     });
 

@@ -44,6 +44,7 @@ public class AdapterLembretes extends RecyclerView.Adapter<AdapterLembretes.MyVi
         holder.textTitulo.setText(lembrete.getTitulo());
         holder.textDescricao.setText(lembrete.getDescricao());
         holder.textHoras.setText(lembrete.getHoras() + ":" + lembrete.getMinutos());
+        holder.textPaciente.setText(lembrete.getPaciente());
 
     }
 
@@ -57,6 +58,7 @@ public class AdapterLembretes extends RecyclerView.Adapter<AdapterLembretes.MyVi
         TextView textTitulo;
         TextView textDescricao;
         TextView textHoras;
+        TextView textPaciente;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,6 +66,7 @@ public class AdapterLembretes extends RecyclerView.Adapter<AdapterLembretes.MyVi
             textTitulo = itemView.findViewById(R.id.textTituloLembretes);
             textDescricao = itemView.findViewById(R.id.textDescLembretes);
             textHoras = itemView.findViewById(R.id.textHorasLembretes);
+            textPaciente = itemView.findViewById(R.id.textPaciente);
 
         }
     }

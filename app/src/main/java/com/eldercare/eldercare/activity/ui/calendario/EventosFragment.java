@@ -221,6 +221,25 @@ public class EventosFragment extends Fragment {
                                                                 }
                                                             });
 
+                                                    //remover para o paciente
+                                                    eventosRef = firebaseRef.child("eventos")
+                                                            .child(evento.getIdPaciente())
+                                                            .child(dataSelecionada);
+
+                                                    eventosRef.child(evento.getKey()).removeValue()
+                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+
+                                                                    if (!task.isSuccessful()){
+                                                                        Toast.makeText(getContext(),
+                                                                                "Erro ao eliminar evento",
+                                                                                Toast.LENGTH_LONG).show();
+                                                                    }
+
+                                                                }
+                                                            });
+
                                                 }
                                             });
 

@@ -15,6 +15,8 @@ public class Lembrete implements Serializable {
     private String Horas;
     private String Minutos;
     private String Tempo;
+    private String paciente;
+    private String idPaciente;
     private String Key;
 
     public void guardar(){
@@ -24,9 +26,16 @@ public class Lembrete implements Serializable {
 
         String idUtilizador = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
 
+        String idLembrete = firebaseRef.push().getKey();
+
         firebaseRef.child("lembretes")
                 .child(idUtilizador)
-                .push()
+                .child(idLembrete)
+                .setValue(this);
+
+        firebaseRef.child("lembretes")
+                .child(this.idPaciente)
+                .child(idLembrete)
                 .setValue(this);
 
     }
@@ -43,6 +52,11 @@ public class Lembrete implements Serializable {
                 .child(this.getKey())
                 .setValue(this);
 
+        firebaseRef.child("lembretes")
+                .child(this.idPaciente)
+                .child(this.getKey())
+                .setValue(this);
+
     }
 
     public Lembrete() {
@@ -55,6 +69,22 @@ public class Lembrete implements Serializable {
 
     public void setKey(String key) {
         Key = key;
+    }
+
+    public String getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(String paciente) {
+        this.paciente = paciente;
+    }
+
+    public String getIdPaciente() {
+        return idPaciente;
+    }
+
+    public void setIdPaciente(String idPaciente) {
+        this.idPaciente = idPaciente;
     }
 
     public String getTitulo() {
