@@ -17,6 +17,8 @@ public class Glicemia implements Serializable {
     private String minutos;
     private String tempo;
     private String paciente;
+    private String idPaciente;
+    private String idPacienteAnterior;
     private String key;
 
     public Glicemia() {
@@ -40,6 +42,12 @@ public class Glicemia implements Serializable {
                 .child(this.getKey())
                 .setValue(this);
 
+        firebaseRef.child("glicemia")
+                .child(this.idPaciente)
+                .child(idDia)
+                .child(this.getKey())
+                .setValue(this);
+
         if(!(this.getData()).equals(this.getDataAnterior())){
             //fazer o id do dia anterior
             String[] dataAnteriorSplit = this.dataAnterior.split("/");
@@ -49,6 +57,22 @@ public class Glicemia implements Serializable {
             firebaseRef.child("glicemia").child(idUtilizador)
                     .child(idDiaAnterior)
                     .child(this.getKey()).removeValue();
+
+            firebaseRef.child("glicemia").child(this.idPaciente)
+                    .child(idDiaAnterior)
+                    .child(this.getKey()).removeValue();
+
+            //para facilitar a atualização de paciente
+            idDia = idDiaAnterior;
+        }
+
+        if(!(this.getIdPaciente().equals(this.getIdPacienteAnterior()))){
+
+            firebaseRef.child("glicemia")
+                    .child(this.idPacienteAnterior)
+                    .child(idDia)
+                    .child(this.getKey()).removeValue();
+
         }
 
     }
@@ -60,6 +84,8 @@ public class Glicemia implements Serializable {
 
         String idUtilizador = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
 
+        String idGlicemia = firebaseRef.push().getKey();
+
         //fazer o id do dia
         String[] dataSplit = this.data.split("/");
 
@@ -68,7 +94,13 @@ public class Glicemia implements Serializable {
         firebaseRef.child("glicemia")
                 .child(idUtilizador)
                 .child(idDia)
-                .push()
+                .child(idGlicemia)
+                .setValue(this);
+
+        firebaseRef.child("glicemia")
+                .child(this.idPaciente)
+                .child(idDia)
+                .child(idGlicemia)
                 .setValue(this);
 
     }
@@ -120,6 +152,23 @@ public class Glicemia implements Serializable {
 
     public void setTempo(String tempo) {
         this.tempo = tempo;
+    }
+
+    @Exclude
+    public String getIdPacienteAnterior() {
+        return idPacienteAnterior;
+    }
+
+    public void setIdPacienteAnterior(String idPacienteAnterior) {
+        this.idPacienteAnterior = idPacienteAnterior;
+    }
+
+    public String getIdPaciente() {
+        return idPaciente;
+    }
+
+    public void setIdPaciente(String idPaciente) {
+        this.idPaciente = idPaciente;
     }
 
     public String getPaciente() {

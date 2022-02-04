@@ -237,6 +237,7 @@ public class AdicionarEventosActivity extends AppCompatActivity {
 
                             evento.setDataAnterior(eventoAtual.getData());
                             evento.setKey(eventoAtual.getKey());
+                            evento.setIdPacienteAnterior(eventoAtual.getIdPaciente());
                             evento.editarEvento();
                             finish();
 

@@ -195,6 +195,7 @@ public class AdicionarLembretesActivity extends AppCompatActivity {
                     if (lembreteAtual != null) {
 
                         lembrete.setKey(lembreteAtual.getKey());
+                        lembrete.setIdPacienteAnterior(lembreteAtual.getIdPaciente());
                         lembrete.editar();
 
                     } else {

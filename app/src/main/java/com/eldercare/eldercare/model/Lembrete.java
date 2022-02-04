@@ -17,6 +17,7 @@ public class Lembrete implements Serializable {
     private String Tempo;
     private String paciente;
     private String idPaciente;
+    private String idPacienteAnterior;
     private String Key;
 
     public void guardar(){
@@ -57,6 +58,14 @@ public class Lembrete implements Serializable {
                 .child(this.getKey())
                 .setValue(this);
 
+        if(!(this.getIdPaciente().equals(this.getIdPacienteAnterior()))){
+
+            firebaseRef.child("lembretes")
+                    .child(this.idPacienteAnterior)
+                    .child(this.getKey()).removeValue();
+
+        }
+
     }
 
     public Lembrete() {
@@ -77,6 +86,15 @@ public class Lembrete implements Serializable {
 
     public void setPaciente(String paciente) {
         this.paciente = paciente;
+    }
+
+    @Exclude
+    public String getIdPacienteAnterior() {
+        return idPacienteAnterior;
+    }
+
+    public void setIdPacienteAnterior(String idPacienteAnterior) {
+        this.idPacienteAnterior = idPacienteAnterior;
     }
 
     public String getIdPaciente() {

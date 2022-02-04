@@ -151,28 +151,22 @@ public class AdicionarContactosActivity extends AppCompatActivity {
             if (!textoPaciente.isEmpty()) {
                 if (!textoNumero.isEmpty()) {
 
+                    contacto.setNome(textoNome);
+                    contacto.setNumero(textoNumero);
+                    contacto.setCategoria(textoCategoria);
+                    contacto.setPaciente(textoPaciente);
+                    contacto.setIdPaciente(textoId);
+
                     //Caso o utilizador queira editar uma nota, em vez de criar uma nota com id novo, ela reutiliza o id
                     if (contactoAtual != null) {
-
-                        contacto.setNome(textoNome);
-                        contacto.setNumero(textoNumero);
-                        contacto.setCategoria(textoCategoria);
-                        contacto.setPaciente(textoPaciente);
-                        contacto.setIdPaciente(textoId);
                         //preciso da key para saber onde atualizar
                         contacto.setKey(contactoAtual.getKey());
+                        contacto.setIdPacienteAnterior(contactoAtual.getIdPaciente());
 
                         contacto.editar();
                         finish();
 
                     } else {
-
-                        contacto.setNome(textoNome);
-                        contacto.setNumero(textoNumero);
-                        contacto.setCategoria(textoCategoria);
-                        contacto.setPaciente(textoPaciente);
-                        contacto.setIdPaciente(textoId);
-
                         contacto.guardar();
                         finish();
 

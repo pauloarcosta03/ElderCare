@@ -19,6 +19,7 @@ public class Evento implements Serializable {
     private String tempo;
     private String paciente;
     private String idPaciente;
+    private String idPacienteAnterior;
     private String key;
 
     public Evento() {
@@ -87,6 +88,17 @@ public class Evento implements Serializable {
                     .child(idDiaAnterior)
                     .child(this.getKey()).removeValue();
 
+            //para facilitar a atualização de paciente
+            idDia = idDiaAnterior;
+        }
+
+        if(!(this.getIdPaciente().equals(this.getIdPacienteAnterior()))){
+
+            firebaseRef.child("eventos")
+                    .child(this.idPacienteAnterior)
+                    .child(idDia)
+                    .child(this.getKey()).removeValue();
+
         }
 
     }
@@ -115,6 +127,15 @@ public class Evento implements Serializable {
 
     public void setPaciente(String paciente) {
         this.paciente = paciente;
+    }
+
+    @Exclude
+    public String getIdPacienteAnterior() {
+        return idPacienteAnterior;
+    }
+
+    public void setIdPacienteAnterior(String idPacienteAnterior) {
+        this.idPacienteAnterior = idPacienteAnterior;
     }
 
     public String getIdPaciente() {

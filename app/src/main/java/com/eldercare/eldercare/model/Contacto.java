@@ -21,6 +21,7 @@ public class Contacto implements Serializable {
     private String numero;
     private String paciente;
     private String idPaciente;
+    private String idPacienteAnterior;
     private String key;
 
     public Contacto() {
@@ -41,6 +42,15 @@ public class Contacto implements Serializable {
                 .child(this.idPaciente)
                 .child(this.getKey())
                 .setValue(this);
+
+        if(!(this.getIdPaciente().equals(this.getIdPacienteAnterior()))){
+
+            firebaseRef.child("contactos")
+                    .child(this.idPacienteAnterior)
+                    .child(this.getKey()).removeValue();
+
+        }
+
     }
 
     public void guardar(){
@@ -78,6 +88,15 @@ public class Contacto implements Serializable {
 
     public void setPaciente(String paciente) {
         this.paciente = paciente;
+    }
+
+    @Exclude
+    public String getIdPacienteAnterior() {
+        return idPacienteAnterior;
+    }
+
+    public void setIdPacienteAnterior(String idPacienteAnterior) {
+        this.idPacienteAnterior = idPacienteAnterior;
     }
 
     public String getIdPaciente() {
