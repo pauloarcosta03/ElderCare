@@ -1,9 +1,12 @@
 package com.eldercare.eldercare.activity.ui.pressao;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
@@ -13,11 +16,21 @@ import android.widget.Toast;
 
 import com.eldercare.eldercare.R;
 import com.eldercare.eldercare.activity.ui.calendario.AdicionarEventosActivity;
+import com.eldercare.eldercare.config.ConfiguracaoFirebase;
+import com.eldercare.eldercare.helper.Base64Custom;
+import com.eldercare.eldercare.model.Paciente;
 import com.eldercare.eldercare.model.Pressao;
 import com.github.clans.fab.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class AdicionarPressaoActivity extends AppCompatActivity {
@@ -26,11 +39,20 @@ public class AdicionarPressaoActivity extends AppCompatActivity {
     private EditText editData;
     private EditText editHoras;
     private EditText editPressao;
-    private EditText editPaciente;
     private FloatingActionButton fab;
+    private EditText editPaciente;
+    private EditText editId;
 
     private Pressao pressao;
     private Pressao pressaoAtual;
+
+    private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+    private DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
+    private DatabaseReference utilizadorRef;
+
+    private Paciente paciente;
+    List<String> pacientesNome = new ArrayList<String>();
+    List<String> pacientesId = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +62,12 @@ public class AdicionarPressaoActivity extends AppCompatActivity {
         editData = findViewById(R.id.editData);
         editHoras = findViewById(R.id.editHoras);
         editPressao = findViewById(R.id.editPressao);
-        editPaciente = findViewById(R.id.editPaciente);
         fab = findViewById(R.id.fabAddPressao);
 
         pressaoAtual = (Pressao) getIntent().getSerializableExtra("pressao");
+
+        editPaciente = findViewById(R.id.editPaciente);
+        editId = findViewById(R.id.editId);
 
         if(pressaoAtual != null){
 
@@ -51,8 +75,73 @@ public class AdicionarPressaoActivity extends AppCompatActivity {
             editData.setText(pressaoAtual.getData());
             editHoras.setText(pressaoAtual.getHoras() + ":" + pressaoAtual.getMinutos());
             editPaciente.setText(pressaoAtual.getPaciente());
+            editId.setText(pressaoAtual.getIdPaciente());
 
         }
+
+        //escolha de paciente
+        editPaciente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Verificar as permições da conta
+                String emailUtilizador = autenticacao.getCurrentUser().getEmail();
+                String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
+
+                utilizadorRef = firebaseRef.child("utilizadores")
+                        .child(idUtilizador)
+                        .child("paciente");
+
+                utilizadorRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        pacientesNome.clear();
+                        pacientesId.clear();
+
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdicionarPressaoActivity.this);
+                        alertDialog.setTitle("Escolha o paciente.");
+
+                        for (DataSnapshot dados: snapshot.getChildren()) {
+                            paciente = snapshot.getValue(Paciente.class);
+
+                            pacientesNome.add(dados.child("nome").getValue().toString());
+                            pacientesId.add(dados.child("idPaciente").getValue().toString());
+                        }
+
+                        //define as opções de todos os nomes no alert dialog
+                        String[] nomes = pacientesNome.toArray(new String[pacientesNome.size()]);
+                        String[] ids = pacientesId.toArray(new String[pacientesId.size()]);
+
+                        alertDialog.setItems(nomes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                for(int i = 0; i< nomes.length; i++) {
+
+                                    if (nomes[i].equals(nomes[which])) {
+
+                                        editPaciente.setText(nomes[i]);
+                                        //para facilitar o guardar id
+                                        editId.setText(ids[i]);
+
+                                    }
+
+                                }
+                            }
+                        });
+
+                        alertDialog.show();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+            }
+        });
 
         //Escolha de data
         DatePickerDialog.OnDateSetListener data =new DatePickerDialog.OnDateSetListener() {
@@ -111,9 +200,11 @@ public class AdicionarPressaoActivity extends AppCompatActivity {
     public void guardar(){
 
         String textoPressao = editPressao.getText().toString();
-        String textoPaciente = editPaciente.getText().toString();
         String textoHoras = editHoras.getText().toString();
         String textoData = editData.getText().toString();
+
+        String textoPaciente = editPaciente.getText().toString();
+        String textoId = editId.getText().toString();
 
         boolean separador = textoPressao.contains("/") ;
 
@@ -146,12 +237,13 @@ public class AdicionarPressaoActivity extends AppCompatActivity {
                                 pressao.setPaciente(textoPaciente);
                                 pressao.setSistolica(sistolica);
                                 pressao.setDiastolica(diastolica);
+                                pressao.setIdPaciente(textoId);
 
                                 if(pressaoAtual != null){
 
-
                                     pressao.setDataAnterior(pressaoAtual.getData());
                                     pressao.setKey(pressaoAtual.getKey());
+                                    pressao.setIdPacienteAnterior(pressaoAtual.getIdPaciente());
                                     pressao.editar();
                                     finish();
 

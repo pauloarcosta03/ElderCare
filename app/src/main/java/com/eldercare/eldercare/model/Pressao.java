@@ -15,9 +15,11 @@ public class Pressao implements Serializable {
     private String horas;
     private String minutos;
     private String tempo;
-    private String paciente;
     private String sistolica;
     private String diastolica;
+    private String paciente;
+    private String idPaciente;
+    private String idPacienteAnterior;
     private String key;
 
     public void editar(){
@@ -31,7 +33,14 @@ public class Pressao implements Serializable {
 
         String idDia = dataSplit[0] + dataSplit[1] + dataSplit[2];
 
-        firebaseRef.child("pressao").child(idUtilizador)
+        firebaseRef.child("pressao")
+                .child(idUtilizador)
+                .child(idDia)
+                .child(this.getKey())
+                .setValue(this);
+
+        firebaseRef.child("pressao")
+                .child(this.getIdPaciente())
                 .child(idDia)
                 .child(this.getKey())
                 .setValue(this);
@@ -42,10 +51,29 @@ public class Pressao implements Serializable {
 
             String idDiaAnterior = dataAnteriorSplit[0] + dataAnteriorSplit[1] + dataAnteriorSplit[2];
 
-            firebaseRef.child("pressao").child(idUtilizador)
+            firebaseRef.child("pressao")
+                    .child(idUtilizador)
                     .child(idDiaAnterior)
                     .child(this.getKey()).removeValue();
+
+            firebaseRef.child("pressao")
+                    .child(this.getIdPaciente())
+                    .child(idDiaAnterior)
+                    .child(this.getKey()).removeValue();
+
+            //para facilitar a atualização de paciente
+            idDia = idDiaAnterior;
         }
+
+        if(!(this.getIdPaciente().equals(this.getIdPacienteAnterior()))){
+
+            firebaseRef.child("pressao")
+                    .child(this.idPacienteAnterior)
+                    .child(idDia)
+                    .child(this.getKey()).removeValue();
+
+        }
+
     }
 
     public void guardar(){
@@ -60,10 +88,18 @@ public class Pressao implements Serializable {
 
         String idDia = dataSplit[0] + dataSplit[1] + dataSplit[2];
 
+        String idPressao = firebaseRef.push().getKey();
+
         firebaseRef.child("pressao")
                 .child(idUtilizador)
                 .child(idDia)
-                .push()
+                .child(idPressao)
+                .setValue(this);
+
+        firebaseRef.child("pressao")
+                .child(this.getIdPaciente())
+                .child(idDia)
+                .child(idPressao)
                 .setValue(this);
 
     }
@@ -119,6 +155,23 @@ public class Pressao implements Serializable {
 
     public void setTempo(String tempo) {
         this.tempo = tempo;
+    }
+
+    public String getIdPaciente() {
+        return idPaciente;
+    }
+
+    public void setIdPaciente(String idPaciente) {
+        this.idPaciente = idPaciente;
+    }
+
+    @Exclude
+    public String getIdPacienteAnterior() {
+        return idPacienteAnterior;
+    }
+
+    public void setIdPacienteAnterior(String idPacienteAnterior) {
+        this.idPacienteAnterior = idPacienteAnterior;
     }
 
     public String getPaciente() {

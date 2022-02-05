@@ -63,13 +63,15 @@ public class Evento implements Serializable {
 
         String idDia = dataSplit[0] + dataSplit[1] + dataSplit[2];
 
-        firebaseRef.child("eventos").child(idUtilizador)
+        firebaseRef.child("eventos")
+                .child(idUtilizador)
                 .child(idDia)
                 .child(this.getKey())
                 .setValue(this);
 
         //editar para o paciente
-        firebaseRef.child("eventos").child(this.idPaciente)
+        firebaseRef.child("eventos")
+                .child(this.idPaciente)
                 .child(idDia)
                 .child(this.getKey())
                 .setValue(this);
