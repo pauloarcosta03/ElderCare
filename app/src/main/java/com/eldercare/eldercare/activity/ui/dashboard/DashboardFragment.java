@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.eldercare.eldercare.R;
+import com.eldercare.eldercare.activity.PrincipalActivity;
 import com.eldercare.eldercare.adapter.calendario.AdapterCalendario;
 import com.eldercare.eldercare.adapter.lembretes.AdapterLembretes;
 import com.eldercare.eldercare.config.ConfiguracaoFirebase;
@@ -27,6 +28,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 
@@ -236,7 +238,40 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        verificarUser();
+
         recuperarEventos();
         recuperarLembretes();
     }
+
+    public void verificarUser(){
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+
+        String emailUtilizador1 = autenticacao.getCurrentUser().getEmail();
+        String idUtilizador1 = Base64Custom.codificarBase64(emailUtilizador1);
+
+        firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
+
+        DatabaseReference verificarRef = firebaseRef
+                .child("utilizadores")
+                .child(idUtilizador1);
+
+        verificarRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(!snapshot.exists()) {
+                    autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+                    autenticacao.signOut();
+                    getActivity().finish();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 }

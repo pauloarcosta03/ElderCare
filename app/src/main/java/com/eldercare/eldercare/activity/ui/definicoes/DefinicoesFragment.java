@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.eldercare.eldercare.R;
 import com.eldercare.eldercare.config.ConfiguracaoFirebase;
@@ -27,6 +28,7 @@ public class DefinicoesFragment extends Fragment {
 
     private Button ButtonAddPaciente;
     private Button ButtonRemConta;
+    private TextView textTipo;
 
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     private DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
@@ -56,6 +58,7 @@ public class DefinicoesFragment extends Fragment {
 
         ButtonAddPaciente = view.findViewById(R.id.ButtonAddPaciente);
         ButtonRemConta = view.findViewById(R.id.ButtonRemConta);
+        textTipo = view.findViewById(R.id.textTipo);
 
             //Ver se o utilizador tem permições
             String emailUtilizador = autenticacao.getCurrentUser().getEmail();
@@ -72,8 +75,12 @@ public class DefinicoesFragment extends Fragment {
 
                     if(utilizador.getTipo().equals("p")){
                         ButtonAddPaciente.setVisibility(View.INVISIBLE);
-                        ButtonRemConta.setVisibility(View.INVISIBLE);
+                        textTipo.setText("p");
+                    }else{
+                        textTipo.setText("c");
                     }
+
+
 
                 }
 
@@ -90,5 +97,30 @@ public class DefinicoesFragment extends Fragment {
             }
         });
 
+        ButtonRemConta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                utilizadorRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Utilizador utilizador = snapshot.getValue(Utilizador.class);
+
+                        //startActivity(new Intent(getContext(), CriarPacienteActivity.class));
+
+                        utilizador.EliminarConta();
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+            }
+        });
     }
+
 }

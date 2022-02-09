@@ -10,4 +10,8 @@ public class Base64Custom {
                 "( \\n|\\r)", "");
     }
 
+    public static String descodificarBase64(String texto){
+        return new String(Base64.decode(texto, Base64.NO_WRAP));
+    }
+
 }

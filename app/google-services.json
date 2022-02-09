@@ -79,6 +79,43 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:679261047286:android:948eb9bbedbb9a649adfd7",
+        "android_client_info": {
+          "package_name": "com.eldercare.notificao"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "679261047286-7guq0qii5mc25e2pl50sov2cun9ic6h3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eldercare.notificao",
+            "certificate_hash": "a033bb6f0b99fda796b1921660deba3c0d5cf58c"
+          }
+        },
+        {
+          "client_id": "679261047286-l36i53rqn7l72io1jf20bdk5olav03fv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUHOa5T7jzVwhxcWCXlHNlEnW1VkcOitc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "679261047286-l36i53rqn7l72io1jf20bdk5olav03fv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

@@ -84,6 +84,11 @@ public class NotasFragment extends Fragment {
                         recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
+                        Nota nota = notas.get(position);
+
+                        Intent intent = new Intent(getContext(), AdicionarNotasActivity.class);
+                        intent.putExtra("nota", nota);
+                        startActivity(intent);
 
                     }
 

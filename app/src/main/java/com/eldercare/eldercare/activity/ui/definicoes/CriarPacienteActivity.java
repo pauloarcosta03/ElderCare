@@ -100,6 +100,7 @@ public class CriarPacienteActivity extends AppCompatActivity {
                             String idUtilizador = Base64Custom.codificarBase64(utilizador.getEmail());
                             utilizador.setIdUtilizador(idUtilizador);
                             utilizador.setCuidador(idCuidador);
+                            utilizador.setPassword(Base64Custom.codificarBase64(textoPassword));
                             utilizador.guardarNome();
                             finish();
                         }else{
