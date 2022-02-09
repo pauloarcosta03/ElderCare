@@ -35,16 +35,18 @@ public class Paciente {
         utilizadorRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Utilizador utilizador = snapshot.getValue(Utilizador.class);
+                if(snapshot.exists()) {
+                    Utilizador utilizador = snapshot.getValue(Utilizador.class);
 
-                String cuidador = utilizadorRef.child("cuidador").toString();
+                    String cuidador = utilizador.getCuidador();
 
-                //remove o paciente no seu cuidador
-                firebaseRef.child("utilizadores")
-                        .child(cuidador)
-                        .child("paciente")
-                        .child(idUtilizador)
-                        .removeValue();
+                    //remove o paciente no seu cuidador
+                    firebaseRef.child("utilizadores")
+                            .child(cuidador)
+                            .child("paciente")
+                            .child(idUtilizador)
+                            .removeValue();
+                }
 
                 //buscar password e email
                 String password = utilizadorRef.child("password").toString();
@@ -61,8 +63,6 @@ public class Paciente {
         });
 
         FirebaseUser utilizadoAuth = autenticacao.getCurrentUser();
-
-        utilizadoAuth.delete();
 
         firebaseRef.child("contactos")
                 .child(idUtilizador)
@@ -91,6 +91,8 @@ public class Paciente {
         firebaseRef.child("utilizadores")
                 .child(idUtilizador)
                 .removeValue();
+
+        utilizadoAuth.delete();
 
     }
 

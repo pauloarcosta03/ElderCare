@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.eldercare.eldercare.R;
+import com.eldercare.eldercare.activity.MainActivity;
 import com.eldercare.eldercare.config.ConfiguracaoFirebase;
 import com.eldercare.eldercare.helper.Base64Custom;
 import com.eldercare.eldercare.model.Utilizador;
@@ -60,35 +61,11 @@ public class DefinicoesFragment extends Fragment {
         ButtonRemConta = view.findViewById(R.id.ButtonRemConta);
         textTipo = view.findViewById(R.id.textTipo);
 
-            //Ver se o utilizador tem permições
-            String emailUtilizador = autenticacao.getCurrentUser().getEmail();
-            String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
+        String emailUtilizador = autenticacao.getCurrentUser().getEmail();
+        String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
 
-            utilizadorRef = firebaseRef.child("utilizadores")
-                    .child(idUtilizador);
-
-            utilizadorRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                    Utilizador utilizador = snapshot.getValue(Utilizador.class);
-
-                    if(utilizador.getTipo().equals("p")){
-                        ButtonAddPaciente.setVisibility(View.INVISIBLE);
-                        textTipo.setText("p");
-                    }else{
-                        textTipo.setText("c");
-                    }
-
-
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
+        utilizadorRef = firebaseRef.child("utilizadores")
+                .child(idUtilizador);
 
         ButtonAddPaciente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,11 +81,16 @@ public class DefinicoesFragment extends Fragment {
                 utilizadorRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Utilizador utilizador = snapshot.getValue(Utilizador.class);
+                        if(snapshot.exists()) {
+                            Utilizador utilizador = snapshot.getValue(Utilizador.class);
 
-                        //startActivity(new Intent(getContext(), CriarPacienteActivity.class));
+                            utilizador.EliminarConta();
 
-                        utilizador.EliminarConta();
+                            //autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+                            autenticacao.signOut();
+                            getActivity().startActivity(new Intent(getContext(), MainActivity.class));
+                            getActivity().finish();
+                        }
 
 
                     }
@@ -118,6 +100,49 @@ public class DefinicoesFragment extends Fragment {
 
                     }
                 });
+
+            }
+        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        verificarPermissões();
+    }
+
+    public void verificarPermissões(){
+        //Ver se o utilizador tem permições
+        String emailUtilizador = autenticacao.getCurrentUser().getEmail();
+        String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
+
+        utilizadorRef = firebaseRef.child("utilizadores")
+                .child(idUtilizador);
+
+        utilizadorRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if(!snapshot.exists()) {
+                    //autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+                    //autenticacao.signOut();
+                    //getActivity().finish();
+
+                }else {
+
+                    Utilizador utilizador = snapshot.getValue(Utilizador.class);
+
+                    if (utilizador.getTipo().equals("p")) {
+                        ButtonAddPaciente.setVisibility(View.INVISIBLE);
+                        textTipo.setText("p");
+                    } else {
+                        textTipo.setText("c");
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });

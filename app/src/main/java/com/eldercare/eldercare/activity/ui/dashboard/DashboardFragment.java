@@ -84,32 +84,7 @@ public class DashboardFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        /*Dizer o nome do utilizador*/
         textSaudacao = view.findViewById(R.id.textSaudacao);
-
-        String emailUtilizador = autenticacao.getCurrentUser().getEmail();
-        String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
-
-        utilizadoresRef = firebaseRef.child("utilizadores")
-                .child(idUtilizador);
-
-        valueEventListenerUtilizadores = utilizadoresRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                Utilizador utilizador = snapshot.getValue(Utilizador.class);
-
-                textSaudacao.setText(Html.fromHtml("Bom dia, <b>" + utilizador.getNome() + "</b>"));
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
 
         textVazioEventos = view.findViewById(R.id.textVazioEventos);
         textVazioLembretes = view.findViewById(R.id.textVazioLembretes);
@@ -235,11 +210,44 @@ public class DashboardFragment extends Fragment {
 
     }
 
+    public void saudacao(){
+        /*Dizer o nome do utilizador*/
+
+
+        String emailUtilizador = autenticacao.getCurrentUser().getEmail();
+        String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
+
+        utilizadoresRef = firebaseRef.child("utilizadores")
+                .child(idUtilizador);
+
+
+        valueEventListenerUtilizadores = utilizadoresRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if(snapshot.exists()) {
+
+                    Utilizador utilizador = snapshot.getValue(Utilizador.class);
+
+                    textSaudacao.setText(Html.fromHtml("Bom dia, <b>" + utilizador.getNome().toString() + "</b>"));
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     @Override
     public void onStart() {
         super.onStart();
 
         verificarUser();
+
+        saudacao();
 
         recuperarEventos();
         recuperarLembretes();
@@ -261,9 +269,9 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(!snapshot.exists()) {
-                    autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+                    /*autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
                     autenticacao.signOut();
-                    getActivity().finish();
+                    getActivity().finish();*/
                 }
             }
 

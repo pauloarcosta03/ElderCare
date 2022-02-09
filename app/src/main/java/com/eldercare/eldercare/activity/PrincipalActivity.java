@@ -115,15 +115,24 @@ public class PrincipalActivity extends AppCompatActivity {
         utilizadorEventListener = utilizadorRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Utilizador utilizador = snapshot.getValue(Utilizador.class);
 
-                textNomeMenu.setText(utilizador.getNome());
-                textEmailMenu.setText(utilizador.getEmail());
-                if (utilizador.getTipo().equals("p")){
-                    imagePfp.setImageResource(R.drawable.pacientepfp);
+                if(!snapshot.exists()) {
+                    autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+                    //autenticacao.signOut();
+                    //finish();
                 }else{
-                    imagePfp.setImageResource(R.drawable.cuidadorpfp);
+                    Utilizador utilizador = snapshot.getValue(Utilizador.class);
+
+                    textNomeMenu.setText(utilizador.getNome());
+                    textEmailMenu.setText(utilizador.getEmail());
+                    if (utilizador.getTipo().equals("p")){
+                        imagePfp.setImageResource(R.drawable.pacientepfp);
+                    }else{
+                        imagePfp.setImageResource(R.drawable.cuidadorpfp);
+                    }
                 }
+
+
 
             }
 
