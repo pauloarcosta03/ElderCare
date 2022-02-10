@@ -49,10 +49,10 @@ public class Paciente {
                 }
 
                 //buscar password e email
-                String password = utilizadorRef.child("password").toString();
+                /*String password = utilizadorRef.child("password").toString();
                 String email = utilizadorRef.child("email").toString();
 
-                autenticacao.signInWithEmailAndPassword(email, password);
+                autenticacao.signInWithEmailAndPassword(email, password);*/
 
             }
 
@@ -92,7 +92,7 @@ public class Paciente {
                 .child(idUtilizador)
                 .removeValue();
 
-        utilizadoAuth.delete();
+        //utilizadoAuth.delete();
 
     }
 

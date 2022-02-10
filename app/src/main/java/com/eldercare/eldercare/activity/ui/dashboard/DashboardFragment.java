@@ -269,9 +269,9 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(!snapshot.exists()) {
-                    /*autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+                    autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
                     autenticacao.signOut();
-                    getActivity().finish();*/
+                    getActivity().finish();
                 }
             }
 
