@@ -55,8 +55,12 @@
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/adapter_glicemia.xml" value="0.13958333333333334" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/adapter_lembretes.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/fragment_contactos.xml" value="0.26875" />
+        <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/fragment_dashboard.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/fragment_definicoes.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/fragment_eventos.xml" value="0.26875" />
+        <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/fragment_glicemia.xml" value="0.26875" />
+        <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/fragment_lembretes.xml" value="0.26875" />
+        <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/fragment_notas.xml" value="0.26875" />
       </map>
     </option>
   </component>
