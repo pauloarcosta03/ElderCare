@@ -176,19 +176,6 @@ public class Utilizador {
                     .child("cuidador")
                     .setValue(this.getCuidador());
 
-            //guardar pass encriptada (para conseguir eliminar)
-
-
-            FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-
-            FirebaseUser utilizadorAuth = autenticacao.getCurrentUser();
-            String userUID = utilizadorAuth.getUid();
-
-            firebaseRef.child("utilizadores")
-                    .child(this.idUtilizador)
-                    .child("uid")
-                    .setValue(userUID);
-
             /*firebaseRef.child("utilizadores")
                     .child(this.idUtilizador)
                     .child("password")
