@@ -53,6 +53,10 @@ public class Utilizador {
                         DatabaseReference pacientes = utilizadorRef
                                 .child("paciente");
 
+                        /*FirebaseUser utilizadorAuth = autenticacao.getCurrentUser();
+
+                        utilizadorAuth.delete();*/
+
                         pacientes.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -66,37 +70,6 @@ public class Utilizador {
 
                                 }
 
-                                FirebaseUser utilizadoAuth = autenticacao.getCurrentUser();
-
-                                firebaseRef.child("contactos")
-                                        .child(idUtilizador)
-                                        .removeValue();
-
-                                firebaseRef.child("eventos")
-                                        .child(idUtilizador)
-                                        .removeValue();
-
-                                firebaseRef.child("glicemia")
-                                        .child(idUtilizador)
-                                        .removeValue();
-
-                                firebaseRef.child("lembretes")
-                                        .child(idUtilizador)
-                                        .removeValue();
-
-                                firebaseRef.child("notas")
-                                        .child(idUtilizador)
-                                        .removeValue();
-
-                                firebaseRef.child("pressao")
-                                        .child(idUtilizador)
-                                        .removeValue();
-
-                                firebaseRef.child("utilizadores")
-                                        .child(idUtilizador)
-                                        .removeValue();
-
-                                //utilizadoAuth.delete();
                             }
 
                             @Override
@@ -104,19 +77,6 @@ public class Utilizador {
 
                             }
                         });
-
-                    } else {
-
-                        String cuidador = utilizador.getCuidador();
-
-                        //remove o paciente no seu cuidador
-                        firebaseRef.child("utilizadores")
-                                .child(cuidador)
-                                .child("paciente")
-                                .child(idUtilizador)
-                                .removeValue();
-
-                        FirebaseUser utilizadoAuth = autenticacao.getCurrentUser();
 
                         firebaseRef.child("contactos")
                                 .child(idUtilizador)
@@ -146,7 +106,48 @@ public class Utilizador {
                                 .child(idUtilizador)
                                 .removeValue();
 
-                        utilizadoAuth.delete();
+                    } else {
+
+                        String cuidador = utilizador.getCuidador();
+
+                        //remove o paciente no seu cuidador
+                        firebaseRef.child("utilizadores")
+                                .child(cuidador)
+                                .child("paciente")
+                                .child(idUtilizador)
+                                .removeValue();
+
+                        //FirebaseUser utilizadorAuth = autenticacao.getCurrentUser();
+
+                        firebaseRef.child("contactos")
+                                .child(idUtilizador)
+                                .removeValue();
+
+                        firebaseRef.child("eventos")
+                                .child(idUtilizador)
+                                .removeValue();
+
+                        firebaseRef.child("glicemia")
+                                .child(idUtilizador)
+                                .removeValue();
+
+                        firebaseRef.child("lembretes")
+                                .child(idUtilizador)
+                                .removeValue();
+
+                        firebaseRef.child("notas")
+                                .child(idUtilizador)
+                                .removeValue();
+
+                        firebaseRef.child("pressao")
+                                .child(idUtilizador)
+                                .removeValue();
+
+                        firebaseRef.child("utilizadores")
+                                .child(idUtilizador)
+                                .removeValue();
+
+                        //utilizadorAuth.delete();
 
                     }
                 }
@@ -177,10 +178,21 @@ public class Utilizador {
 
             //guardar pass encriptada (para conseguir eliminar)
 
+
+            FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+
+            FirebaseUser utilizadorAuth = autenticacao.getCurrentUser();
+            String userUID = utilizadorAuth.getUid();
+
             firebaseRef.child("utilizadores")
                     .child(this.idUtilizador)
+                    .child("uid")
+                    .setValue(userUID);
+
+            /*firebaseRef.child("utilizadores")
+                    .child(this.idUtilizador)
                     .child("password")
-                    .setValue(this.getPassword());
+                    .setValue(this.getPassword());*/
 
             Paciente paciente = new Paciente();
             paciente.setNome(this.nome);

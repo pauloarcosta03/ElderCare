@@ -47,13 +47,6 @@ public class Paciente {
                             .child(idUtilizador)
                             .removeValue();
                 }
-
-                //buscar password e email
-                /*String password = utilizadorRef.child("password").toString();
-                String email = utilizadorRef.child("email").toString();
-
-                autenticacao.signInWithEmailAndPassword(email, password);*/
-
             }
 
             @Override
@@ -62,7 +55,7 @@ public class Paciente {
             }
         });
 
-        FirebaseUser utilizadoAuth = autenticacao.getCurrentUser();
+        //FirebaseUser utilizadoAuth = autenticacao.getCurrentUser();
 
         firebaseRef.child("contactos")
                 .child(idUtilizador)
@@ -92,7 +85,13 @@ public class Paciente {
                 .child(idUtilizador)
                 .removeValue();
 
-        //utilizadoAuth.delete();
+        //buscar uid
+        /*String password = utilizadorRef.child("password").toString();
+        String email = utilizadorRef.child("email").toString();
+
+        autenticacao.signInWithEmailAndPassword(email, Base64Custom.descodificarBase64(password));
+
+        utilizadoAuth.delete();*/
 
     }
 
