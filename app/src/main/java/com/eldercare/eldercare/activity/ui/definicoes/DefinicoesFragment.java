@@ -262,6 +262,7 @@ public class DefinicoesFragment extends Fragment {
 
                     if (utilizador.getTipo().equals("p")) {
                         ButtonAddPaciente.setVisibility(View.INVISIBLE);
+                        ButtonRemConta.setVisibility(View.INVISIBLE);
                         textTipo.setText("p");
                     } else {
                         textTipo.setText("c");
