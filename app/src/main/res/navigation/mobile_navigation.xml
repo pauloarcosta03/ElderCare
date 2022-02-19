@@ -52,4 +52,5 @@
         android:name="com.eldercare.eldercare.activity.ui.notas.NotasFragment"
         android:label="notas"
         tools:layout="@layout/fragment_notas" />
+
 </navigation>

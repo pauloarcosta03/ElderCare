@@ -14,11 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.eldercare.eldercare.R;
 import com.eldercare.eldercare.activity.MainActivity;
-import com.eldercare.eldercare.activity.ui.pressao.AdicionarPressaoActivity;
 import com.eldercare.eldercare.config.ConfiguracaoFirebase;
 import com.eldercare.eldercare.helper.Base64Custom;
 import com.eldercare.eldercare.model.Paciente;
@@ -38,6 +36,7 @@ public class DefinicoesFragment extends Fragment {
     private Button ButtonAddPaciente;
     private Button ButtonRemConta;
     private Button ButtonRemPacientes;
+    private Button ButtonEditarPass;
     private TextView textTipo;
 
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
@@ -72,6 +71,7 @@ public class DefinicoesFragment extends Fragment {
         ButtonAddPaciente = view.findViewById(R.id.ButtonAddPaciente);
         ButtonRemConta = view.findViewById(R.id.ButtonRemConta);
         ButtonRemPacientes = view.findViewById(R.id.ButtonRemPacientes);
+        ButtonEditarPass = view.findViewById(R.id.ButtonMudarPass);
         textTipo = view.findViewById(R.id.textTipo);
 
         String emailUtilizador = autenticacao.getCurrentUser().getEmail();
@@ -231,6 +231,14 @@ public class DefinicoesFragment extends Fragment {
             }
         });
 
+        //Abrir activity editar password
+        ButtonEditarPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), EditarPassActivity.class));
+            }
+        });
+
     }
 
     @Override
@@ -262,7 +270,7 @@ public class DefinicoesFragment extends Fragment {
 
                     if (utilizador.getTipo().equals("p")) {
                         ButtonAddPaciente.setVisibility(View.INVISIBLE);
-                        ButtonRemConta.setVisibility(View.INVISIBLE);
+                        ButtonRemPacientes.setVisibility(View.INVISIBLE);
                         textTipo.setText("p");
                     } else {
                         textTipo.setText("c");

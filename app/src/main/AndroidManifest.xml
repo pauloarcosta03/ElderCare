@@ -12,12 +12,16 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.ElderCare">
-
+        <activity
+            android:name=".activity.ui.definicoes.EditarPassActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".activity.ui.definicoes.CriarPacienteActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.ui.glicemia.AdicionarGlicemiaActivity"
             android:exported="false"
@@ -36,19 +40,20 @@
         <activity
             android:name=".activity.ui.calendario.AdicionarEventosActivity"
             android:exported="false"
+
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
+        <!--android:parentActivityName=".activity.PrincipalActivity"-->
         <activity
             android:name=".activity.ui.contactos.AdicionarContactosActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.ui.notas.AdicionarNotasActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
-        <!--android:theme="@style/Theme.ElderCare.NoActionBar"-->
+            android:windowSoftInputMode="adjustResize" /> <!-- android:theme="@style/Theme.ElderCare.NoActionBar" -->
         <activity
             android:name=".activity.PrincipalActivity"
             android:exported="false"
