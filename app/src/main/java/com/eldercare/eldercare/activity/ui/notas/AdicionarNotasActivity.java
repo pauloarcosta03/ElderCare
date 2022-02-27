@@ -1,8 +1,11 @@
 package com.eldercare.eldercare.activity.ui.notas;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,6 +26,11 @@ public class AdicionarNotasActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_notas);
+
+        //permite fazer alterações à toolbar
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Criar Nota");
 
         editTitulo = findViewById(R.id.editTitulo);
         editDescricao = findViewById(R.id.editDescricao);
@@ -45,6 +53,17 @@ public class AdicionarNotasActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    //em vez de dar reset à activity anterior, dá finish
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void guardarNota(){

@@ -1,10 +1,13 @@
 package com.eldercare.eldercare.activity.ui.definicoes;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,12 +24,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 public class CriarPacienteActivity extends AppCompatActivity {
 
     private EditText editNome, editEmail, editPassword;
     private Button botaoCriar;
+    private Button buttonVerPass;
+    boolean visivelPass = false;
 
     private FirebaseAuth autenticacao;
 
@@ -34,6 +42,32 @@ public class CriarPacienteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_criar_paciente);
+
+        buttonVerPass = findViewById(R.id.buttonVerPass);
+
+        //Mudar pass de invisivel para visivel
+        buttonVerPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(visivelPass){
+                    visivelPass = false;
+                }else{
+                    visivelPass = true;
+                }
+
+                if(visivelPass){
+                    editPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                }else{
+                    editPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                }
+            }
+        });
+
+        //permite fazer alterações à toolbar
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Criar Novo Paciente");
 
         editNome = findViewById(R.id.editNome);
         editEmail = findViewById(R.id.editEmail);
@@ -69,6 +103,17 @@ public class CriarPacienteActivity extends AppCompatActivity {
         });
     }
 
+    //em vez de dar reset à activity anterior, dá finish
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void registarPaciente(){
 
         String textoNome = editNome.getText().toString();
@@ -88,6 +133,7 @@ public class CriarPacienteActivity extends AppCompatActivity {
         utilizador.setTipo("p");
 
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+
         //O registo é criado no firebase
         autenticacao.createUserWithEmailAndPassword(
                 utilizador.getEmail(),
@@ -102,6 +148,28 @@ public class CriarPacienteActivity extends AppCompatActivity {
                             utilizador.setCuidador(idCuidador);
                             utilizador.setPassword(Base64Custom.codificarBase64(textoPassword));
                             utilizador.guardarNome();
+
+                            //dar login de novo ao cuidador
+                            DatabaseReference dadosRef = firebaseRef
+                                    .child("utilizadores")
+                                    .child(idCuidador);
+
+                            dadosRef.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    Utilizador cuidador = snapshot.getValue(Utilizador.class);
+
+                                    autenticacao.signInWithEmailAndPassword(
+                                            Base64Custom.descodificarBase64(idCuidador),
+                                            Base64Custom.descodificarBase64(cuidador.getPassword()));
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
                             finish();
                         }else{
 

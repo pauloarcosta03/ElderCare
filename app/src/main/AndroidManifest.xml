@@ -13,10 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ElderCare">
         <activity
+            android:name=".activity.ui.definicoes.GestaoPacientesActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ui.definicoes.EditarPassActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.ui.definicoes.CriarPacienteActivity"
             android:exported="false"
@@ -40,10 +43,8 @@
         <activity
             android:name=".activity.ui.calendario.AdicionarEventosActivity"
             android:exported="false"
-
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
-        <!--android:parentActivityName=".activity.PrincipalActivity"-->
+            android:windowSoftInputMode="adjustResize" /> <!-- android:parentActivityName=".activity.PrincipalActivity" -->
         <activity
             android:name=".activity.ui.contactos.AdicionarContactosActivity"
             android:exported="false"
@@ -63,11 +64,13 @@
         <activity
             android:name=".activity.RegistoActivity"
             android:exported="false"
+            android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.LoginActivity"
             android:exported="false"
+            android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity

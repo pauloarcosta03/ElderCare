@@ -6,6 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".activity.ui.definicoes.CriarPacienteActivity">
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonVerPass"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/ic_visibilidade"
+        android:backgroundTint="@android:color/darker_gray"
+        app:layout_constraintBottom_toBottomOf="@+id/textInputLayout17"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textInputLayout17"
+        app:layout_constraintTop_toTopOf="@+id/textInputLayout17" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/botaoCriar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@color/colorPrimary"
+        android:padding="5dp"
+        android:radius="20dp"
+        android:text="Novo Paciente"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout17" />
+
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
@@ -16,7 +44,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
@@ -30,7 +58,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout9"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6">
 
@@ -50,9 +78,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout10"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout17"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout8">
 
@@ -66,14 +94,13 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout10"
+        android:id="@+id/textInputLayout17"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toTopOf="@+id/botaoCriar"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonVerPass"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout9">
@@ -86,20 +113,4 @@
             android:hint="Password"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/botaoCriar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:background="@color/colorPrimary"
-        android:padding="5dp"
-        android:radius="20dp"
-        android:text="Novo Paciente"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout10" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,13 @@
 package com.eldercare.eldercare.activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +30,8 @@ public class RegistoActivity extends AppCompatActivity {
     //variáveis do layout
     private EditText editNome, editEmail, editPassword;
     private Button botaoRegisto;
+    private Button buttonVerPass;
+    boolean visivelPass = false;
 
     //classes
     private Utilizador utilizador;
@@ -39,9 +44,34 @@ public class RegistoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registo);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Registo");
+
         editNome = findViewById(R.id.editNomeSignup);
         editEmail = findViewById(R.id.editEmailSignup);
         editPassword = findViewById(R.id.editPasswordSignup);
+
+        buttonVerPass = findViewById(R.id.buttonVerPass);
+
+        //Mudar pass de invisivel para visivel
+        buttonVerPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(visivelPass){
+                    visivelPass = false;
+                }else{
+                    visivelPass = true;
+                }
+
+                if(visivelPass){
+                    editPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                }else{
+                    editPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                }
+            }
+        });
 
         botaoRegisto = findViewById(R.id.botaoSignup);
 
@@ -61,7 +91,7 @@ public class RegistoActivity extends AppCompatActivity {
                             utilizador = new Utilizador();
                             utilizador.setNome(textoNome);
                             utilizador.setEmail(textoEmail);
-                            utilizador.setPassword(textoPassword);
+                            utilizador.setPassword(Base64Custom.codificarBase64(textoPassword));
                             //para ter um identificador
                             utilizador.setTipo("c");
 
@@ -86,6 +116,17 @@ public class RegistoActivity extends AppCompatActivity {
         });
     }
 
+    //em vez de dar reset à activity anterior, dá finish
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     //classe para registar o user
     public void registarUtilizador(){
 
@@ -93,7 +134,7 @@ public class RegistoActivity extends AppCompatActivity {
         //O registo é criado no firebase
         autenticacao.createUserWithEmailAndPassword(
                 utilizador.getEmail(),
-                utilizador.getPassword())
+                Base64Custom.descodificarBase64(utilizador.getPassword()))
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {

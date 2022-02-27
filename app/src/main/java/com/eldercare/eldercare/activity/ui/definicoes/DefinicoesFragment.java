@@ -35,8 +35,8 @@ public class DefinicoesFragment extends Fragment {
 
     private Button ButtonAddPaciente;
     private Button ButtonRemConta;
-    private Button ButtonRemPacientes;
     private Button ButtonEditarPass;
+    private Button ButtonGerirPacientes;
     private TextView textTipo;
 
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
@@ -70,8 +70,8 @@ public class DefinicoesFragment extends Fragment {
 
         ButtonAddPaciente = view.findViewById(R.id.ButtonAddPaciente);
         ButtonRemConta = view.findViewById(R.id.ButtonRemConta);
-        ButtonRemPacientes = view.findViewById(R.id.ButtonRemPacientes);
         ButtonEditarPass = view.findViewById(R.id.ButtonMudarPass);
+        ButtonGerirPacientes = view.findViewById(R.id.ButtonGerirPacientes);
         textTipo = view.findViewById(R.id.textTipo);
 
         String emailUtilizador = autenticacao.getCurrentUser().getEmail();
@@ -79,6 +79,14 @@ public class DefinicoesFragment extends Fragment {
 
         utilizadorRef = firebaseRef.child("utilizadores")
                 .child(idUtilizador);
+
+        //butão de gestão de pacientes
+        ButtonGerirPacientes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), GestaoPacientesActivity.class));
+            }
+        });
 
         ButtonAddPaciente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,8 +98,6 @@ public class DefinicoesFragment extends Fragment {
         ButtonRemConta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
 
                 utilizadorRef.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -142,94 +148,6 @@ public class DefinicoesFragment extends Fragment {
             }
         });
 
-        ButtonRemPacientes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //Verificar as permições da conta
-                String emailUtilizador = autenticacao.getCurrentUser().getEmail();
-                String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
-
-                utilizadorRef = firebaseRef.child("utilizadores")
-                        .child(idUtilizador)
-                        .child("paciente");
-
-                utilizadorRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        pacientesNome.clear();
-                        pacientesId.clear();
-
-                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-                        alertDialog.setTitle("Eliminar paciente");
-
-
-                        for (DataSnapshot dados: snapshot.getChildren()) {
-                            paciente = snapshot.getValue(Paciente.class);
-
-                            pacientesNome.add(dados.child("nome").getValue().toString());
-                            pacientesId.add(dados.child("idPaciente").getValue().toString());
-                        }
-
-                        //define as opções de todos os nomes no alert dialog
-                        String[] nomes = pacientesNome.toArray(new String[pacientesNome.size()]);
-                        String[] ids = pacientesId.toArray(new String[pacientesId.size()]);
-
-                        if(nomes.length!=0){
-                            alertDialog.setItems(nomes, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    for(int i = 0; i< nomes.length; i++) {
-
-                                        if (nomes[i].equals(nomes[which])) {
-                                            AlertDialog.Builder confirmarDialog = new AlertDialog.Builder(getContext());
-                                            confirmarDialog.setTitle("Eliminar paciente");
-                                            confirmarDialog.setMessage("Deseja mesmo eliminar o paciente " +
-                                                    nomes[i] + "?");
-
-                                            int idArray = i;
-
-                                            confirmarDialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    Paciente paciente = new Paciente();
-
-                                                    paciente.setNome(nomes[idArray]);
-                                                    paciente.setIdPaciente(ids[idArray]);
-                                                    paciente.eliminarPaciente();
-                                                }
-                                            });
-
-                                            confirmarDialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-
-                                                }
-                                            });
-
-                                            confirmarDialog.show();
-                                        }
-
-                                    }
-                                }
-                            });
-                        }else{
-                            alertDialog.setMessage("Ainda não adicionou nenhum paciente.");
-                        }
-
-
-                        alertDialog.show();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-            }
-        });
 
         //Abrir activity editar password
         ButtonEditarPass.setOnClickListener(new View.OnClickListener() {
@@ -270,7 +188,7 @@ public class DefinicoesFragment extends Fragment {
 
                     if (utilizador.getTipo().equals("p")) {
                         ButtonAddPaciente.setVisibility(View.INVISIBLE);
-                        ButtonRemPacientes.setVisibility(View.INVISIBLE);
+                        ButtonGerirPacientes.setVisibility(View.INVISIBLE);
                         textTipo.setText("p");
                     } else {
                         textTipo.setText("c");

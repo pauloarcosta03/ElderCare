@@ -241,7 +241,7 @@ public class Utilizador {
         this.email = email;
     }
 
-    @Exclude
+    //@Exclude
     public String getPassword() {
         return password;
     }

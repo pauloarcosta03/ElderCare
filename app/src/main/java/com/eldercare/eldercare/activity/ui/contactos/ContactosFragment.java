@@ -148,7 +148,7 @@ public class ContactosFragment extends Fragment {
 
                         String opcaoLigar = "Ligar a " + contacto.getNome();
 
-                        final String[] opcoes = {"opcaoLigar", "Editar Contacto", "Eliminar Contacto"};
+                        final String[] opcoes = {"Contactar", "Editar Contacto", "Eliminar Contacto"};
 
                         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                         alertDialog.setTitle("Opções de contacto");
@@ -156,7 +156,7 @@ public class ContactosFragment extends Fragment {
                         alertDialog.setItems(opcoes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                if ("opcaoLigar".equals(opcoes[which])) {
+                                if ("Contactar".equals(opcoes[which])) {
 
                                     Intent intent = new Intent(Intent.ACTION_DIAL,
                                             Uri.parse("tel:" + contacto.getNumero()));

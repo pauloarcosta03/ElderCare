@@ -21,10 +21,11 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Adicionar Paciente"
-        app:layout_constraintBottom_toTopOf="@+id/ButtonRemPacientes"
+        app:layout_constraintBottom_toTopOf="@+id/ButtonRemConta"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ButtonMudarPass" />
+        app:layout_constraintTop_toBottomOf="@+id/ButtonGerirPacientes" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ButtonRemConta"
@@ -33,17 +34,7 @@
         android:text="Remover Conta"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ButtonRemPacientes" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/ButtonRemPacientes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Remover Pacientes"
-        app:layout_constraintBottom_toTopOf="@+id/ButtonRemConta"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ButtonAddPaciente" />
 
@@ -53,9 +44,23 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Mudar password"
-        app:layout_constraintBottom_toTopOf="@+id/ButtonAddPaciente"
+        app:layout_constraintBottom_toTopOf="@+id/ButtonGerirPacientes"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ButtonGerirPacientes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Gerir Pacientes"
+        app:layout_constraintBottom_toTopOf="@+id/ButtonAddPaciente"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ButtonMudarPass" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,12 @@
 package com.eldercare.eldercare.activity.ui.definicoes;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,7 +48,10 @@ public class EditarPassActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_pass);
 
-        getSupportActionBar().setTitle("Editar Password");
+        //permite fazer alterações à toolbar
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Editar Password");
 
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -153,6 +158,17 @@ public class EditarPassActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    //em vez de dar reset à activity anterior, dá finish
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void mudarPass(){

@@ -1,6 +1,7 @@
 package com.eldercare.eldercare.activity.ui.calendario;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +9,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -59,6 +61,11 @@ public class AdicionarEventosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_eventos);
+
+        //permite fazer alterações à toolbar
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Adicionar Evento");
 
         editData = findViewById(R.id.editData);
         editHoras = findViewById(R.id.editHoras);
@@ -208,6 +215,17 @@ public class AdicionarEventosActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    //em vez de dar reset à activity anterior, dá finish
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void guardar(){

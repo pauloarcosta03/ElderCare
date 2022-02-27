@@ -1,9 +1,12 @@
 package com.eldercare.eldercare.activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +26,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText editEmail, editPassword;
     private Button botaoLogin;
+    private Button buttonVerPass;
+    boolean visivelPass = false;
 
     private Utilizador utilizador;
 
@@ -33,8 +38,32 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Login");
+
         editEmail = findViewById(R.id.editEmailLogin);
         editPassword = findViewById(R.id.editPasswordLogin);
+        buttonVerPass = findViewById(R.id.buttonVerPass);
+
+        //Mudar pass de invisivel para visivel
+        buttonVerPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(visivelPass){
+                    visivelPass = false;
+                }else{
+                    visivelPass = true;
+                }
+
+                if(visivelPass){
+                    editPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                }else{
+                    editPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                }
+            }
+        });
 
         botaoLogin = findViewById(R.id.botaoLogin);
 
@@ -68,6 +97,17 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    //em vez de dar reset à activity anterior, dá finish
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     //classe para fazer login
