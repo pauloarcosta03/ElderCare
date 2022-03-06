@@ -54,6 +54,7 @@
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/activity_adicionar_pressao.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/activity_criar_paciente.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/activity_editar_pass.xml" value="0.26875" />
+        <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/activity_editar_perfil_paciente.xml" value="0.33" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/activity_gestao_pacientes.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/activity_login.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/activity_mudar_pass.xml" value="0.2546875" />
@@ -72,8 +73,10 @@
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/fragment_glicemia.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/fragment_lembretes.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/fragment_notas.xml" value="0.26875" />
+        <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/nav_header_principal.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/toolbar.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/toolbar_adicionar.xml" value="0.26875" />
+        <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/menu/activity_main_drawer.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/menu/principal.xml" value="0.26875" />
       </map>
     </option>

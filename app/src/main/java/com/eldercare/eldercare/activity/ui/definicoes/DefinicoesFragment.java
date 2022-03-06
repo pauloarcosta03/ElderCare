@@ -33,7 +33,6 @@ import java.util.List;
 
 public class DefinicoesFragment extends Fragment {
 
-    private Button ButtonAddPaciente;
     private Button ButtonRemConta;
     private Button ButtonEditarPass;
     private Button ButtonGerirPacientes;
@@ -68,7 +67,6 @@ public class DefinicoesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ButtonAddPaciente = view.findViewById(R.id.ButtonAddPaciente);
         ButtonRemConta = view.findViewById(R.id.ButtonRemConta);
         ButtonEditarPass = view.findViewById(R.id.ButtonMudarPass);
         ButtonGerirPacientes = view.findViewById(R.id.ButtonGerirPacientes);
@@ -85,13 +83,6 @@ public class DefinicoesFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), GestaoPacientesActivity.class));
-            }
-        });
-
-        ButtonAddPaciente.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), CriarPacienteActivity.class));
             }
         });
 
@@ -187,7 +178,6 @@ public class DefinicoesFragment extends Fragment {
                     Utilizador utilizador = snapshot.getValue(Utilizador.class);
 
                     if (utilizador.getTipo().equals("p")) {
-                        ButtonAddPaciente.setVisibility(View.INVISIBLE);
                         ButtonGerirPacientes.setVisibility(View.INVISIBLE);
                         textTipo.setText("p");
                     } else {

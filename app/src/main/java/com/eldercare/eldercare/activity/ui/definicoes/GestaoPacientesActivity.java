@@ -145,11 +145,11 @@ public class GestaoPacientesActivity extends AppCompatActivity {
                             public void onItemClick(View view, int position) {
                                 Paciente paciente = new Paciente();
                                 paciente.setNome(nomePacientes.get(position));
-                                paciente.setNome(idPacientes.get(position));
+                                paciente.setIdPaciente(idPacientes.get(position));
 
-                                /*Intent intent = new Intent(getApplicationContext(), AdicionarEventosActivity.class);
-                                intent.putExtra("evento", evento);
-                                startActivity(intent);*/
+                                Intent intent = new Intent(getApplicationContext(), EditarPerfilPacienteActivity.class);
+                                intent.putExtra("id", paciente.getIdPaciente());
+                                startActivity(intent);
 
                             }
 
@@ -160,7 +160,7 @@ public class GestaoPacientesActivity extends AppCompatActivity {
                                 paciente.setNome(nomePacientes.get(position));
                                 paciente.setIdPaciente(idPacientes.get(position));
 
-                                final String[] opcoes = {"Editar Dados", "Mudar Palavra-passe", "Eliminar Paciente"};
+                                final String[] opcoes = {"Editar Dados", "Eliminar Paciente"};
 
                                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(GestaoPacientesActivity.this);
                                 alertDialog.setTitle("Opções de evento");
@@ -168,9 +168,7 @@ public class GestaoPacientesActivity extends AppCompatActivity {
                                 alertDialog.setItems(opcoes, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        if("Editar Dados".equals(opcoes[which])){
-
-                                        }else if("Mudar Palavra-passe".equals(opcoes[which])){
+                                        if("Editar Paciente".equals(opcoes[which])){
 
                                         }else if("Eliminar Paciente".equals(opcoes[which])) {
 

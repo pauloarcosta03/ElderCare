@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ElderCare">
         <activity
+            android:name=".activity.ui.definicoes.EditarPerfilPacienteActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ui.definicoes.GestaoPacientesActivity"
             android:exported="false" />
         <activity

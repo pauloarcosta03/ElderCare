@@ -11,7 +11,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-public class Paciente {
+import java.io.Serializable;
+
+public class Paciente implements Serializable {
 
     private String idPaciente;
     private String nome;
