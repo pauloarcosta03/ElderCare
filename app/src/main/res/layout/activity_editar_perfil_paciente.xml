@@ -21,6 +21,7 @@
             android:id="@+id/imagePfp2"
             android:layout_width="match_parent"
             android:layout_height="125dp"
+            android:layout_marginBottom="10dp"
             android:contentDescription="@string/nav_header_desc"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
             android:scaleType="fitCenter"
@@ -39,7 +40,9 @@
             android:paddingBottom="0dp"
             android:text="Utilizador"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="24sp" />
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textEmail"
@@ -47,14 +50,17 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="utilizador@eldercare.com"
+            android:textColor="@color/white"
             android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layoutSexo"
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:orientation="horizontal"
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,9 +88,11 @@
 
     <LinearLayout
         android:id="@+id/layoutIdade"
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:orientation="horizontal"
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -112,9 +120,11 @@
 
     <LinearLayout
         android:id="@+id/layoutPeso"
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:orientation="horizontal"
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -142,9 +152,11 @@
 
     <LinearLayout
         android:id="@+id/layoutAltura"
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:orientation="horizontal"
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
