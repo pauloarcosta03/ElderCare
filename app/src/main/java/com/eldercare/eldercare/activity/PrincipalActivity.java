@@ -1,23 +1,28 @@
 package com.eldercare.eldercare.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eldercare.eldercare.R;
 import com.eldercare.eldercare.config.ConfiguracaoFirebase;
 import com.eldercare.eldercare.databinding.ActivityPrincipalBinding;
 import com.eldercare.eldercare.helper.Base64Custom;
 import com.eldercare.eldercare.model.Utilizador;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
@@ -142,6 +147,26 @@ public class PrincipalActivity extends AppCompatActivity {
 
             }
         });
+
+        //guarda o token das notificacoes na database
+        recuperarToken();
+    }
+
+    public void recuperarToken(){
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(new OnSuccessListener<String>() {
+            @Override
+            public void onSuccess(String s) {
+                DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseRef();
+                FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+
+                String idUtilizador = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
+
+                firebaseRef.child("utilizadores")
+                        .child(idUtilizador)
+                        .child("token")
+                        .setValue(s);
+            }
+        });
     }
 
     @Override
@@ -149,6 +174,15 @@ public class PrincipalActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.principal, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if(item.getItemId() == R.id.notificacoes){
+            startActivity(new Intent(PrincipalActivity.this, NotificacoesActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void logOut(){
