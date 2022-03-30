@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.eldercare.eldercare.R;
+import com.eldercare.eldercare.activity.NotificacoesActivity;
 import com.eldercare.eldercare.activity.PrincipalActivity;
 import com.eldercare.eldercare.config.ConfiguracaoFirebase;
 import com.eldercare.eldercare.helper.Base64Custom;
@@ -47,14 +48,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         //configurações notificação
         String canal = getString(R.string.default_notification_channel_id);
         Uri uriSom = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        Intent intent = new Intent(this, PrincipalActivity.class);
+        Intent intent = new Intent(this, NotificacoesActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
         //criar notificação
         NotificationCompat.Builder notificacao = new NotificationCompat.Builder(this, canal)
                 .setContentTitle(titulo)
                 .setContentText(corpo)
-                .setSmallIcon(R.drawable.ic_menu_camera)
+                .setSmallIcon(R.drawable.ic_menu_calendario)
                 .setSound(uriSom)
                 .setAutoCancel(true)//ao clicar desaparece
                 .setContentIntent(pendingIntent);

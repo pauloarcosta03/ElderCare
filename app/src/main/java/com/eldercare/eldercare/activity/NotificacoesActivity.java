@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.eldercare.eldercare.R;
 import com.eldercare.eldercare.adapter.calendario.AdapterCalendario;
@@ -21,11 +22,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class NotificacoesActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private TextView textVazio;
     private AdapterNotificacao adapterNotificacao;
 
     private List<DisplayNotificacao> notificacoes = new ArrayList<>();
@@ -46,6 +49,7 @@ public class NotificacoesActivity extends AppCompatActivity {
         actionBar.setTitle("Notificações");
 
         recyclerView = findViewById(R.id.recyclerNotificacao);
+        textVazio = findViewById(R.id.textVazio);
 
         //Configuraçao do adapter
         adapterNotificacao = new AdapterNotificacao(notificacoes, getApplicationContext());
@@ -78,12 +82,15 @@ public class NotificacoesActivity extends AppCompatActivity {
                     notificacoes.add(notificacao);
                 }
 
+                //para aparecer da ordem de mais recente para mais antigo
+                Collections.reverse(notificacoes);
+
                 //verificar se existem notificacoes e mostra uma mensagem
-                /*if(notificacoes.isEmpty()){
-                    textVazio.setText("Ainda não tem nenhum evento adicionada.");
+                if(notificacoes.isEmpty()){
+                    textVazio.setText("Ainda não recebeu nenhuma notificação.");
                 }else{
                     textVazio.setText("");
-                }*/
+                }
 
                 //diz ao adapter que os dados foram atualizados
                 adapterNotificacao.notifyDataSetChanged();
