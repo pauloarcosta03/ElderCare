@@ -16,6 +16,7 @@ import com.google.firebase.database.Exclude;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -189,6 +190,13 @@ public class Evento implements Serializable {
                 .child("utilizadores")
                 .child(this.idPaciente);
 
+        //guardar dados da notificação
+        DisplayNotificacao displayNotificacao = new DisplayNotificacao();
+
+        displayNotificacao.setTitulo(this.titulo);
+        displayNotificacao.setTempo(String.format("%02d", LocalDateTime.now().getHour()) + ":" + String.format("%02d", LocalDateTime.now().getMinute()));
+        displayNotificacao.setDescricao("Editaram este evento.");
+
         tokenRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -205,6 +213,19 @@ public class Evento implements Serializable {
                         if(response.isSuccessful()){
 
                             Log.i("codigo", "codigo: " + response.code());
+
+                            String idNotificacao = firebaseRef.push().getKey();
+
+                            firebaseRef.child("notificacoes")
+                                    .child(idPaciente)
+                                    .child(idNotificacao)
+                                    .setValue(displayNotificacao);
+
+                            firebaseRef.child("notificacoes")
+                                    .child(idUtilizador)
+                                    .child(idNotificacao)
+                                    .setValue(displayNotificacao);
+
 
                         }
                     }
