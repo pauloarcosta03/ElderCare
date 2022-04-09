@@ -15,6 +15,7 @@ import com.google.firebase.database.Exclude;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,6 +35,11 @@ public class Glicemia implements Serializable {
     private String idPaciente;
     private String idPacienteAnterior;
     private String key;
+
+    //notificacao
+    private Retrofit retrofit;
+    private String baseUrl;
+    private String token;
 
     public Glicemia() {
     }
@@ -93,8 +99,8 @@ public class Glicemia implements Serializable {
         ---------Mandar notificacao--------
         ---------------------------------*/
 
-        String baseUrl = "https://fcm.googleapis.com/fcm/";
-        Retrofit retrofit = new Retrofit.Builder()
+        baseUrl = "https://fcm.googleapis.com/fcm/";
+        retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -105,10 +111,17 @@ public class Glicemia implements Serializable {
                 .child("utilizadores")
                 .child(this.idPaciente);
 
+        //guardar dados da notificação
+        DisplayNotificacao displayNotificacao = new DisplayNotificacao();
+
+        displayNotificacao.setTitulo("Glicemia");
+        displayNotificacao.setTempo(String.format("%02d", LocalDateTime.now().getHour()) + ":" + String.format("%02d", LocalDateTime.now().getMinute()));
+        displayNotificacao.setDescricao("Editaram um valor de glicemia.");
+
         tokenRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String token = snapshot.child("token").getValue().toString();
+                token = snapshot.child("token").getValue().toString();
                 String to = token;
                 Notificacao notificacao = new Notificacao("ElderCare", "O cuidador acabou de editar uma medição de glicemia!");
                 NotificacaoDados notificacaoDados = new NotificacaoDados(to, notificacao);
@@ -121,6 +134,18 @@ public class Glicemia implements Serializable {
                         if(response.isSuccessful()){
 
                             Log.i("codigo", "codigo: " + response.code());
+
+                            String idNotificacao = firebaseRef.push().getKey();
+
+                            firebaseRef.child("notificacoes")
+                                    .child(idPaciente)
+                                    .child(idNotificacao)
+                                    .setValue(displayNotificacao);
+
+                            firebaseRef.child("notificacoes")
+                                    .child(idUtilizador)
+                                    .child(idNotificacao)
+                                    .setValue(displayNotificacao);
 
                         }
                     }
@@ -170,8 +195,8 @@ public class Glicemia implements Serializable {
         ---------Mandar notificacao--------
         ---------------------------------*/
 
-        String baseUrl = "https://fcm.googleapis.com/fcm/";
-        Retrofit retrofit = new Retrofit.Builder()
+        baseUrl = "https://fcm.googleapis.com/fcm/";
+        retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -182,10 +207,17 @@ public class Glicemia implements Serializable {
                 .child("utilizadores")
                 .child(this.idPaciente);
 
+        //guardar dados da notificação
+        DisplayNotificacao displayNotificacao = new DisplayNotificacao();
+
+        displayNotificacao.setTitulo("Glicemia");
+        displayNotificacao.setTempo(String.format("%02d", LocalDateTime.now().getHour()) + ":" + String.format("%02d", LocalDateTime.now().getMinute()));
+        displayNotificacao.setDescricao("Adicionaram um valor de Glicemia.");
+
         tokenRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String token = snapshot.child("token").getValue().toString();
+                token = snapshot.child("token").getValue().toString();
                 String to = token;
                 Notificacao notificacao = new Notificacao("ElderCare", "O cuidador acabou de adicionar uma medição de glicemia!");
                 NotificacaoDados notificacaoDados = new NotificacaoDados(to, notificacao);
@@ -198,6 +230,18 @@ public class Glicemia implements Serializable {
                         if(response.isSuccessful()){
 
                             Log.i("codigo", "codigo: " + response.code());
+
+                            String idNotificacao = firebaseRef.push().getKey();
+
+                            firebaseRef.child("notificacoes")
+                                    .child(idPaciente)
+                                    .child(idNotificacao)
+                                    .setValue(displayNotificacao);
+
+                            firebaseRef.child("notificacoes")
+                                    .child(idUtilizador)
+                                    .child(idNotificacao)
+                                    .setValue(displayNotificacao);
 
                         }
                     }

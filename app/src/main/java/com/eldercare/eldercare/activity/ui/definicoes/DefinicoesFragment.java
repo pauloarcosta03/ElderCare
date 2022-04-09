@@ -178,7 +178,7 @@ public class DefinicoesFragment extends Fragment {
                     Utilizador utilizador = snapshot.getValue(Utilizador.class);
 
                     if (utilizador.getTipo().equals("p")) {
-                        ButtonGerirPacientes.setVisibility(View.INVISIBLE);
+                        ButtonGerirPacientes.setVisibility(View.GONE);
                         textTipo.setText("p");
                     } else {
                         textTipo.setText("c");
