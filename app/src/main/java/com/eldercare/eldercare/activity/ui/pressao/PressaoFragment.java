@@ -62,7 +62,6 @@ public class PressaoFragment extends Fragment {
     private ValueEventListener valueEventListenerPressoes;
 
     public PressaoFragment() {
-        // Required empty public constructor
     }
 
     @Override
