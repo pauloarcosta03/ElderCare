@@ -95,7 +95,7 @@ public class PrincipalActivity extends AppCompatActivity {
         ImageView imagePfp = (ImageView) headerView.findViewById(R.id.imagePfp);
 
         //botão de logout
-        navigationView1.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener(
+        /*navigationView1.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener(
                 new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -103,7 +103,7 @@ public class PrincipalActivity extends AppCompatActivity {
                         return false;
                     }
                 }
-        );
+        );*/
 
         //Mudar o nome de utilizador no menu
         //Buscar e-mail
@@ -185,10 +185,10 @@ public class PrincipalActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void logOut(){
+    /*public void logOut(){
         autenticacao.signOut();
         finish();
-    }
+    }*/
 
     @Override
     public boolean onSupportNavigateUp() {

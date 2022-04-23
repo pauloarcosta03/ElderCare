@@ -117,6 +117,25 @@ public class Utilizador {
                                 .child(idUtilizador)
                                 .removeValue();
 
+                        firebaseRef.child("contactos").child(cuidador).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot dados: snapshot.getChildren()){
+                                    if(dados.child("idpaciente").getValue() == idUtilizador){
+                                        String key = dados.getKey();
+                                        firebaseRef.child("contactos")
+                                                .child(cuidador)
+                                                .child(key).removeValue();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
                         //FirebaseUser utilizadorAuth = autenticacao.getCurrentUser();
 
                         firebaseRef.child("contactos")
@@ -168,6 +187,12 @@ public class Utilizador {
         firebaseRef.child("utilizadores")
                 .child(this.idUtilizador)
                 .setValue(this);
+
+        //para a app não crashar ao enviar notificações
+        firebaseRef.child("utilizadores")
+                .child(this.idUtilizador)
+                .child("token")
+                .setValue("");
         
         if(this.getTipo().equals("p")){
 

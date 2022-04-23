@@ -71,6 +71,8 @@ public class AdicionarLembretesActivity extends AppCompatActivity {
 
         if (lembreteAtual != null){
 
+            actionBar.setTitle("Editar Lembrete");
+
             editTitulo.setText(lembreteAtual.getTitulo());
             editDescricao.setText(lembreteAtual.getDescricao());
             editHoras.setText(lembreteAtual.getTempo());

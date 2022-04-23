@@ -64,6 +64,9 @@ public class AdicionarContactosActivity extends AppCompatActivity {
 
         //Caso o utilizador queira editar uma nota, o código preenche os campos automáticamente
         if (contactoAtual != null){
+
+            actionBar.setTitle("Editar Contacto");
+
             editNome.setText(contactoAtual.getNome());
             editNumero.setText(contactoAtual.getNumero());
             editCategoria.setText(contactoAtual.getCategoria());

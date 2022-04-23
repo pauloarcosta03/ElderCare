@@ -78,6 +78,8 @@ public class AdicionarPressaoActivity extends AppCompatActivity {
 
         if(pressaoAtual != null){
 
+            actionBar.setTitle("Editar Pressão Arterial");
+
             editPressao.setText(pressaoAtual.getSistolica() + "/" + pressaoAtual.getDiastolica());
             editData.setText(pressaoAtual.getData());
             editHoras.setText(pressaoAtual.getHoras() + ":" + pressaoAtual.getMinutos());
@@ -204,7 +206,7 @@ public class AdicionarPressaoActivity extends AppCompatActivity {
 
     }
 
-    //em vez de dar reset à activity anterior, dá finish
+    //em vez de dar reset à activity anterior, dá finish quando se clica no botão para trás
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

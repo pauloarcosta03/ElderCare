@@ -79,6 +79,8 @@ public class AdicionarGlicemiaActivity extends AppCompatActivity {
 
         if(glicemiaAtual!=null){
 
+            actionBar.setTitle("Editar Nivel de Glicemia");
+
             editGlicemia.setText(glicemiaAtual.getGlicose());
             editHoras.setText(glicemiaAtual.getHoras() + ":" + glicemiaAtual.getMinutos());
             editPaciente.setText(glicemiaAtual.getPaciente());

@@ -19,13 +19,41 @@
         android:id="@+id/ButtonRemConta"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:background="@drawable/botao_borda"
+        android:backgroundTint="#FFE3E3"
         android:drawableRight="@drawable/mcv_action_next"
         android:drawableTint="#B8B8B8"
         android:text="Remover Conta"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonLogOut" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonLogOut"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/botao_borda"
+        android:drawableRight="@drawable/mcv_action_next"
+        android:drawableTint="#B8B8B8"
+        android:text="Encerrar Sessão"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ButtonMudarPass" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ButtonMudarPass"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/botao_borda"
+        android:drawableRight="@drawable/mcv_action_next"
+        android:drawableTint="#B8B8B8"
+        android:text="Mudar password"
+        app:layout_constraintBottom_toTopOf="@+id/buttonLogOut"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ButtonGerirPacientes" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ButtonGerirPacientes"
@@ -40,18 +68,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/ButtonMudarPass"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/botao_borda"
-        android:drawableRight="@drawable/mcv_action_next"
-        android:drawableTint="#B8B8B8"
-        android:text="Mudar password"
-        app:layout_constraintBottom_toTopOf="@+id/ButtonRemConta"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ButtonGerirPacientes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
