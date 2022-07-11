@@ -167,6 +167,5 @@ public class RegistoActivity extends AppCompatActivity {
                         }
                     }
                 });
-
     }
 }

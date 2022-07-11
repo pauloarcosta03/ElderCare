@@ -117,24 +117,6 @@ public class Utilizador {
                                 .child(idUtilizador)
                                 .removeValue();
 
-                        firebaseRef.child("contactos").child(cuidador).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dados: snapshot.getChildren()){
-                                    if(dados.child("idpaciente").getValue() == idUtilizador){
-                                        String key = dados.getKey();
-                                        firebaseRef.child("contactos")
-                                                .child(cuidador)
-                                                .child(key).removeValue();
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
 
                         //FirebaseUser utilizadorAuth = autenticacao.getCurrentUser();
 

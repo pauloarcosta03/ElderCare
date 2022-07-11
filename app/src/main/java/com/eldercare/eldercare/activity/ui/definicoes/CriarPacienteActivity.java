@@ -194,7 +194,5 @@ public class CriarPacienteActivity extends AppCompatActivity {
                         }
                     }
                 });
-
     }
-
 }
