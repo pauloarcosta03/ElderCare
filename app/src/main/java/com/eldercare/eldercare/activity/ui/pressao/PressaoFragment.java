@@ -212,6 +212,25 @@ public class PressaoFragment extends Fragment {
                                                         }
                                                     });
 
+                                            //remover para os pacientes
+                                            pressoesRef = firebaseRef.child("pressao")
+                                                    .child(pressao.getIdPaciente())
+                                                    .child(dataSelecionada);
+
+                                            pressoesRef.child(pressao.getKey()).removeValue()
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                                            if (!task.isSuccessful()){
+                                                                Toast.makeText(getContext(),
+                                                                        "Erro ao eliminar lembrete",
+                                                                        Toast.LENGTH_LONG).show();
+                                                            }
+
+                                                        }
+                                                    });
+
                                         }
                                     });
 

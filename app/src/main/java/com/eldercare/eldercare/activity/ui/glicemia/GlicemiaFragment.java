@@ -207,6 +207,25 @@ public class GlicemiaFragment extends Fragment {
                                                 }
                                             });
 
+                                            //remover para os pacientes
+                                            glicemiaRef = firebaseRef.child("glicemia")
+                                                    .child(glicemia.getIdPaciente())
+                                                    .child(dataSelecionada);
+
+                                            glicemiaRef.child(glicemia.getKey()).removeValue()
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                                            if (!task.isSuccessful()){
+                                                                Toast.makeText(getContext(),
+                                                                        "Erro ao eliminar glicemia",
+                                                                        Toast.LENGTH_LONG).show();
+                                                            }
+
+                                                        }
+                                                    });
+
                                         }
                                     });
 
