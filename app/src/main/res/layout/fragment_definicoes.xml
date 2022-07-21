@@ -25,6 +25,7 @@
         android:drawableRight="@drawable/mcv_action_next"
         android:drawableTint="#B8B8B8"
         android:text="Remover Conta"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
