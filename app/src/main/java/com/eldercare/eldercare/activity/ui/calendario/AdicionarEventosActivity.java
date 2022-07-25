@@ -80,15 +80,8 @@ public class AdicionarEventosActivity extends AppCompatActivity {
         eventoAtual = (Evento) getIntent().getSerializableExtra("evento");
 
         if(eventoAtual != null){
-            //mostrar titulo
+
             getSupportActionBar().setTitle("Editar evento");
-        }else{
-            //mostrar titulo
-            getSupportActionBar().setTitle("Adicionar evento");
-        }
-
-
-        if(eventoAtual != null){
 
             editTitulo.setText(eventoAtual.getTitulo());
             editDescricao.setText(eventoAtual.getDescricao());

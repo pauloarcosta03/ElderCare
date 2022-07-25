@@ -36,6 +36,7 @@ public class DefinicoesFragment extends Fragment {
     private Button ButtonRemConta;
     private Button ButtonEditarPass;
     private Button ButtonGerirPacientes;
+    private Button ButtonLogout;
     private TextView textTipo;
 
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
@@ -70,6 +71,7 @@ public class DefinicoesFragment extends Fragment {
         ButtonRemConta = view.findViewById(R.id.ButtonRemConta);
         ButtonEditarPass = view.findViewById(R.id.ButtonMudarPass);
         ButtonGerirPacientes = view.findViewById(R.id.ButtonGerirPacientes);
+        ButtonLogout = view.findViewById(R.id.buttonLogOut);
         textTipo = view.findViewById(R.id.textTipo);
 
         String emailUtilizador = autenticacao.getCurrentUser().getEmail();
@@ -83,6 +85,35 @@ public class DefinicoesFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), GestaoPacientesActivity.class));
+            }
+        });
+        //butão de Logout
+        ButtonLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                alertDialog.setTitle("Sair desta conta?");
+
+                alertDialog.setMessage("Deseja encerrar a sessão desta conta?");
+
+                alertDialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        logOut();
+                    }
+                });
+
+                alertDialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                alertDialog.show();
+
+
             }
         });
 
@@ -150,6 +181,20 @@ public class DefinicoesFragment extends Fragment {
 
     }
 
+    public void logOut(){
+
+        String emailUtilizador = autenticacao.getCurrentUser().getEmail();
+        String idUtilizador = Base64Custom.codificarBase64(emailUtilizador);
+
+        //elimina o token para este dispositivo não receber notificações
+        firebaseRef.child("utilizadores")
+                .child(idUtilizador)
+                .child("token").setValue("");
+
+        autenticacao.signOut();
+        getActivity().finish();
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -179,6 +224,7 @@ public class DefinicoesFragment extends Fragment {
 
                     if (utilizador.getTipo().equals("p")) {
                         ButtonGerirPacientes.setVisibility(View.GONE);
+                        ButtonRemConta.setVisibility(View.GONE);
                         textTipo.setText("p");
                     } else {
                         textTipo.setText("c");

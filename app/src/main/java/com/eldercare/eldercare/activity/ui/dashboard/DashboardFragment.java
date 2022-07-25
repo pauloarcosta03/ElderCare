@@ -107,7 +107,7 @@ public class DashboardFragment extends Fragment {
             recyclerLembretes = view.findViewById(R.id.recyclerLembretes);
 
             //configura adapter
-            adapterLembretes = new AdapterLembretes(lembretes, getContext());
+            adapterLembretes = new AdapterLembretes(lembretes, getContext(), 1);
 
             //configura layout manager
             RecyclerView.LayoutManager layoutManager1 = new LinearLayoutManager(getContext());

@@ -55,7 +55,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.Builder notificacao = new NotificationCompat.Builder(this, canal)
                 .setContentTitle(titulo)
                 .setContentText(corpo)
-                .setSmallIcon(R.drawable.ic_menu_calendario)
+                .setSmallIcon(R.drawable.logo1)
                 .setSound(uriSom)
                 .setAutoCancel(true)//ao clicar desaparece
                 .setContentIntent(pendingIntent);

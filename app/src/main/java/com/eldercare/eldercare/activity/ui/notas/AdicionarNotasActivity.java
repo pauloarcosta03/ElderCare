@@ -40,7 +40,7 @@ public class AdicionarNotasActivity extends AppCompatActivity {
         notaAtual = (Nota) getIntent().getSerializableExtra("nota");
 
         if (notaAtual != null){
-
+            actionBar.setTitle("Editar Nota");
             editTitulo.setText(notaAtual.getTitulo());
             editDescricao.setText(notaAtual.getDescricao());
 

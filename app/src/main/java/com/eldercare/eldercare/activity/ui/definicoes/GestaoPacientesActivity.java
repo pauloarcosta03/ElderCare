@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eldercare.eldercare.R;
@@ -51,7 +52,7 @@ public class GestaoPacientesActivity extends AppCompatActivity {
 
     private RecyclerView recyclerPacientes;
     private FloatingActionButton fab;
-
+    private TextView textVazio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,7 @@ public class GestaoPacientesActivity extends AppCompatActivity {
 
         fab = findViewById(R.id.fabAddPaciente);
         recyclerPacientes = findViewById(R.id.recyclerPacientes);
+        textVazio = findViewById(R.id.textVazio);
 
         //configuração adapter
         adapterPacientes = new AdapterGestaoPacientes(nomePacientes, getApplicationContext());
@@ -122,6 +124,12 @@ public class GestaoPacientesActivity extends AppCompatActivity {
 
                 }
 
+                if(nomePacientes.isEmpty()){
+                    textVazio.setText("Ainda não tem nenhum paciente adicionado.");
+                }else{
+                    textVazio.setText("");
+                }
+
                 //diz ao adapter que os dados foram atualizados
                 adapterPacientes.notifyDataSetChanged();
 
@@ -163,7 +171,7 @@ public class GestaoPacientesActivity extends AppCompatActivity {
                                 final String[] opcoes = {"Editar Dados", "Eliminar Paciente"};
 
                                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(GestaoPacientesActivity.this);
-                                alertDialog.setTitle("Opções de evento");
+                                alertDialog.setTitle("Opções de Paciente");
 
                                 alertDialog.setItems(opcoes, new DialogInterface.OnClickListener() {
                                     @Override

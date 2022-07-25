@@ -17,21 +17,31 @@ import java.util.List;
 
 public class AdapterLembretes extends RecyclerView.Adapter<AdapterLembretes.MyViewHolder> {
 
+    View itemLista;
+
     List<Lembrete> lembretes;
     Context context;
+    Integer fragment;
 
-    public AdapterLembretes(List<Lembrete> lembretes, Context context) {
+    public AdapterLembretes(List<Lembrete> lembretes, Context context, Integer fragment) {
 
         this.lembretes = lembretes;
         this.context = context;
+        this.fragment = fragment;
 
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemLista = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.adapter_lembretes, parent, false);
+
+        if(fragment == 2) {
+            itemLista = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.adapter_lembretes, parent, false);
+        }else{
+            itemLista = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.adapter_lembretes2, parent, false);
+        }
 
         return new AdapterLembretes.MyViewHolder(itemLista);
     }

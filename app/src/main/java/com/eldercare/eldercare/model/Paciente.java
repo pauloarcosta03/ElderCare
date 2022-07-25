@@ -48,6 +48,153 @@ public class Paciente implements Serializable {
                             .child(idUtilizador)
                             .removeValue();
 
+                    //eliminar contactos cuidador
+                    firebaseRef.child("contactos").child(cuidador).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot dados: snapshot.getChildren()){
+                                String idPaciente = String.valueOf(dados.child("idPaciente").getValue());
+                                if(idPaciente.equals(idUtilizador)){
+                                    String key = dados.getKey();
+                                    firebaseRef.child("contactos")
+                                            .child(cuidador)
+                                            .child(key).removeValue();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                    //eliminar eventos cuidador
+                    firebaseRef.child("eventos").child(cuidador).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot dados: snapshot.getChildren()){
+                                String dia = dados.getKey();
+                                firebaseRef.child("eventos").child(cuidador).child(dia).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        for (DataSnapshot dados: snapshot.getChildren()){
+                                            String idPaciente = String.valueOf(dados.child("idPaciente").getValue());
+                                            if(idPaciente.equals(idUtilizador)){
+                                                String key = dados.getKey();
+                                                firebaseRef.child("eventos")
+                                                        .child(cuidador)
+                                                        .child(dia)
+                                                        .child(key).removeValue();
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                    //eliminar glicemia cuidador
+                    firebaseRef.child("glicemia").child(cuidador).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot dados: snapshot.getChildren()){
+                                String dia = dados.getKey();
+                                firebaseRef.child("glicemia").child(cuidador).child(dia).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        for (DataSnapshot dados: snapshot.getChildren()){
+                                            String idPaciente = String.valueOf(dados.child("idPaciente").getValue());
+                                            if(idPaciente.equals(idUtilizador)){
+                                                String key = dados.getKey();
+                                                firebaseRef.child("glicemia")
+                                                        .child(cuidador)
+                                                        .child(dia)
+                                                        .child(key).removeValue();
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                    //eliminar pressao cuidador
+                    firebaseRef.child("pressao").child(cuidador).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot dados: snapshot.getChildren()){
+                                String dia = dados.getKey();
+                                firebaseRef.child("pressao").child(cuidador).child(dia).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        for (DataSnapshot dados: snapshot.getChildren()){
+                                            String idPaciente = String.valueOf(dados.child("idPaciente").getValue());
+                                            if(idPaciente.equals(idUtilizador)){
+                                                String key = dados.getKey();
+                                                firebaseRef.child("pressao")
+                                                        .child(cuidador)
+                                                        .child(dia)
+                                                        .child(key).removeValue();
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                //eliminar lembretes cuidador
+                firebaseRef.child("lembretes").child(cuidador).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dados: snapshot.getChildren()){
+                            String idPaciente = String.valueOf(dados.child("idPaciente").getValue());
+                            if(idPaciente.equals(idUtilizador)){
+                                String key = dados.getKey();
+                                firebaseRef.child("lembretes")
+                                        .child(cuidador)
+                                        .child(key).removeValue();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
                     //FirebaseUser utilizadoAuth = autenticacao.getCurrentUser();
 
                     firebaseRef.child("contactos")
@@ -75,6 +222,14 @@ public class Paciente implements Serializable {
                             .removeValue();
 
                     firebaseRef.child("utilizadores")
+                            .child(idUtilizador)
+                            .removeValue();
+
+                    firebaseRef.child("perfis")
+                            .child(idUtilizador)
+                            .removeValue();
+
+                    firebaseRef.child("notificacoes")
                             .child(idUtilizador)
                             .removeValue();
 

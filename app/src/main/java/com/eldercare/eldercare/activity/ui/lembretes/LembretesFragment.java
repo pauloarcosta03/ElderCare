@@ -110,7 +110,7 @@ public class LembretesFragment extends Fragment {
         });
 
         //configuração adapter
-        adapterLembretes = new AdapterLembretes(lembretes, getContext());
+        adapterLembretes = new AdapterLembretes(lembretes, getContext(), 2);
 
         //Configuração RecyclerView
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());

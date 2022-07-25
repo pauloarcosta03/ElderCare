@@ -45,6 +45,7 @@
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/menu/principal.xml" value="0.26875" />
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.12222222222222222" />
         <entry key="..\:/Users/paulo/AndroidStudioProjects/ElderCare/app/src/main/res/mipmap-anydpi-v26/logo1.xml" value="0.106" />
+        <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/drawable-v24/botao_borda2.xml" value="0.2611111111111111" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/drawable/botao_borda.xml" value="0.37864583333333335" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/drawable/ic_notificacao.xml" value="0.11944444444444445" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/drawable/ic_visibilidade.xml" value="0.18888888888888888" />
@@ -53,6 +54,7 @@
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/activity_adicionar_eventos.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/activity_adicionar_glicemia.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/activity_adicionar_lembretes.xml" value="0.26875" />
+        <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/activity_adicionar_notas.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/activity_adicionar_pressao.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/activity_criar_paciente.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/activity_editar_pass.xml" value="0.26875" />
@@ -66,9 +68,12 @@
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/adapter_calendario.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/adapter_contactos.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/adapter_gestao_pacientes.xml" value="0.26875" />
-        <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/adapter_glicemia.xml" value="0.13958333333333334" />
+        <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/adapter_glicemia.xml" value="0.33" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/adapter_lembretes.xml" value="0.26875" />
+        <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/adapter_lembretes2.xml" value="0.26875" />
+        <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/adapter_notas.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/adapter_notificacao.xml" value="0.3625" />
+        <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/adapter_pressao.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/app_bar_principal.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/content_principal.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/fragment_contactos.xml" value="0.26875" />
@@ -78,6 +83,10 @@
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/fragment_glicemia.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/fragment_lembretes.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/fragment_notas.xml" value="0.26875" />
+        <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/fragment_pressao.xml" value="0.26875" />
+        <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/intro_1.xml" value="0.26875" />
+        <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/intro_2.xml" value="0.26875" />
+        <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/intro_login.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/nav_header_principal.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/toolbar.xml" value="0.26875" />
         <entry key="..\:/pastas win/desktop/pap/ElderCare/ElderCare-master/app/src/main/res/layout/toolbar_adicionar.xml" value="0.26875" />

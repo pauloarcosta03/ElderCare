@@ -117,6 +117,7 @@ public class Utilizador {
                                 .child(idUtilizador)
                                 .removeValue();
 
+
                         //FirebaseUser utilizadorAuth = autenticacao.getCurrentUser();
 
                         firebaseRef.child("contactos")
@@ -168,6 +169,12 @@ public class Utilizador {
         firebaseRef.child("utilizadores")
                 .child(this.idUtilizador)
                 .setValue(this);
+
+        //para a app não crashar ao enviar notificações
+        firebaseRef.child("utilizadores")
+                .child(this.idUtilizador)
+                .child("token")
+                .setValue("");
         
         if(this.getTipo().equals("p")){
 
